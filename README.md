@@ -1,5 +1,7 @@
 # Brazilian Syncopation Lab
 
+# uofiyiyfiuifyi
+
 Interactive rhythm-study generator for Brazilian rhythmic grammar (see project spec for full pedagogical background).
 
 ## Structure
