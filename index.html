@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brazilian Syncopation Lab</title>
+  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+  <link rel="stylesheet" href="src/css/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Brazilian Syncopation Lab</h1>
+    <p>Interactive Brazilian Rhythm Studies Generator. Built-in library of 16 rhythmic fragments (A1–A6, B1–B10) and 3 Brazilian backing tracks — generate 2/4 rhythm studies using random combinations, manual sequences, traditional patterns, pattern progressions, or hybrid pattern/random blocks.</p>
+  </header>
+
+  <main>
+    <aside>
+      <div class="group">
+        <label>1. Fragment Library (built-in)</label>
+        <div class="hint">16 built-in rhythmic fragments (A1–A6, B1–B10) load automatically from <span class="kbd">assets/fragments/</span>. To add more, drop MusicXML files there and list them in <span class="kbd">src/js/manifest.js</span>.</div>
+        <div id="loadStatus" class="status">Loading fragments…</div>
+      </div>
+
+      <div class="group">
+        <label>2. Brazilian Backing Track</label>
+        <div class="hint">Built-in loops load automatically from <span class="kbd">assets/audio/</span>. To add more, drop an audio file there and list it in <span class="kbd">src/js/manifest.js</span>.</div>
+        <div style="height:10px"></div>
+        <label class="small">Selected backing</label>
+        <select id="backingSelect"><option value="">No track — metronome only</option></select>
+        <div style="height:10px"></div>
+        <label class="small">Track volume</label>
+        <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
+        <div class="hint">Official loops are assumed to be prepared at 100 BPM. If no track is selected, a simple metronome will play instead.</div>
+        <div id="audioStatus" class="status">No track selected — metronome only.</div>
+      </div>
+
+      <div class="group">
+        <label>3. Construction Mode</label>
+        <select id="modeSelect">
+          <option value="random">Random</option>
+          <option value="manual">Manual</option>
+          <option value="traditional">Traditional Pattern</option>
+          <option value="progression">Pattern Progression</option>
+          <option value="hybrid">Hybrid Pattern/Random</option>
+        </select>
+        <div style="height:10px"></div>
+        <div>
+          <label class="small">Study Length</label>
+          <select id="barsInput">
+            <option value="2">2 bars — 4 fragments</option>
+            <option value="4" selected>4 bars — 8 fragments</option>
+            <option value="8">8 bars — 16 fragments</option>
+            <option value="16">16 bars — 32 fragments</option>
+            <option value="32">32 bars — 64 fragments</option>
+          </select>
+        </div>
+        <div class="hint">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
+        <div id="randomOptions" style="margin-top:10px">
+          <label class="small">Repetitions</label>
+          <select id="repeatSelect">
+            <option value="allow">Allowed</option>
+            <option value="avoidAdjacent">Avoid adjacent duplicates</option>
+            <option value="noRepeat">No repeat until possible</option>
+          </select>
+        </div>
+        <div id="manualOptions" style="display:none;margin-top:12px">
+          <div class="row">
+            <button id="buildManualBtn" class="secondary" type="button">Prepare slots</button>
+            <button id="clearManualBtn" class="secondary" type="button">Clear</button>
+          </div>
+          <div style="height:10px"></div>
+          <div id="manualGrid" class="manual-grid"><div class="small">Load fragments and press “Prepare slots”.</div></div>
+        </div>
+
+        <div id="traditionalBox" class="pattern-box">
+          <label>Traditional Pattern</label>
+          <select id="traditionalPatternSelect"></select>
+          <div id="traditionalPatternInfo" class="pattern-meta"></div>
+        </div>
+
+        <div id="progressionBox" class="pattern-box">
+          <label>Pattern Progression</label>
+          <div class="hint" style="margin-bottom:8px;">Study the transition from one pattern to another without stopping.</div>
+          <label class="small">Progression mode</label>
+          <select id="progressionModeSelect">
+            <option value="manual">Manual pattern choice</option>
+            <option value="random">Random pattern progression</option>
+          </select>
+          <div id="progressionManualBox" style="margin-top:10px;">
+            <div class="hint" style="margin-bottom:8px;">Choose 2 to 8 patterns. If the progression is shorter than the study length, it will repeat.</div>
+            <div id="progressionSelectors" class="pattern-list"></div>
+          </div>
+          <div id="progressionRandomBox" class="hint" style="display:none;margin-top:10px;">
+            The app will randomly choose enough traditional patterns to fill the selected study length.
+          </div>
+        </div>
+
+        <div id="hybridBox" class="pattern-box">
+          <label>Hybrid Pattern/Random</label>
+          <div class="hint" style="margin-bottom:8px;">Mix 2-bar traditional-pattern blocks with 2-bar random-fragment blocks. This tests how free fragments work inside a traditional rhythmic grammar.</div>
+          <div id="hybridPatternSourceBox">
+            <label class="small">Pattern source</label>
+            <select id="hybridPatternSourceSelect">
+              <option value="randomPatterns" selected>Random traditional patterns</option>
+              <option value="chosenPattern">Choose one traditional pattern</option>
+            </select>
+            <div id="hybridChosenPatternBox" style="display:none;margin-top:10px;">
+              <label class="small">Chosen pattern</label>
+              <select id="hybridPatternSelect"></select>
+            </div>
+            <div style="height:10px"></div>
+          </div>
+          <label class="small">Hybrid form</label>
+          <select id="hybridFormSelect">
+            <option value="patternBlockRandomBlock" selected>Pattern block → Random block</option>
+            <option value="randomBlockPatternBlock">Random block → Pattern block</option>
+            <option value="patternOpeningRandomEnding">Pattern opening → Random ending</option>
+            <option value="randomOpeningPatternEnding">Random opening → Pattern ending</option>
+            <option value="grammarRemix">Grammar Remix</option>
+          </select>
+          <div id="hybridVariationTypeBox">
+            <div style="height:10px"></div>
+            <label class="small">Random variation type</label>
+            <select id="hybridRandomTypeSelect">
+              <option value="free" selected>Free random</option>
+              <option value="matchColor">Match A/B color profile</option>
+            </select>
+          </div>
+          <div id="hybridGrammarHint" class="hint" style="display:none;">Grammar Remix chooses everything automatically: pattern opening or pattern ending, free random or A/B color-matched random. No extra choices.</div>
+          <div class="hint">Block size is fixed at 2 bars: 4 fragments. Opening/ending forms replace one bar inside the pattern phrase.</div>
+        </div>
+      </div>
+      </div>
+
+      <div class="group">
+        <button id="generateBtn" style="width:100%" disabled>Generate Study</button>
+        <div style="height:10px"></div>
+        <div class="row">
+          <button id="playBtn" disabled>Play</button>
+          <button id="stopBtn" class="danger" disabled>Stop</button>
+        </div>
+        <div style="height:10px"></div>
+        <button id="printBtn" class="secondary" disabled style="width:100%">PDF/Print</button>
+        <div style="height:12px"></div>
+        <label>Study BPM: <span id="bpmValue">100</span></label>
+        <input id="bpmInput" type="range" min="60" max="160" value="100" />
+        <div style="height:10px"></div>
+        <label class="small">Written rhythm sound</label>
+        <select id="soundSelect">
+          <option value="woodblock" selected>Woodblock — clear study sound</option>
+          <option value="clave">Clave — dry and musical</option>
+          <option value="clap">Clap — strong and simple</option>
+          <option value="mute">Off — backing/metronome only</option>
+        </select>
+        <div class="hint">Choose a clear percussive guide sound. No automatic bar accent is added.</div>
+        <div style="height:10px"></div>
+        <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
+        <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
+        <div class="hint">A 4-beat count-in is always active by default.</div>
+        <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
+        <label class="switchline"><input id="loopInput" type="checkbox" checked /> Loop study and track</label>
+      </div>
+
+      <div class="group">
+        <label>Saved Studies / Favorites</label>
+        <div class="row">
+          <button id="saveStudyBtn" class="secondary" type="button" disabled>Save current</button>
+          <button id="deleteStudyBtn" class="danger" type="button" disabled>Delete</button>
+        </div>
+        <div style="height:10px"></div>
+        <select id="savedStudySelect"><option value="">No saved study</option></select>
+        <div class="row" style="margin-top:10px">
+          <button id="loadStudyBtn" class="secondary" type="button" disabled>Load</button>
+          <button id="exportStudiesBtn" class="secondary" type="button">Export</button>
+        </div>
+        <div style="height:10px"></div>
+        <button id="importStudiesBtn" class="secondary" type="button" style="width:100%">Import saved studies</button>
+        <input id="importStudiesInput" type="file" accept=".json" style="display:none" />
+        <div class="hint">Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
+        <div id="savedStudiesStatus" class="status">No saved study yet.</div>
+      </div>
+
+      <div class="group">
+        <label>Fragment Library</label>
+        <div id="library" class="library"><div class="cell-item"><span>No files</span></div></div>
+        <div class="legend">
+          <span class="pill quality-a">A = green</span>
+          <span class="pill quality-b">B = yellow</span>
+        </div>
+      </div>
+    </aside>
+
+    <section class="viewer">
+      <div class="topbar">
+        <div>
+          <h2>Generated Study</h2>
+          <p id="summary">Load fragments and generate a 2/4 study.</p>
+        </div>
+      </div>
+      <div id="sequence" class="sequence"></div>
+      <div id="osmd-container"><div class="empty">Notation will appear here.</div></div>
+      <div id="renderStatus" class="status"></div>
+    </section>
+  </main>
+
+
+<script src="src/js/manifest.js"></script>
+<script src="src/js/patterns.js"></script>
+<script src="src/js/app.js"></script>
+</body>
+</html>
