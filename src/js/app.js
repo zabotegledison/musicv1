@@ -966,15 +966,18 @@
       if (state.backingPlayer) {
         try { state.backingPlayer.dispose(); } catch(e) {}
       }
-      // GrainPlayer time-stretches via granular synthesis: playbackRate changes
-      // speed WITHOUT changing pitch (unlike Tone.Player, which resamples the
-      // buffer and shifts pitch together with speed).
-      state.backingPlayer = new Tone.GrainPlayer({
+      // Tone.Player (resampling): speed and pitch change together, like a
+      // sped-up/slowed-down tape. For pure percussion loops this reads as a
+      // higher/lower drum, not "out of tune" — and it stays clean and tight.
+      // (GrainPlayer/granular time-stretch was tried to keep pitch fixed, but
+      // on percussive transients it produces a robotic/echoey artifact, so
+      // clean rhythm took priority over exact pitch here.)
+      state.backingPlayer = new Tone.Player({
         url: t.url,
         loop: false,
         autostart: false,
-        grainSize: 0.06,
-        overlap: 0.2
+        fadeIn: 0.01,
+        fadeOut: 0.01
       }).toDestination();
       state.currentPlayerTrackId = t.id;
       await Tone.loaded();
