@@ -12,13 +12,12 @@ const FRAGMENT_FILES = [
 // Each backing track ships as several pre-rendered tempo versions (offline
 // pitch-preserving time-stretch, studio quality — no realtime processing in
 // the browser). "tempos" lists the available BPM files as
-// assets/audio/<id>_<bpm>.mp3. At playback the app picks the closest
-// available tempo to the Study BPM and plays it back at normal speed, so
-// there is never any live pitch-shifting artifact or sync drift.
-// To add more tempo steps to an existing track: render a new
-// assets/audio/<id>_<bpm>.mp3 file and add that bpm to its "tempos" array.
+// assets/audio/<id>_<bpm>.mp3. Study BPM is snapped to the nearest available
+// tempo whenever a track is selected, so notation and audio always share the
+// exact same tempo (no drift). To add more tempo steps to an existing track:
+// render a new assets/audio/<id>_<bpm>.mp3 file and add that bpm to "tempos".
 const AUDIO_TRACKS = [
-  { id: 'afoxe',    name: 'Afoxé (16 bars)',    tempos: [60,70,80,90,100,110,120,130,140] },
-  { id: 'baiao',    name: 'Baião (16 bars)',    tempos: [60,70,80,90,100,110,120,130,140] },
-  { id: 'batucada', name: 'Batucada (16 bars)', tempos: [60,70,80,90,100,110,120,130,140] }
+  { id: 'afoxe',    name: 'Afoxé (16 bars)',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'baiao',    name: 'Baião (16 bars)',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'batucada', name: 'Batucada (16 bars)', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
 ];

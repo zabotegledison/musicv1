@@ -901,9 +901,20 @@
       const lastQ = getLastQuarter();
       const responseGapQ = callResponse ? lastQ : 0;
       const studyLenSec = (lastQ + responseGapQ) * quarterSec;
-      const loopEndSec = countInSec + studyLenSec;
+      let loopEndSec = countInSec + studyLenSec;
 
-      await prepareBackingPlayer();
+      const hasBackingTrack = await prepareBackingPlayer();
+
+      // The notated loop length (bars × tempo, in seconds) is a mathematical
+      // ideal; the actual decoded audio buffer duration differs from it by a
+      // tiny amount (MP3 encoding rounding, time-stretch rounding). If the
+      // two loops run on slightly different lengths, the mismatch compounds
+      // every repeat and the two drift apart after a few cycles. Locking the
+      // notation loop to the real measured buffer duration keeps both loops
+      // exactly identical in length, so they never drift.
+      if (hasBackingTrack && state.backingPlayer?.buffer?.duration) {
+        loopEndSec = countInSec + state.backingPlayer.buffer.duration;
+      }
 
       for (let i = 0; i < countInQ; i++) {
         Tone.Transport.schedule(time => triggerCountIn(i, time), i * quarterSec);
@@ -911,7 +922,6 @@
 
       state.events.forEach(ev => Tone.Transport.schedule(time => triggerPercussion(ev,time), countInSec + ev.timeQ * quarterSec));
 
-      const hasBackingTrack = !!getSelectedTrack();
       if (!hasBackingTrack) {
         for (let beat = 0; beat < lastQ; beat++) {
           Tone.Transport.schedule(time => triggerMetronome(beat, time), countInSec + beat * quarterSec);
