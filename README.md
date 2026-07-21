@@ -36,7 +36,14 @@ python3 -m http.server 8000
 ## Adding new material
 
 - **New fragment**: drop the `.xml` in `assets/fragments/`, add the filename to `FRAGMENT_FILES` in `src/js/manifest.js`.
-- **New backing track**: drop the audio file in `assets/audio/`, add an entry to `AUDIO_TRACKS` in `src/js/manifest.js`.
+- **New backing track**: pitch stays clean at any tempo because each track ships as several pre-rendered versions (one file per BPM) instead of being stretched live in the browser. To add one:
+  1. Export your loop at its natural tempo (e.g. `meu-groove.wav`).
+  2. Render tempo variants offline with `ffmpeg` (needs the `rubberband` filter, good for percussion):
+     ```bash
+     ffmpeg -i meu-groove.wav -filter:a "rubberband=tempo=0.8:transients=crisp:detector=percussive" -codec:a libmp3lame -b:a 128k assets/audio/meugroove_80.mp3
+     ```
+     (`tempo` = target BPM ÷ original BPM — e.g. for 80 BPM from a 100 BPM original, `tempo=0.8`.) Repeat for each BPM you want covered (e.g. 60,70,80,...,140), naming files `<id>_<bpm>.mp3`.
+  3. Add an entry to `AUDIO_TRACKS` in `src/js/manifest.js` listing the id, name, and the `tempos` array of BPMs you rendered.
 - **New traditional pattern**: add an entry to the array in `src/js/patterns.js`.
 
 No other code changes needed for any of the three.

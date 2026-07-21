@@ -9,8 +9,16 @@ const FRAGMENT_FILES = [
   'B6.xml', 'B7.xml', 'B8.xml', 'B9.xml', 'B10.xml'
 ];
 
+// Each backing track ships as several pre-rendered tempo versions (offline
+// pitch-preserving time-stretch, studio quality — no realtime processing in
+// the browser). "tempos" lists the available BPM files as
+// assets/audio/<id>_<bpm>.mp3. At playback the app picks the closest
+// available tempo to the Study BPM and plays it back at normal speed, so
+// there is never any live pitch-shifting artifact or sync drift.
+// To add more tempo steps to an existing track: render a new
+// assets/audio/<id>_<bpm>.mp3 file and add that bpm to its "tempos" array.
 const AUDIO_TRACKS = [
-  { id: 'afoxe',    name: 'Afoxé (100 BPM, 16 bars)',    url: 'assets/audio/afoxe.mp3',    originalBpm: 100 },
-  { id: 'baiao',    name: 'Baião (100 BPM, 16 bars)',    url: 'assets/audio/baiao.mp3',    originalBpm: 100 },
-  { id: 'batucada', name: 'Batucada (100 BPM, 16 bars)', url: 'assets/audio/batucada.mp3', originalBpm: 100 }
+  { id: 'afoxe',    name: 'Afoxé (16 bars)',    tempos: [60,70,80,90,100,110,120,130,140] },
+  { id: 'baiao',    name: 'Baião (16 bars)',    tempos: [60,70,80,90,100,110,120,130,140] },
+  { id: 'batucada', name: 'Batucada (16 bars)', tempos: [60,70,80,90,100,110,120,130,140] }
 ];

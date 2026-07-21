@@ -5,7 +5,7 @@
   const state = {
     fragments: [], sequence: [], generatedXml: null, osmd: null, events: [], savedStudies: [], currentStudyMeta: null,
     synthClick: null, synthAccent: null, synthTamborim: null, synthRimshot: null, synthWoodblock: null, synthClave: null, synthClap: null, synthMetronome: null,
-    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, isPlaying: false, isStarting: false, backingLoopHandler: null
+    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, currentPlayerUrl: null, isPlaying: false, isStarting: false, backingLoopHandler: null
   };
   state.audioEl.loop = true;
 
@@ -953,38 +953,43 @@
   function getSelectedTrack() { return state.audioTracks.find(t => t.id === $('backingSelect').value) || null; }
   function updateTrackBpmFromSelection() { /* no-op: originalBpm now comes from manifest.js per track */ }
 
+  function closestTempoUrl(t, studyBpm) {
+    if (!t.tempos || !t.tempos.length) return null;
+    let best = t.tempos[0];
+    for (const bpm of t.tempos) if (Math.abs(bpm - studyBpm) < Math.abs(best - studyBpm)) best = bpm;
+    return `assets/audio/${t.id}_${best}.mp3`;
+  }
+
   async function prepareBackingPlayer() {
     const t = getSelectedTrack();
     if (!t) return false;
 
     const studyBpm = Number($('bpmInput').value || 100);
-    const originalBpm = t.originalBpm || t.bpm || 100;
-    const playbackRate = studyBpm / originalBpm;
+    const url = closestTempoUrl(t, studyBpm);
+    if (!url) return false;
 
-    if (!state.backingPlayer || state.currentPlayerTrackId !== t.id) {
+    if (!state.backingPlayer || state.currentPlayerUrl !== url) {
       stopBacking();
       if (state.backingPlayer) {
         try { state.backingPlayer.dispose(); } catch(e) {}
       }
-      // Tone.Player (resampling): speed and pitch change together, like a
-      // sped-up/slowed-down tape. For pure percussion loops this reads as a
-      // higher/lower drum, not "out of tune" — and it stays clean and tight.
-      // (GrainPlayer/granular time-stretch was tried to keep pitch fixed, but
-      // on percussive transients it produces a robotic/echoey artifact, so
-      // clean rhythm took priority over exact pitch here.)
+      // Plain Tone.Player at normal speed: the pitch-preserving tempo match
+      // is done offline (see manifest.js), so no realtime time-stretch or
+      // pitch-shift runs in the browser — no robotic artifacts, no drift.
       state.backingPlayer = new Tone.Player({
-        url: t.url,
+        url,
         loop: false,
         autostart: false,
         fadeIn: 0.01,
         fadeOut: 0.01
       }).toDestination();
       state.currentPlayerTrackId = t.id;
+      state.currentPlayerUrl = url;
       await Tone.loaded();
     }
 
     state.backingPlayer.volume.value = getTrackVolumeDb();
-    state.backingPlayer.playbackRate = playbackRate;
+    state.backingPlayer.playbackRate = 1;
     return true;
   }
 
