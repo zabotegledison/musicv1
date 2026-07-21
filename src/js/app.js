@@ -554,6 +554,7 @@
       if ($('soundSelect') && saved.meta.sound) $('soundSelect').value = saved.meta.sound;
       if ($('loopInput')) $('loopInput').checked = saved.meta.loop !== false;
       if ($('backingSelect') && saved.meta.backingId) $('backingSelect').value = saved.meta.backingId;
+      snapBpmToTrack();
     }
     renderSequence();
     $('summary').textContent = `Loaded saved study — ${saved.name} — ${restored.length} 1/4 units. Sound events: ${state.events.length}.`;
@@ -951,6 +952,15 @@
   }
 
   function getSelectedTrack() { return state.audioTracks.find(t => t.id === $('backingSelect').value) || null; }
+
+  function snapBpmToTrack() {
+    const t = getSelectedTrack();
+    if (!t || !t.tempos || !t.tempos.length) return;
+    const current = Number($('bpmInput').value || 100);
+    let best = t.tempos[0];
+    for (const bpm of t.tempos) if (Math.abs(bpm - current) < Math.abs(best - current)) best = bpm;
+    if (best !== current) { $('bpmInput').value = best; $('bpmValue').textContent = best; }
+  }
   function updateTrackBpmFromSelection() { /* no-op: originalBpm now comes from manifest.js per track */ }
 
   function closestTempoUrl(t, studyBpm) {
@@ -999,25 +1009,24 @@
 
     const studyDurationSec = Math.max(0.001, loopEndSec - countInSec);
 
-    const startBackingNow = (time) => {
+    // Start once after the count-in, then let the backing track loop
+    // seamlessly on its own full-length buffer (native, gapless loop).
+    // We deliberately do NOT restart it every time the (often shorter)
+    // notated study loop restarts — cutting the 16-bar groove short at each
+    // notated repeat is what produced the "missing piece" artifact. The
+    // notation and the backing groove share the exact same tempo (BPM is
+    // snapped to the track's tempo), so they never drift in speed even if
+    // their loop lengths/phases differ.
+    Tone.Transport.scheduleOnce((time) => {
       try { state.backingPlayer.stop(time); } catch(e) {}
-      state.backingPlayer.loop = false;
+      state.backingPlayer.loop = !!$('loopInput').checked;
+      state.backingPlayer.loopStart = 0;
+      state.backingPlayer.loopEnd = state.backingPlayer.buffer?.duration || 0;
       state.backingPlayer.start(time, 0);
       if (!$('loopInput').checked) {
         state.backingPlayer.stop(time + studyDurationSec);
       }
-    };
-
-    // Start once after the count-in.
-    Tone.Transport.scheduleOnce((time) => startBackingNow(time), startTransportSec);
-
-    // Re-trigger the backing track every time the Transport loop restarts,
-    // instead of letting GrainPlayer loop on its own internal timer — that
-    // timer runs independently of the Transport clock and drifts out of
-    // sync with the notation/metronome over several cycles.
-    if (state.backingLoopHandler) Tone.Transport.off('loop', state.backingLoopHandler);
-    state.backingLoopHandler = (time) => { if ($('loopInput').checked) startBackingNow(time); };
-    Tone.Transport.on('loop', state.backingLoopHandler);
+    }, startTransportSec);
   }
 
   function stopBacking() {
@@ -1039,7 +1048,7 @@
     if ($('modeSelect').value === 'manual') buildManualGrid(false);
   }
 
-  $('backingSelect').addEventListener('change', invalidatePlayback);
+  $('backingSelect').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
   $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); });
   $('traditionalPatternSelect').addEventListener('change', updateTraditionalPatternInfo);
   $('progressionModeSelect').addEventListener('change', updateProgressionModeUI);
@@ -1053,6 +1062,7 @@
   $('phraseRestInput').addEventListener('change', invalidatePlayback);
   $('printBtn').addEventListener('click', () => window.print());
   $('bpmInput').addEventListener('input', () => { $('bpmValue').textContent = $('bpmInput').value; invalidatePlayback(); });
+  $('bpmInput').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
   $('trackVolumeInput').addEventListener('input', () => { state.audioEl.volume = Number($('trackVolumeInput').value || 70)/100; if (state.backingPlayer) state.backingPlayer.volume.value = getTrackVolumeDb(); });
   $('studyVolumeInput').addEventListener('input', () => { $('studyVolumeValue').textContent = $('studyVolumeInput').value; });
 
