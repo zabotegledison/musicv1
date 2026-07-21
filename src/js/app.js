@@ -911,9 +911,12 @@
       // two loops run on slightly different lengths, the mismatch compounds
       // every repeat and the two drift apart after a few cycles. Locking the
       // notation loop to the real measured buffer duration keeps both loops
-      // exactly identical in length, so they never drift.
-      if (hasBackingTrack && state.backingPlayer?.buffer?.duration) {
-        loopEndSec = countInSec + state.backingPlayer.buffer.duration;
+      // exactly identical in length, so they never drift — but only when
+      // that measurement is actually valid; otherwise keep the safe
+      // theoretical value so the study always keeps looping.
+      const measuredDuration = state.backingPlayer?.buffer?.duration;
+      if (hasBackingTrack && Number.isFinite(measuredDuration) && measuredDuration > 0.1) {
+        loopEndSec = countInSec + measuredDuration;
       }
 
       for (let i = 0; i < countInQ; i++) {
