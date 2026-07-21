@@ -5,7 +5,7 @@
   const state = {
     fragments: [], sequence: [], generatedXml: null, osmd: null, events: [], savedStudies: [], currentStudyMeta: null,
     synthClick: null, synthAccent: null, synthTamborim: null, synthRimshot: null, synthWoodblock: null, synthClave: null, synthClap: null, synthMetronome: null,
-    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, isPlaying: false, isStarting: false
+    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, isPlaying: false, isStarting: false, backingLoopHandler: null
   };
   state.audioEl.loop = true;
 
@@ -973,8 +973,8 @@
         url: t.url,
         loop: false,
         autostart: false,
-        grainSize: 0.2,
-        overlap: 0.05
+        grainSize: 0.06,
+        overlap: 0.2
       }).toDestination();
       state.currentPlayerTrackId = t.id;
       await Tone.loaded();
@@ -991,24 +991,30 @@
 
     const studyDurationSec = Math.max(0.001, loopEndSec - countInSec);
 
-    // Start the backing loop only once after the count-in.
-    // Using Tone.Transport.schedule would fire again on every Transport loop
-    // and can stack the backing audio, making the volume grow every cycle.
-    Tone.Transport.scheduleOnce((time) => {
+    const startBackingNow = (time) => {
       try { state.backingPlayer.stop(time); } catch(e) {}
-      state.backingPlayer.loop = true;
-      state.backingPlayer.loopStart = 0;
-      state.backingPlayer.loopEnd = state.backingPlayer.buffer?.duration || 0;
+      state.backingPlayer.loop = false;
       state.backingPlayer.start(time, 0);
-
       if (!$('loopInput').checked) {
         state.backingPlayer.stop(time + studyDurationSec);
       }
-    }, startTransportSec);
+    };
+
+    // Start once after the count-in.
+    Tone.Transport.scheduleOnce((time) => startBackingNow(time), startTransportSec);
+
+    // Re-trigger the backing track every time the Transport loop restarts,
+    // instead of letting GrainPlayer loop on its own internal timer — that
+    // timer runs independently of the Transport clock and drifts out of
+    // sync with the notation/metronome over several cycles.
+    if (state.backingLoopHandler) Tone.Transport.off('loop', state.backingLoopHandler);
+    state.backingLoopHandler = (time) => { if ($('loopInput').checked) startBackingNow(time); };
+    Tone.Transport.on('loop', state.backingLoopHandler);
   }
 
   function stopBacking() {
-    try { 
+    try {
+      if (state.backingLoopHandler) { Tone.Transport.off('loop', state.backingLoopHandler); state.backingLoopHandler = null; }
       if (state.backingPlayer) {
         state.backingPlayer.loop = false;
         state.backingPlayer.stop(Tone.now());
