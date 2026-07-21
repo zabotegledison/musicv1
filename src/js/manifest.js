@@ -10,7 +10,7 @@ const FRAGMENT_FILES = [
 ];
 
 const AUDIO_TRACKS = [
-  { id: 'afoxe',    name: 'Afoxé (100 BPM, 16 bars)',    url: 'assets/audio/afoxe.mp3',    bpm: 100 },
-  { id: 'baiao',    name: 'Baião (100 BPM, 16 bars)',    url: 'assets/audio/baiao.mp3',    bpm: 100 },
-  { id: 'batucada', name: 'Batucada (100 BPM, 16 bars)', url: 'assets/audio/batucada.mp3', bpm: 100 }
+  { id: 'afoxe',    name: 'Afoxé (100 BPM, 16 bars)',    url: 'assets/audio/afoxe.mp3',    originalBpm: 100 },
+  { id: 'baiao',    name: 'Baião (100 BPM, 16 bars)',    url: 'assets/audio/baiao.mp3',    originalBpm: 100 },
+  { id: 'batucada', name: 'Batucada (100 BPM, 16 bars)', url: 'assets/audio/batucada.mp3', originalBpm: 100 }
 ];

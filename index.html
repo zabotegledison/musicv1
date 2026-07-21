@@ -11,33 +11,15 @@
 <body>
 
   <header>
-    <h1>Brazilian Syncopation Lab</h1>
-    <p>Interactive Brazilian Rhythm Studies Generator. Built-in library of 16 rhythmic fragments (A1–A6, B1–B10) and 3 Brazilian backing tracks — generate 2/4 rhythm studies using random combinations, manual sequences, traditional patterns, pattern progressions, or hybrid pattern/random blocks.</p>
+    <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
+    <p>Rhythm study generator for Brazilian percussion grammar.</p>
   </header>
 
   <main>
     <aside>
+<div id="loadStatus" class="status" style="display:none"></div>
       <div class="group">
-        <label>1. Fragment Library (built-in)</label>
-        <div class="hint">16 built-in rhythmic fragments (A1–A6, B1–B10) load automatically from <span class="kbd">assets/fragments/</span>. To add more, drop MusicXML files there and list them in <span class="kbd">src/js/manifest.js</span>.</div>
-        <div id="loadStatus" class="status">Loading fragments…</div>
-      </div>
-
-      <div class="group">
-        <label>2. Brazilian Backing Track</label>
-        <div class="hint">Built-in loops load automatically from <span class="kbd">assets/audio/</span>. To add more, drop an audio file there and list it in <span class="kbd">src/js/manifest.js</span>.</div>
-        <div style="height:10px"></div>
-        <label class="small">Selected backing</label>
-        <select id="backingSelect"><option value="">No track — metronome only</option></select>
-        <div style="height:10px"></div>
-        <label class="small">Track volume</label>
-        <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
-        <div class="hint">Official loops are assumed to be prepared at 100 BPM. If no track is selected, a simple metronome will play instead.</div>
-        <div id="audioStatus" class="status">No track selected — metronome only.</div>
-      </div>
-
-      <div class="group">
-        <label>3. Construction Mode</label>
+        <label>1. Generate Study</label>
         <select id="modeSelect">
           <option value="random">Random</option>
           <option value="manual">Manual</option>
@@ -135,14 +117,23 @@
       </div>
 
       <div class="group">
-        <button id="generateBtn" style="width:100%" disabled>Generate Study</button>
+        <button id="generateBtn" class="primary" style="width:100%" disabled>Generate Study</button>
         <div style="height:10px"></div>
         <div class="row">
-          <button id="playBtn" disabled>Play</button>
-          <button id="stopBtn" class="danger" disabled>Stop</button>
+          <button id="saveStudyBtn" class="secondary" type="button" disabled>Save current</button>
+          <button id="printBtn" class="secondary" disabled>PDF/Print</button>
         </div>
+      </div>
+
+      <div class="group">
+        <label>2. Playback / Backing Track</label>
+        <label class="small">Selected backing</label>
+        <select id="backingSelect"><option value="">No track — metronome only</option></select>
         <div style="height:10px"></div>
-        <button id="printBtn" class="secondary" disabled style="width:100%">PDF/Print</button>
+        <label class="small">Track volume</label>
+        <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
+        <div class="hint">Loops are prepared at a fixed original tempo and time-stretched to match Study BPM without changing pitch. If no track is selected, a simple metronome plays instead.</div>
+        <div id="audioStatus" class="status">Loading backing tracks…</div>
         <div style="height:12px"></div>
         <label>Study BPM: <span id="bpmValue">100</span></label>
         <input id="bpmInput" type="range" min="60" max="160" value="100" />
@@ -154,19 +145,22 @@
           <option value="clap">Clap — strong and simple</option>
           <option value="mute">Off — backing/metronome only</option>
         </select>
-        <div class="hint">Choose a clear percussive guide sound. No automatic bar accent is added.</div>
         <div style="height:10px"></div>
         <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
         <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
         <div class="hint">A 4-beat count-in is always active by default.</div>
         <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
         <label class="switchline"><input id="loopInput" type="checkbox" checked /> Loop study and track</label>
+        <div style="height:12px"></div>
+        <div class="row">
+          <button id="playBtn" class="accent-yellow" disabled>Play</button>
+          <button id="stopBtn" class="danger" disabled>Stop</button>
+        </div>
       </div>
 
       <div class="group">
-        <label>Saved Studies / Favorites</label>
+        <label>4. Saved Studies / Favorites</label>
         <div class="row">
-          <button id="saveStudyBtn" class="secondary" type="button" disabled>Save current</button>
           <button id="deleteStudyBtn" class="danger" type="button" disabled>Delete</button>
         </div>
         <div style="height:10px"></div>
@@ -182,14 +176,15 @@
         <div id="savedStudiesStatus" class="status">No saved study yet.</div>
       </div>
 
-      <div class="group">
-        <label>Fragment Library</label>
-        <div id="library" class="library"><div class="cell-item"><span>No files</span></div></div>
+      <details class="group">
+        <summary style="cursor:pointer;font-weight:700;font-size:14px;">Fragment quality (advanced)</summary>
+        <div style="height:8px"></div>
+        <div id="library" class="library"><div class="cell-item"><span>Loading…</span></div></div>
         <div class="legend">
           <span class="pill quality-a">A = green</span>
           <span class="pill quality-b">B = yellow</span>
         </div>
-      </div>
+      </details>
     </aside>
 
     <section class="viewer">

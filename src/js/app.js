@@ -5,7 +5,7 @@
   const state = {
     fragments: [], sequence: [], generatedXml: null, osmd: null, events: [], savedStudies: [], currentStudyMeta: null,
     synthClick: null, synthAccent: null, synthTamborim: null, synthRimshot: null, synthWoodblock: null, synthClave: null, synthClap: null, synthMetronome: null,
-    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null
+    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, isPlaying: false, isStarting: false
   };
   state.audioEl.loop = true;
 
@@ -535,6 +535,7 @@
   }
 
   async function loadSavedStudy() {
+    invalidatePlayback();
     const id = $('savedStudySelect')?.value;
     const saved = state.savedStudies.find(s => s.id === id);
     if (!saved) return;
@@ -719,7 +720,7 @@
 
 
   async function generate() {
-    stopPlayback();
+    invalidatePlayback();
     if (!state.fragments.length) return;
     const bars = getBars();
     const fragsPerBar = FRAGS_PER_BAR;
@@ -870,54 +871,68 @@
     state.synthMetronome.triggerAttackRelease(isDownbeat ? 'C6' : 'G5', '32n', time, isDownbeat ? .55 : .38);
   }
 
-  function stopPlayback() {
-    try { Tone.Transport.stop(); Tone.Transport.cancel(0); } catch(e) {}
+  function resetPlayback() {
+    try { Tone.Transport.stop(); } catch(e) {}
+    try { Tone.Transport.cancel(0); } catch(e) {}
+    Tone.Transport.loop = false;
+    Tone.Transport.position = 0;
     stopBacking();
   }
+  function stopPlayback() { resetPlayback(); state.isPlaying = false; updatePlayButtonState(); }
+  function invalidatePlayback() { if (state.isPlaying) resetPlayback(); state.isPlaying = false; updatePlayButtonState(); }
+  function updatePlayButtonState() { const btn = $('playBtn'); if (btn && !state.isStarting) btn.disabled = !state.events.length; }
   function getLastQuarter() { return state.sequence && state.sequence.length ? state.sequence.length : (state.events.length ? Math.max(...state.events.map(e => e.timeQ + e.durationQ),0) : 0); }
 
   async function play({ callResponse=false } = {}) {
-    if (!state.events.length) return;
-    await Tone.start(); 
-    ensureSynths(); 
-    stopPlayback();
+    if (!state.events.length || state.isStarting) return;
+    state.isStarting = true;
+    const btn = $('playBtn'); if (btn) btn.disabled = true;
+    try {
+      await Tone.start();
+      ensureSynths();
+      resetPlayback();
 
-    const bpm = Number($('bpmInput').value || 80); 
-    Tone.Transport.bpm.value = bpm;
-    const quarterSec = 60 / bpm;
-    const countInQ = 4;
-    const countInSec = countInQ * quarterSec;
-    const lastQ = getLastQuarter();
-    const responseGapQ = callResponse ? lastQ : 0;
-    const studyLenSec = (lastQ + responseGapQ) * quarterSec;
-    const loopEndSec = countInSec + studyLenSec;
+      const bpm = Number($('bpmInput').value || 80);
+      Tone.Transport.bpm.value = bpm;
+      const quarterSec = 60 / bpm;
+      const countInQ = 4;
+      const countInSec = countInQ * quarterSec;
+      const lastQ = getLastQuarter();
+      const responseGapQ = callResponse ? lastQ : 0;
+      const studyLenSec = (lastQ + responseGapQ) * quarterSec;
+      const loopEndSec = countInSec + studyLenSec;
 
-    await prepareBackingPlayer();
+      await prepareBackingPlayer();
 
-    for (let i = 0; i < countInQ; i++) {
-      Tone.Transport.schedule(time => triggerCountIn(i, time), i * quarterSec);
-    }
-
-    state.events.forEach(ev => Tone.Transport.schedule(time => triggerPercussion(ev,time), countInSec + ev.timeQ * quarterSec));
-
-    const hasBackingTrack = !!getSelectedTrack();
-    if (!hasBackingTrack) {
-      for (let beat = 0; beat < lastQ; beat++) {
-        Tone.Transport.schedule(time => triggerMetronome(beat, time), countInSec + beat * quarterSec);
+      for (let i = 0; i < countInQ; i++) {
+        Tone.Transport.schedule(time => triggerCountIn(i, time), i * quarterSec);
       }
-    }
 
-    if ($('loopInput').checked) {
-      Tone.Transport.loop = true;
-      Tone.Transport.loopStart = countInSec;
-      Tone.Transport.loopEnd = loopEndSec;
-    } else {
-      Tone.Transport.loop = false;
-      Tone.Transport.scheduleOnce(() => stopPlayback(), loopEndSec + .05);
-    }
+      state.events.forEach(ev => Tone.Transport.schedule(time => triggerPercussion(ev,time), countInSec + ev.timeQ * quarterSec));
 
-    scheduleBacking(countInSec, loopEndSec, countInSec);
-    Tone.Transport.start('+0.05');
+      const hasBackingTrack = !!getSelectedTrack();
+      if (!hasBackingTrack) {
+        for (let beat = 0; beat < lastQ; beat++) {
+          Tone.Transport.schedule(time => triggerMetronome(beat, time), countInSec + beat * quarterSec);
+        }
+      }
+
+      if ($('loopInput').checked) {
+        Tone.Transport.loop = true;
+        Tone.Transport.loopStart = countInSec;
+        Tone.Transport.loopEnd = loopEndSec;
+      } else {
+        Tone.Transport.loop = false;
+        Tone.Transport.scheduleOnce(() => stopPlayback(), loopEndSec + .05);
+      }
+
+      scheduleBacking(countInSec, loopEndSec, countInSec);
+      Tone.Transport.start('+0.05');
+      state.isPlaying = true;
+    } finally {
+      state.isStarting = false;
+      if (btn) btn.disabled = !state.events.length;
+    }
   }
 
   function loadAudioLibrary() {
@@ -936,26 +951,30 @@
   }
 
   function getSelectedTrack() { return state.audioTracks.find(t => t.id === $('backingSelect').value) || null; }
-  function updateTrackBpmFromSelection() { const t = getSelectedTrack(); if (t) t.bpm = 100; }
-  function updateSelectedTrackBpm() { const t = getSelectedTrack(); if (t) { t.bpm = 100; saveAudioTracks(); } }
+  function updateTrackBpmFromSelection() { /* no-op: originalBpm now comes from manifest.js per track */ }
 
   async function prepareBackingPlayer() {
-    const t = getSelectedTrack(); 
+    const t = getSelectedTrack();
     if (!t) return false;
 
     const studyBpm = Number($('bpmInput').value || 100);
-    const trackBpm = 100;
-    const playbackRate = studyBpm / trackBpm;
+    const originalBpm = t.originalBpm || t.bpm || 100;
+    const playbackRate = studyBpm / originalBpm;
 
     if (!state.backingPlayer || state.currentPlayerTrackId !== t.id) {
       stopBacking();
       if (state.backingPlayer) {
         try { state.backingPlayer.dispose(); } catch(e) {}
       }
-      state.backingPlayer = new Tone.Player({
+      // GrainPlayer time-stretches via granular synthesis: playbackRate changes
+      // speed WITHOUT changing pitch (unlike Tone.Player, which resamples the
+      // buffer and shifts pitch together with speed).
+      state.backingPlayer = new Tone.GrainPlayer({
         url: t.url,
         loop: false,
-        autostart: false
+        autostart: false,
+        grainSize: 0.2,
+        overlap: 0.05
       }).toDestination();
       state.currentPlayerTrackId = t.id;
       await Tone.loaded();
@@ -1006,18 +1025,20 @@
     if ($('modeSelect').value === 'manual') buildManualGrid(false);
   }
 
-  $('backingSelect').addEventListener('change', () => { stopPlayback(); updateTrackBpmFromSelection(); });
-  $('modeSelect').addEventListener('change', updateModeUI);
+  $('backingSelect').addEventListener('change', invalidatePlayback);
+  $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); });
   $('traditionalPatternSelect').addEventListener('change', updateTraditionalPatternInfo);
   $('progressionModeSelect').addEventListener('change', updateProgressionModeUI);
-  $('barsInput').addEventListener('change', buildManualGridIfNeeded);
+  $('barsInput').addEventListener('change', () => { invalidatePlayback(); buildManualGridIfNeeded(); });
   $('buildManualBtn').addEventListener('click', () => buildManualGrid(true));
   $('clearManualBtn').addEventListener('click', clearManualGrid);
   $('generateBtn').addEventListener('click', generate);
   $('playBtn').addEventListener('click', () => play({ callResponse:false }));
   $('stopBtn').addEventListener('click', stopPlayback);
+  $('loopInput').addEventListener('change', invalidatePlayback);
+  $('phraseRestInput').addEventListener('change', invalidatePlayback);
   $('printBtn').addEventListener('click', () => window.print());
-  $('bpmInput').addEventListener('input', () => { $('bpmValue').textContent = $('bpmInput').value; Tone.Transport.bpm.value = Number($('bpmInput').value); });
+  $('bpmInput').addEventListener('input', () => { $('bpmValue').textContent = $('bpmInput').value; invalidatePlayback(); });
   $('trackVolumeInput').addEventListener('input', () => { state.audioEl.volume = Number($('trackVolumeInput').value || 70)/100; if (state.backingPlayer) state.backingPlayer.volume.value = getTrackVolumeDb(); });
   $('studyVolumeInput').addEventListener('input', () => { $('studyVolumeValue').textContent = $('studyVolumeInput').value; });
 
