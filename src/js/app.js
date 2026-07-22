@@ -926,7 +926,7 @@
         Tone.Transport.scheduleOnce(() => stopPlayback(), loopEndSec + .05);
       }
 
-      scheduleBacking(countInSec, loopEndSec, countInSec);
+      scheduleBacking(countInSec, loopEndSec, countInSec, quarterSec);
       Tone.Transport.start('+0.05');
       state.isPlaying = true;
     } finally {
@@ -1002,26 +1002,24 @@
     return true;
   }
 
-  function scheduleBacking(startTransportSec, loopEndSec, countInSec) {
+  function scheduleBacking(startTransportSec, loopEndSec, countInSec, quarterSec) {
     const t = getSelectedTrack();
     if (!t || !state.backingPlayer) return;
 
     const studyDurationSec = Math.max(0.001, loopEndSec - countInSec);
 
-    // Start once after the count-in, then let the backing track loop
-    // seamlessly on its own full-length buffer (native, gapless loop).
-    // We deliberately do NOT restart it every time the (often shorter)
-    // notated study loop restarts — cutting the 16-bar groove short at each
-    // notated repeat is what produced the "missing piece" artifact. The
-    // notation and the backing groove share the exact same tempo (BPM is
-    // snapped to the track's tempo), so they never drift in speed even if
-    // their loop lengths/phases differ.
-    // Loop only the slice of the backing audio matching the notated study's
-    // own length (studyDurationSec) — the SAME exact value used for the
-    // Transport's own loop. Using one shared number for both means they can
-    // never drift apart, and the study repeats together with the backing
-    // instead of only once per full 16-bar file.
-    const loopLenSec = Math.max(0.05, Math.min(studyDurationSec, state.backingPlayer.buffer?.duration || studyDurationSec));
+    // Loop the backing track's OWN natural musical unit (4 notated bars —
+    // confirmed to be a clean, seamless repeat point in the recording),
+    // independent of how many bars the notated study itself uses. Forcing
+    // the backing loop to match the study's length caused an audible cut
+    // whenever that length didn't land on the groove's own natural repeat
+    // point (e.g. 8 or 16 bars). Every selectable study length (2, 4, 8,
+    // 16, 32 bars) is an exact multiple of — or exactly divides — this
+    // 4-bar unit, so the two loops always stay phase-locked, never drifting
+    // or cutting each other off, even though their lengths differ.
+    const BACKING_LOOP_BARS = 4;
+    const backingUnitSec = BACKING_LOOP_BARS * FRAGS_PER_BAR * quarterSec;
+    const loopLenSec = Math.max(0.05, Math.min(backingUnitSec, state.backingPlayer.buffer?.duration || backingUnitSec));
 
     Tone.Transport.scheduleOnce((time) => {
       try { state.backingPlayer.stop(time); } catch(e) {}
