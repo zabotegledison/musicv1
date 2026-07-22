@@ -905,20 +905,6 @@
 
       const hasBackingTrack = await prepareBackingPlayer();
 
-      // The notated loop length (bars × tempo, in seconds) is a mathematical
-      // ideal; the actual decoded audio buffer duration differs from it by a
-      // tiny amount (MP3 encoding rounding, time-stretch rounding). If the
-      // two loops run on slightly different lengths, the mismatch compounds
-      // every repeat and the two drift apart after a few cycles. Locking the
-      // notation loop to the real measured buffer duration keeps both loops
-      // exactly identical in length, so they never drift — but only when
-      // that measurement is actually valid; otherwise keep the safe
-      // theoretical value so the study always keeps looping.
-      const measuredDuration = state.backingPlayer?.buffer?.duration;
-      if (hasBackingTrack && Number.isFinite(measuredDuration) && measuredDuration > 0.1) {
-        loopEndSec = countInSec + measuredDuration;
-      }
-
       for (let i = 0; i < countInQ; i++) {
         Tone.Transport.schedule(time => triggerCountIn(i, time), i * quarterSec);
       }
@@ -1030,11 +1016,18 @@
     // notation and the backing groove share the exact same tempo (BPM is
     // snapped to the track's tempo), so they never drift in speed even if
     // their loop lengths/phases differ.
+    // Loop only the slice of the backing audio matching the notated study's
+    // own length (studyDurationSec) — the SAME exact value used for the
+    // Transport's own loop. Using one shared number for both means they can
+    // never drift apart, and the study repeats together with the backing
+    // instead of only once per full 16-bar file.
+    const loopLenSec = Math.max(0.05, Math.min(studyDurationSec, state.backingPlayer.buffer?.duration || studyDurationSec));
+
     Tone.Transport.scheduleOnce((time) => {
       try { state.backingPlayer.stop(time); } catch(e) {}
       state.backingPlayer.loop = !!$('loopInput').checked;
       state.backingPlayer.loopStart = 0;
-      state.backingPlayer.loopEnd = state.backingPlayer.buffer?.duration || 0;
+      state.backingPlayer.loopEnd = loopLenSec;
       state.backingPlayer.start(time, 0);
       if (!$('loopInput').checked) {
         state.backingPlayer.stop(time + studyDurationSec);
