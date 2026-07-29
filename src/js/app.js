@@ -221,12 +221,16 @@
   }
 
   function updateModePanels() {
-    const mode = $('modeSelect').value;
+    const rawMode = $('modeSelect').value;
+    const isCreativeFlow = rawMode === 'creativeFlow';
+    const mode = isCreativeFlow ? 'hybrid' : rawMode;
     if ($('randomOptions')) $('randomOptions').style.display = mode === 'random' ? 'block' : 'none';
     if ($('manualOptions')) $('manualOptions').style.display = mode === 'manual' ? 'block' : 'none';
     if ($('traditionalBox')) $('traditionalBox').classList.toggle('active', mode === 'traditional');
     if ($('progressionBox')) $('progressionBox').classList.toggle('active', mode === 'progression');
     if ($('hybridBox')) $('hybridBox').classList.toggle('active', mode === 'hybrid');
+    if ($('hybridBox')) $('hybridBox').classList.toggle('creative-flow', isCreativeFlow);
+    if (isCreativeFlow && $('hybridFormSelect')) $('hybridFormSelect').value = 'grammarRemix';
     updateProgressionModeUI();
     updateHybridModeUI();
   }
@@ -726,7 +730,9 @@
     const bars = getBars();
     const fragsPerBar = FRAGS_PER_BAR;
     const total = bars * fragsPerBar;
-    const mode = $('modeSelect').value;
+    const isCreativeFlow = $('modeSelect').value === 'creativeFlow';
+    const mode = isCreativeFlow ? 'hybrid' : $('modeSelect').value;
+    if (isCreativeFlow && $('hybridFormSelect')) $('hybridFormSelect').value = 'grammarRemix';
     let sequence = [];
     let modeLabel = 'Random';
 
@@ -767,7 +773,7 @@
       const result = buildHybridSequence(total);
       if (result.error) { setStatus('renderStatus', result.error, true); return; }
       sequence = result.sequence;
-      modeLabel = `Hybrid Pattern/Random: ${result.labels.join(' → ')}`;
+      modeLabel = isCreativeFlow ? `Creative Flow: ${result.labels.join(' → ')}` : `Hybrid Pattern/Random: ${result.labels.join(' → ')}`;
     } else {
       sequence = pickRandomSequence(total, $('repeatSelect').value);
     }
@@ -1050,9 +1056,13 @@
   function updateModeUI() {
     updateModePanels();
     if ($('modeSelect').value === 'manual') buildManualGrid(false);
-    if ($('modeSelect').value === 'traditional' && $('barsInput').value !== '2') {
-      $('barsInput').value = '2';
-      buildManualGridIfNeeded();
+    const barsSelect = $('barsInput');
+    const longOptions = Array.from(barsSelect.options).filter(o => ['8','16','32'].includes(o.value));
+    if ($('modeSelect').value === 'traditional') {
+      longOptions.forEach(o => { o.disabled = true; o.hidden = true; });
+      if (!['2','4'].includes(barsSelect.value)) { barsSelect.value = '2'; buildManualGridIfNeeded(); }
+    } else {
+      longOptions.forEach(o => { o.disabled = false; o.hidden = false; });
     }
   }
 
@@ -1068,8 +1078,9 @@
   $('stopBtn').addEventListener('click', stopPlayback);
   $('loopInput').addEventListener('change', invalidatePlayback);
   if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
-    $('osmd-container').classList.toggle('score-dark');
-    $('darkScoreBtn').textContent = $('osmd-container').classList.contains('score-dark') ? 'Light Study Mode' : 'Dark Study Mode';
+    const el = $('osmd-container');
+    const isDark = el.classList.toggle('score-dark');
+    $('darkScoreBtn').textContent = isDark ? 'Light Study Mode' : 'Dark Study Mode';
   });
   $('phraseRestInput').addEventListener('change', invalidatePlayback);
   $('printBtn').addEventListener('click', () => window.print());

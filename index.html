@@ -26,15 +26,23 @@
     <aside>
 <div id="loadStatus" class="status" style="display:none"></div>
       <div class="group">
-        <label>1. Generate Study</label>
+        <label>Generate Study</label>
+        <ol class="pathway-mini">
+          <li>Fragment Library <span class="small">(manual choices)</span></li>
+          <li>Random Generator</li>
+          <li>Traditional Patterns</li>
+          <li>Pattern Rotation</li>
+          <li>Hybrid Pattern</li>
+          <li>Creative Flow</li>
+        </ol>
         <select id="modeSelect">
-          <option value="random">2. Random Generator</option>
-          <option value="traditional">3. Traditional Patterns</option>
-          <option value="progression">4. Pattern Rotation</option>
-          <option value="hybrid">5. Hybrid Pattern (Creative Flow)</option>
+          <option value="random">Random Generator</option>
+          <option value="traditional">Traditional Patterns</option>
+          <option value="progression">Pattern Rotation</option>
+          <option value="hybrid">Hybrid Pattern</option>
+          <option value="creativeFlow">Creative Flow</option>
           <option value="manual">Manual (practice tool)</option>
         </select>
-        <div class="hint">Method pathway: Fragment Library → Random → Traditional → Pattern Rotation → Hybrid / Creative Flow.</div>
         <div style="height:10px"></div>
         <div>
           <label class="small">Study Length</label>
@@ -66,7 +74,7 @@
         </div>
 
         <div id="traditionalBox" class="pattern-box">
-          <label>Traditional Pattern</label>
+          <label>Traditional Patterns</label>
           <select id="traditionalPatternSelect"></select>
           <div id="traditionalPatternInfo" class="pattern-meta"></div>
         </div>
@@ -103,6 +111,7 @@
             </div>
             <div style="height:10px"></div>
           </div>
+          <div id="hybridFormBox">
           <label class="small">Hybrid form</label>
           <select id="hybridFormSelect">
             <option value="patternBlockRandomBlock" selected>Pattern block → Random block</option>
@@ -111,6 +120,7 @@
             <option value="randomOpeningPatternEnding">Random opening → Pattern ending</option>
             <option value="grammarRemix">Grammar Remix</option>
           </select>
+          </div>
           <div id="hybridVariationTypeBox">
             <div style="height:10px"></div>
             <label class="small">Random variation type</label>
@@ -135,7 +145,7 @@
       </div>
 
       <div class="group">
-        <label>2. Playback / Backing Track</label>
+        <label>3. Playback / Backing Track</label>
         <label class="small">Selected backing</label>
         <select id="backingSelect"><option value="">No track — metronome only</option></select>
         <div style="height:10px"></div>
@@ -185,7 +195,7 @@
       </div>
 
       <details class="group">
-        <summary style="cursor:pointer;font-weight:700;font-size:14px;">Fragment quality (advanced)</summary>
+        <summary style="cursor:pointer;font-weight:700;font-size:14px;">1. Fragment Library (manual choices)</summary>
         <div style="height:8px"></div>
         <div id="library" class="library"><div class="cell-item"><span>Loading…</span></div></div>
         <div class="legend">
