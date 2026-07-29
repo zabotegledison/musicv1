@@ -750,7 +750,7 @@
         }
         const result = pickRandomPatternSequence(total, availablePatterns);
         sequence = result.sequence;
-        modeLabel = `Random Pattern Progression: ${result.patterns.map(p => p.name).join(' → ')}`;
+        modeLabel = `Random Pattern Rotation: ${result.patterns.map(p => p.name).join(' → ')}`;
       } else {
         const selectedPatterns = Array.from(document.querySelectorAll('.progressionSelect')).map(s => s.value).filter(Boolean).map(getPatternById);
         if (!selectedPatterns.length) { setStatus('renderStatus','Choose at least one pattern for the progression.', true); return; }
@@ -761,7 +761,7 @@
           baseSeq = baseSeq.concat(resolvePatternFragments(pattern));
         }
         sequence = buildRepeatedSequence(baseSeq, total);
-        modeLabel = `Pattern Progression: ${selectedPatterns.map(p => p.name).join(' → ')}`;
+        modeLabel = `Pattern Rotation: ${selectedPatterns.map(p => p.name).join(' → ')}`;
       }
     } else if (mode === 'hybrid') {
       const result = buildHybridSequence(total);
@@ -1050,6 +1050,10 @@
   function updateModeUI() {
     updateModePanels();
     if ($('modeSelect').value === 'manual') buildManualGrid(false);
+    if ($('modeSelect').value === 'traditional' && $('barsInput').value !== '2') {
+      $('barsInput').value = '2';
+      buildManualGridIfNeeded();
+    }
   }
 
   $('backingSelect').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
@@ -1063,6 +1067,10 @@
   $('playBtn').addEventListener('click', () => play({ callResponse:false }));
   $('stopBtn').addEventListener('click', stopPlayback);
   $('loopInput').addEventListener('change', invalidatePlayback);
+  if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
+    $('osmd-container').classList.toggle('score-dark');
+    $('darkScoreBtn').textContent = $('osmd-container').classList.contains('score-dark') ? 'Light Study Mode' : 'Dark Study Mode';
+  });
   $('phraseRestInput').addEventListener('change', invalidatePlayback);
   $('printBtn').addEventListener('click', () => window.print());
   $('bpmInput').addEventListener('input', () => { $('bpmValue').textContent = $('bpmInput').value; invalidatePlayback(); });

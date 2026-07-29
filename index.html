@@ -11,8 +11,15 @@
 <body>
 
   <header>
+    <nav class="topnav">
+      <a href="index.html" class="active">App</a>
+      <a href="about.html">How the Method Works</a>
+      <a href="matrix.html">Rhythmic Matrix</a>
+      <a href="notation.html">Rhythmic Representation</a>
+      <a href="research.html">Research Background</a>
+    </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
-    <p>Rhythm study generator for Brazilian percussion grammar.</p>
+    <p>A pedagogical method for developing a Brazilian-inspired rhythmic vocabulary for improvisation and musical creation.</p>
   </header>
 
   <main>
@@ -21,12 +28,13 @@
       <div class="group">
         <label>1. Generate Study</label>
         <select id="modeSelect">
-          <option value="random">Random</option>
-          <option value="manual">Manual</option>
-          <option value="traditional">Traditional Pattern</option>
-          <option value="progression">Pattern Progression</option>
-          <option value="hybrid">Hybrid Pattern/Random</option>
+          <option value="random">2. Random Generator</option>
+          <option value="traditional">3. Traditional Patterns</option>
+          <option value="progression">4. Pattern Rotation</option>
+          <option value="hybrid">5. Hybrid Pattern (Creative Flow)</option>
+          <option value="manual">Manual (practice tool)</option>
         </select>
+        <div class="hint">Method pathway: Fragment Library → Random → Traditional → Pattern Rotation → Hybrid / Creative Flow.</div>
         <div style="height:10px"></div>
         <div>
           <label class="small">Study Length</label>
@@ -39,6 +47,7 @@
           </select>
         </div>
         <div class="hint">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
+        <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
         <div id="randomOptions" style="margin-top:10px">
           <label class="small">Repetitions</label>
           <select id="repeatSelect">
@@ -63,7 +72,7 @@
         </div>
 
         <div id="progressionBox" class="pattern-box">
-          <label>Pattern Progression</label>
+          <label>Pattern Rotation</label>
           <div class="hint" style="margin-bottom:8px;">Study the transition from one pattern to another without stopping.</div>
           <label class="small">Progression mode</label>
           <select id="progressionModeSelect">
@@ -148,9 +157,8 @@
         <div style="height:10px"></div>
         <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
         <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
-        <div class="hint">A 4-beat count-in is always active by default.</div>
-        <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
-        <label class="switchline"><input id="loopInput" type="checkbox" checked /> Loop study and track</label>
+        <div class="hint">A 4-beat count-in is always active by default. Looping stays on so the study repeats continuously with the backing.</div>
+        <input id="loopInput" type="checkbox" checked style="display:none" />
         <div style="height:12px"></div>
         <div class="row">
           <button id="playBtn" class="accent-yellow" disabled>Play</button>
@@ -193,12 +201,17 @@
           <h2>Generated Study</h2>
           <p id="summary">Load fragments and generate a 2/4 study.</p>
         </div>
+        <button id="darkScoreBtn" class="secondary" type="button">Dark Study Mode</button>
       </div>
       <div id="sequence" class="sequence"></div>
       <div id="osmd-container"><div class="empty">Notation will appear here.</div></div>
       <div id="renderStatus" class="status"></div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
+  </footer>
 
 
 <script src="src/js/manifest.js"></script>

@@ -7,6 +7,10 @@ Interactive rhythm-study generator for Brazilian rhythmic grammar (see project s
 ```
 brazilian-syncopation-lab/
 ├── index.html              # App shell (loads CSS/JS, no upload UI)
+├── about.html              # How the Method Works
+├── matrix.html             # Rhythmic Matrix
+├── notation.html           # Rhythmic Representation
+├── research.html           # Research Background
 ├── assets/
 │   ├── fragments/          # MusicXML rhythm cells (A1–A6, B1–B10) — 1 quarter note each
 │   └── audio/               # Backing tracks (mp3, 100 BPM, 16 bars)
