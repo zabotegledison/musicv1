@@ -5,7 +5,7 @@
   const state = {
     fragments: [], sequence: [], generatedXml: null, osmd: null, events: [], savedStudies: [], currentStudyMeta: null,
     synthClick: null, synthAccent: null, synthTamborim: null, synthRimshot: null, synthWoodblock: null, synthClave: null, synthClap: null, synthMetronome: null,
-    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, currentPlayerUrl: null, isPlaying: false, isStarting: false, backingLoopHandler: null
+    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, currentPlayerUrl: null, isPlaying: false, isStarting: false, backingLoopHandler: null, scoreDark: false
   };
   state.audioEl.loop = true;
 
@@ -330,13 +330,13 @@
     for (let b = 0; b < blocks; b++) {
       if (form === 'grammarRemix') {
         const pattern = chooseHybridPattern(available, true);
-        if (!pattern) return { sequence: [], labels: [], error: 'No complete traditional pattern is available for Grammar Remix.' };
+        if (!pattern) return { sequence: [], labels: [], error: 'No complete traditional pattern is available for this step.' };
         const grammarForm = Math.random() < 0.5 ? 'patternOpeningRandomEnding' : 'randomOpeningPatternEnding';
         const variationType = Math.random() < 0.5 ? 'free' : 'matchColor';
         sequence = sequence.concat(buildHalfPatternHalfRandom(pattern, grammarForm, variationType));
         const direction = grammarForm === 'patternOpeningRandomEnding' ? 'pattern→random' : 'random→pattern';
         const variation = variationType === 'matchColor' ? 'A/B' : 'free';
-        labels.push(`Grammar Remix: ${pattern.name} ${direction} ${variation}`);
+        labels.push(`${pattern.name} ${direction} ${variation}`);
         continue;
       }
 
@@ -716,9 +716,11 @@
         state.osmd.EngravingRules.RenderXMeasuresPerLineAkaSystem = 4;
       }
       state.osmd.render();
+      applyScoreDarkMode();
       setStatus('renderStatus','Notation generated successfully.',false);
     } catch (err) {
       console.error(err); container.innerHTML = `<div class="empty">Could not render the notation. The MusicXML structure may be incompatible.</div>`;
+      applyScoreDarkMode();
       setStatus('renderStatus', String(err.message || err), true);
     }
   }
@@ -1055,10 +1057,19 @@
   function updateGenerateState() { $('generateBtn').disabled = state.fragments.length === 0; }
   function updateModeUI() {
     updateModePanels();
-    if ($('modeSelect').value === 'manual') buildManualGrid(false);
+    const mode = $('modeSelect').value;
+    if (mode === 'manual') buildManualGrid(false);
     const barsSelect = $('barsInput');
     const longOptions = Array.from(barsSelect.options).filter(o => ['8','16','32'].includes(o.value));
-    if ($('modeSelect').value === 'traditional') {
+    if (mode === 'manual') {
+      if (barsSelect.value !== '2') { barsSelect.value = '2'; buildManualGridIfNeeded(); }
+      if ($('barsBox')) $('barsBox').style.display = 'none';
+      if ($('barsFixedNote')) $('barsFixedNote').style.display = 'block';
+    } else {
+      if ($('barsBox')) $('barsBox').style.display = '';
+      if ($('barsFixedNote')) $('barsFixedNote').style.display = 'none';
+    }
+    if (mode === 'traditional') {
       longOptions.forEach(o => { o.disabled = true; o.hidden = true; });
       if (!['2','4'].includes(barsSelect.value)) { barsSelect.value = '2'; buildManualGridIfNeeded(); }
     } else {
@@ -1077,17 +1088,22 @@
   $('playBtn').addEventListener('click', () => play({ callResponse:false }));
   $('stopBtn').addEventListener('click', stopPlayback);
   $('loopInput').addEventListener('change', invalidatePlayback);
-  if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
+  function applyScoreDarkMode() {
     const el = $('osmd-container');
-    const isDark = el.classList.toggle('score-dark');
-    if (isDark) {
+    if (!el) return;
+    el.classList.toggle('score-dark', state.scoreDark);
+    if (state.scoreDark) {
       el.style.setProperty('background', '#000', 'important');
       el.style.setProperty('filter', 'invert(1) hue-rotate(180deg)', 'important');
     } else {
       el.style.removeProperty('background');
       el.style.removeProperty('filter');
     }
-    $('darkScoreBtn').textContent = isDark ? 'Light Study Mode' : 'Dark Study Mode';
+    if ($('darkScoreBtn')) $('darkScoreBtn').textContent = state.scoreDark ? 'Light Study Mode' : 'Dark Study Mode';
+  }
+  if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
+    state.scoreDark = !state.scoreDark;
+    applyScoreDarkMode();
   });
   $('phraseRestInput').addEventListener('change', invalidatePlayback);
   $('printBtn').addEventListener('click', () => window.print());
