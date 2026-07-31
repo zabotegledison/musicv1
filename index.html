@@ -27,28 +27,29 @@
 <div id="loadStatus" class="status" style="display:none"></div>
       <div class="group">
         <label>Generate Study</label>
-        <ol class="pathway-mini">
-          <li>Fragment Library <span class="small">(manual choices)</span></li>
-          <li>Random Generator</li>
-          <li>Traditional Patterns</li>
-          <li>Pattern Rotation</li>
-          <li>Hybrid Pattern</li>
-          <li>Creative Flow</li>
-        </ol>
+        <details class="group" style="border:0;margin:0 0 12px;padding:0;">
+          <summary style="cursor:pointer;font-weight:700;font-size:14px;">1. Fragment Library (manual choices)</summary>
+          <div style="height:8px"></div>
+          <div id="library" class="library"><div class="cell-item"><span>Loading…</span></div></div>
+          <div class="legend">
+            <span class="pill quality-a">A = green</span>
+            <span class="pill quality-b">B = yellow</span>
+          </div>
+        </details>
         <select id="modeSelect">
-          <option value="random">Random Generator</option>
-          <option value="traditional">Traditional Patterns</option>
-          <option value="progression">Pattern Rotation</option>
-          <option value="hybrid">Hybrid Pattern</option>
-          <option value="creativeFlow">Creative Flow</option>
+          <option value="random">2. Random Generator</option>
+          <option value="traditional">3. Traditional Patterns</option>
+          <option value="progression">4. Traditional Pattern Rotation</option>
+          <option value="hybrid">5. Hybrid Pattern</option>
+          <option value="creativeFlow">6. Creative Flow</option>
           <option value="manual">Manual (practice tool)</option>
         </select>
         <div style="height:10px"></div>
         <div>
           <label class="small">Study Length</label>
           <select id="barsInput">
-            <option value="2">2 bars — 4 fragments</option>
-            <option value="4" selected>4 bars — 8 fragments</option>
+            <option value="2" selected>2 bars — 4 fragments</option>
+            <option value="4">4 bars — 8 fragments</option>
             <option value="8">8 bars — 16 fragments</option>
             <option value="16">16 bars — 32 fragments</option>
             <option value="32">32 bars — 64 fragments</option>
@@ -145,17 +146,34 @@
       </div>
 
       <div class="group">
-        <label>3. Playback / Backing Track</label>
-        <label class="small">Selected backing</label>
-        <select id="backingSelect"><option value="">No track — metronome only</option></select>
-        <div style="height:10px"></div>
-        <label class="small">Track volume</label>
-        <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
-        <div class="hint">Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
-        <div id="audioStatus" class="status">Loading backing tracks…</div>
+        <div class="row">
+          <button id="playBtn" class="accent-yellow" disabled>Play</button>
+          <button id="stopBtn" class="danger" disabled>Stop</button>
+        </div>
         <div style="height:12px"></div>
         <label>Study BPM: <span id="bpmValue">100</span></label>
         <input id="bpmInput" type="range" min="60" max="160" value="100" />
+        <div class="hint">A 4-beat count-in is always active by default. Looping stays on so the study repeats continuously with the backing.</div>
+        <input id="loopInput" type="checkbox" checked style="display:none" />
+      </div>
+
+      <div class="group">
+        <label>3. Playback / Backing Track</label>
+        <label class="small">Selected backing</label>
+        <select id="backingSelect"><option value="">No track — metronome only</option></select>
+        <div class="hint">Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
+        <div id="audioStatus" class="status">Loading backing tracks…</div>
+        <div style="height:12px"></div>
+        <div class="row">
+          <div>
+            <label class="small">Backing volume</label>
+            <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
+          </div>
+          <div>
+            <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
+            <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
+          </div>
+        </div>
         <div style="height:10px"></div>
         <label class="small">Written rhythm sound</label>
         <select id="soundSelect">
@@ -164,16 +182,6 @@
           <option value="clap">Clap — strong and simple</option>
           <option value="mute">Off — backing/metronome only</option>
         </select>
-        <div style="height:10px"></div>
-        <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
-        <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
-        <div class="hint">A 4-beat count-in is always active by default. Looping stays on so the study repeats continuously with the backing.</div>
-        <input id="loopInput" type="checkbox" checked style="display:none" />
-        <div style="height:12px"></div>
-        <div class="row">
-          <button id="playBtn" class="accent-yellow" disabled>Play</button>
-          <button id="stopBtn" class="danger" disabled>Stop</button>
-        </div>
       </div>
 
       <div class="group">
@@ -193,16 +201,6 @@
         <div class="hint">Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
         <div id="savedStudiesStatus" class="status">No saved study yet.</div>
       </div>
-
-      <details class="group">
-        <summary style="cursor:pointer;font-weight:700;font-size:14px;">1. Fragment Library (manual choices)</summary>
-        <div style="height:8px"></div>
-        <div id="library" class="library"><div class="cell-item"><span>Loading…</span></div></div>
-        <div class="legend">
-          <span class="pill quality-a">A = green</span>
-          <span class="pill quality-b">B = yellow</span>
-        </div>
-      </details>
     </aside>
 
     <section class="viewer">

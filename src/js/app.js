@@ -1080,6 +1080,13 @@
   if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
     const el = $('osmd-container');
     const isDark = el.classList.toggle('score-dark');
+    if (isDark) {
+      el.style.setProperty('background', '#000', 'important');
+      el.style.setProperty('filter', 'invert(1) hue-rotate(180deg)', 'important');
+    } else {
+      el.style.removeProperty('background');
+      el.style.removeProperty('filter');
+    }
     $('darkScoreBtn').textContent = isDark ? 'Light Study Mode' : 'Dark Study Mode';
   });
   $('phraseRestInput').addEventListener('change', invalidatePlayback);
