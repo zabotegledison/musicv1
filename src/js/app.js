@@ -162,6 +162,14 @@
     });
   }
 
+  function renderPatternRotationLegend(names) {
+    const box = $('patternRotationLegend');
+    if (!box) return;
+    if (!names || !names.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+    box.innerHTML = names.map((n, i) => `<span class="pill">${i + 1}. ${escapeXml(n)}</span>`).join('');
+    box.style.display = 'flex';
+  }
+
   function renderPracticeSelectors() {
     const aSel = $('practiceASelect'), bSel = $('practiceBSelect');
     if (!aSel || !bSel) return;
@@ -180,7 +188,7 @@
     const aId = $('practiceASelect')?.value, bId = $('practiceBSelect')?.value;
     if (!aId || !bId) return;
     const grid = $('manualGrid');
-    if (grid) grid.innerHTML = [aId, aId, bId, bId]
+    if (grid) grid.innerHTML = [aId, bId, aId, bId]
       .map((id, i) => `<select class="manualSelect" data-index="${i}" style="display:none"><option value="${escapeXml(id)}" selected>${escapeXml(id)}</option></select>`)
       .join('');
     if (doGenerate && $('modeSelect').value === 'manual') generate();
@@ -762,6 +770,7 @@
     if (isCreativeFlow && $('hybridFormSelect')) $('hybridFormSelect').value = 'grammarRemix';
     let sequence = [];
     let modeLabel = 'Random';
+    let patternRotationNames = null;
 
     if (mode === 'manual') {
       sequence = getManualSequence().slice(0,total);
@@ -784,6 +793,7 @@
         const result = pickRandomPatternSequence(total, availablePatterns);
         sequence = result.sequence;
         modeLabel = `Random Pattern Rotation: ${result.patterns.map(p => p.name).join(' → ')}`;
+        patternRotationNames = result.patterns.map(p => p.name);
       } else {
         const selectedPatterns = Array.from(document.querySelectorAll('.progressionSelect')).map(s => s.value).filter(Boolean).map(getPatternById);
         if (!selectedPatterns.length) { setStatus('renderStatus','Choose at least one pattern for the progression.', true); return; }
@@ -795,6 +805,7 @@
         }
         sequence = buildRepeatedSequence(baseSeq, total);
         modeLabel = `Pattern Rotation: ${selectedPatterns.map(p => p.name).join(' → ')}`;
+        patternRotationNames = selectedPatterns.map(p => p.name);
       }
     } else if (mode === 'hybrid') {
       const result = buildHybridSequence(total);
@@ -813,6 +824,7 @@
     renderSequence();
     state.currentStudyMeta = { modeLabel, bars };
     $('summary').textContent = `${bars} bars in 2/4 — ${modeLabel}${pauseInfo} — ${sequenceForStudy.length} 1/4 units. Sound events: ${state.events.length}.`;
+    renderPatternRotationLegend(patternRotationNames);
     ['playBtn','stopBtn','printBtn','saveStudyBtn'].forEach(id => $(id).disabled = false);
     await renderXml(state.generatedXml);
   }
@@ -1096,7 +1108,7 @@
     }
     if (mode === 'traditional') {
       longOptions.forEach(o => { o.disabled = true; o.hidden = true; });
-      if (!['2','4'].includes(barsSelect.value)) { barsSelect.value = '2'; buildManualGridIfNeeded(); }
+      if (barsSelect.value !== '2') { barsSelect.value = '2'; buildManualGridIfNeeded(); }
     } else {
       longOptions.forEach(o => { o.disabled = false; o.hidden = false; });
     }
