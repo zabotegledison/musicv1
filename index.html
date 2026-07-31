@@ -6,7 +6,7 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=3" />
+  <link rel="stylesheet" href="src/css/style.css?v=4" />
 </head>
 <body>
 
@@ -50,6 +50,7 @@
         <div class="hint">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
         <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
         <div id="randomOptions" style="margin-top:10px">
+          <div class="hint" style="margin-bottom:8px;">Hear fragments combined freely, with no fixed pattern. This builds raw exposure to the full rhythmic vocabulary before any structure is introduced.</div>
           <label class="small">Repetitions</label>
           <select id="repeatSelect">
             <option value="allow">Allowed</option>
@@ -58,23 +59,19 @@
           </select>
         </div>
         <div id="manualOptions" style="display:none;margin-top:12px">
-          <div class="row">
-            <button id="buildManualBtn" class="secondary" type="button">Prepare slots</button>
-            <button id="clearManualBtn" class="secondary" type="button">Clear</button>
-          </div>
+          <div class="hint" style="margin-bottom:8px;">Get to know two fragments up close: one from Family A (tension) and one from Family B (resolution). This builds the very first two-bar phrase of the method.</div>
+          <label class="small">Fragment A</label>
+          <select id="practiceASelect"></select>
           <div style="height:10px"></div>
-          <div id="manualGrid" class="manual-grid"><div class="small">Load fragments and press “Prepare slots”.</div></div>
-          <div style="height:14px"></div>
-          <label class="small">Fragment library</label>
-          <div id="library" class="library"><div class="cell-item"><span>Loading…</span></div></div>
-          <div class="legend">
-            <span class="pill quality-a">A = green</span>
-            <span class="pill quality-b">B = yellow</span>
-          </div>
+          <label class="small">Fragment B</label>
+          <select id="practiceBSelect"></select>
+          <div id="manualGrid" style="display:none"></div>
         </div>
+        <div id="library" style="display:none"></div>
 
         <div id="traditionalBox" class="pattern-box">
           <label>Traditional Patterns</label>
+          <div class="hint" style="margin-bottom:8px;">Explore a collection of traditional patterns and fragments inspired by classic melodies and rhythmic practices of Brazilian music. Study one or two patterns at a time before moving on to continuous rotation and hybrid combinations.</div>
           <select id="traditionalPatternSelect"></select>
           <div id="traditionalPatternInfo" class="pattern-meta"></div>
         </div>
@@ -220,8 +217,8 @@
   </footer>
 
 
-<script src="src/js/manifest.js?v=3"></script>
-<script src="src/js/patterns.js?v=3"></script>
-<script src="src/js/app.js?v=3"></script>
+<script src="src/js/manifest.js?v=4"></script>
+<script src="src/js/patterns.js?v=4"></script>
+<script src="src/js/app.js?v=4"></script>
 </body>
 </html>

@@ -92,7 +92,7 @@
       } catch (err) { console.warn(`Could not load fragment ${fileName}:`, err); }
     }
     state.fragments = loaded.sort(compareIds);
-    renderLibrary(); updateGenerateState(); buildManualGridIfNeeded();
+    renderLibrary(); updateGenerateState(); buildManualGridIfNeeded(); renderPracticeSelectors();
     setStatus('loadStatus', state.fragments.length ? `${state.fragments.length} fragments loaded from assets/fragments/.` : 'No fragments found in assets/fragments/.', !state.fragments.length);
   }
 
@@ -160,6 +160,30 @@
     Array.from(box.querySelectorAll('[data-quality-id]')).forEach(sel => {
       sel.addEventListener('change', (e) => updateFragmentQuality(e.target.getAttribute('data-quality-id'), e.target.value));
     });
+  }
+
+  function renderPracticeSelectors() {
+    const aSel = $('practiceASelect'), bSel = $('practiceBSelect');
+    if (!aSel || !bSel) return;
+    const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a');
+    const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
+    if (!aFrags.length || !bFrags.length) return;
+    const prevA = aSel.value, prevB = bSel.value;
+    aSel.innerHTML = aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('');
+    bSel.innerHTML = bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('');
+    aSel.value = aFrags.some(f => f.id === prevA) ? prevA : (aFrags.some(f => f.id === 'A1') ? 'A1' : aFrags[0].id);
+    bSel.value = bFrags.some(f => f.id === prevB) ? prevB : (bFrags.some(f => f.id === 'B1') ? 'B1' : bFrags[0].id);
+    applyPracticeChoice(false);
+  }
+
+  function applyPracticeChoice(doGenerate = true) {
+    const aId = $('practiceASelect')?.value, bId = $('practiceBSelect')?.value;
+    if (!aId || !bId) return;
+    const grid = $('manualGrid');
+    if (grid) grid.innerHTML = [aId, aId, bId, bId]
+      .map((id, i) => `<select class="manualSelect" data-index="${i}" style="display:none"><option value="${escapeXml(id)}" selected>${escapeXml(id)}</option></select>`)
+      .join('');
+    if (doGenerate && $('modeSelect').value === 'manual') generate();
   }
 
   function pickRandomSequence(total, mode) {
@@ -715,6 +739,7 @@
       if (state.osmd.EngravingRules) {
         state.osmd.EngravingRules.RenderXMeasuresPerLineAkaSystem = 4;
       }
+      applyOsmdColors();
       state.osmd.render();
       applyScoreDarkMode();
       setStatus('renderStatus','Notation generated successfully.',false);
@@ -1078,31 +1103,53 @@
   }
 
   $('backingSelect').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
-  $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); });
+  $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); if ($('modeSelect').value === 'manual') applyPracticeChoice(true); });
+  if ($('practiceASelect')) $('practiceASelect').addEventListener('change', () => applyPracticeChoice(true));
+  if ($('practiceBSelect')) $('practiceBSelect').addEventListener('change', () => applyPracticeChoice(true));
   $('traditionalPatternSelect').addEventListener('change', updateTraditionalPatternInfo);
   $('progressionModeSelect').addEventListener('change', updateProgressionModeUI);
   $('barsInput').addEventListener('change', () => { invalidatePlayback(); buildManualGridIfNeeded(); });
-  $('buildManualBtn').addEventListener('click', () => buildManualGrid(true));
-  $('clearManualBtn').addEventListener('click', clearManualGrid);
   $('generateBtn').addEventListener('click', generate);
   $('playBtn').addEventListener('click', () => play({ callResponse:false }));
   $('stopBtn').addEventListener('click', stopPlayback);
   $('loopInput').addEventListener('change', invalidatePlayback);
+  function applyOsmdColors() {
+    if (!state.osmd || !state.osmd.EngravingRules) return;
+    const rules = state.osmd.EngravingRules;
+    if (state.scoreDark) {
+      if ('PageBackgroundColor' in rules) rules.PageBackgroundColor = '#000000';
+      if ('DefaultColorMusic' in rules) rules.DefaultColorMusic = '#FFFFFF';
+      if ('DefaultColorNotehead' in rules) rules.DefaultColorNotehead = '#FFFFFF';
+      if ('DefaultColorStem' in rules) rules.DefaultColorStem = '#FFFFFF';
+      if ('DefaultColorRest' in rules) rules.DefaultColorRest = '#FFFFFF';
+      if ('DefaultColorLabel' in rules) rules.DefaultColorLabel = '#FFFFFF';
+      if ('DefaultColorTitle' in rules) rules.DefaultColorTitle = '#FFFFFF';
+    } else {
+      if ('PageBackgroundColor' in rules) rules.PageBackgroundColor = '#FBFBF8';
+      if ('DefaultColorMusic' in rules) rules.DefaultColorMusic = '#000000';
+      if ('DefaultColorNotehead' in rules) rules.DefaultColorNotehead = '#000000';
+      if ('DefaultColorStem' in rules) rules.DefaultColorStem = '#000000';
+      if ('DefaultColorRest' in rules) rules.DefaultColorRest = '#000000';
+      if ('DefaultColorLabel' in rules) rules.DefaultColorLabel = '#000000';
+      if ('DefaultColorTitle' in rules) rules.DefaultColorTitle = '#000000';
+    }
+  }
+
   function applyScoreDarkMode() {
     const el = $('osmd-container');
     if (!el) return;
     el.classList.toggle('score-dark', state.scoreDark);
     if (state.scoreDark) {
       el.style.setProperty('background', '#000', 'important');
-      el.style.setProperty('filter', 'invert(1) hue-rotate(180deg)', 'important');
     } else {
       el.style.removeProperty('background');
-      el.style.removeProperty('filter');
     }
     if ($('darkScoreBtn')) $('darkScoreBtn').textContent = state.scoreDark ? 'Light Study Mode' : 'Dark Study Mode';
   }
   if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
     state.scoreDark = !state.scoreDark;
+    applyOsmdColors();
+    if (state.osmd) { try { state.osmd.render(); } catch(e) { console.warn(e); } }
     applyScoreDarkMode();
   });
   $('phraseRestInput').addEventListener('change', invalidatePlayback);

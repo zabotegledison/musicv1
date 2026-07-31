@@ -95,7 +95,7 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .topnav a:hover { color:var(--text-primary); }
 .topnav a.active { color:var(--brazil-yellow); border-bottom-color:var(--brazil-yellow); }
 .site-footer { padding:26px 32px 34px; color:var(--text-secondary); font-size:12px; line-height:1.5; border-top:1px solid var(--border-subtle); text-align:center; }
-#osmd-container.score-dark { background:#000 !important; filter:invert(1) hue-rotate(180deg) !important; }
+#osmd-container.score-dark { background:#000 !important; }
 .doc-page { max-width:860px; margin:0 auto; padding:34px 24px 60px; line-height:1.65; color:var(--text-primary); }
 .doc-page h2 { font-size:24px; margin:34px 0 12px; letter-spacing:-.02em; }
 .doc-page h2:first-child { margin-top:0; }
