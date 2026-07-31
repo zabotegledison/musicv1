@@ -175,12 +175,16 @@
     if (!aSel || !bSel) return;
     const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a');
     const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
-    if (!aFrags.length || !bFrags.length) return;
+    if (!aFrags.length && !bFrags.length) return;
     const prevA = aSel.value, prevB = bSel.value;
-    aSel.innerHTML = aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('');
-    bSel.innerHTML = bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('');
-    aSel.value = aFrags.some(f => f.id === prevA) ? prevA : (aFrags.some(f => f.id === 'A1') ? 'A1' : aFrags[0].id);
-    bSel.value = bFrags.some(f => f.id === prevB) ? prevB : (bFrags.some(f => f.id === 'B1') ? 'B1' : bFrags[0].id);
+    const optionsHtml = `
+      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('')}</optgroup>
+      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('')}</optgroup>`;
+    aSel.innerHTML = optionsHtml;
+    bSel.innerHTML = optionsHtml;
+    const allFrags = aFrags.concat(bFrags);
+    aSel.value = allFrags.some(f => f.id === prevA) ? prevA : (allFrags.some(f => f.id === 'A1') ? 'A1' : (allFrags[0]?.id || ''));
+    bSel.value = allFrags.some(f => f.id === prevB) ? prevB : (allFrags.some(f => f.id === 'B1') ? 'B1' : (allFrags[0]?.id || ''));
     applyPracticeChoice(false);
   }
 
