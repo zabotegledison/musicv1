@@ -177,11 +177,12 @@
     const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
     if (!aFrags.length && !bFrags.length) return;
     const prevA = aSel.value, prevB = bSel.value;
-    const optionsHtml = `
-      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('')}</optgroup>
-      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('')}</optgroup>`;
-    aSel.innerHTML = optionsHtml;
-    bSel.innerHTML = optionsHtml;
+    const restLabel = (f) => (f.id === 'A7' || f.id === 'B10') ? 'Rest' : f.id;
+    const buildOptions = () => `
+      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(restLabel(f))}</option>`).join('')}</optgroup>
+      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(restLabel(f))}</option>`).join('')}</optgroup>`;
+    aSel.innerHTML = buildOptions();
+    bSel.innerHTML = buildOptions();
     const allFrags = aFrags.concat(bFrags);
     aSel.value = allFrags.some(f => f.id === prevA) ? prevA : (allFrags.some(f => f.id === 'A1') ? 'A1' : (allFrags[0]?.id || ''));
     bSel.value = allFrags.some(f => f.id === prevB) ? prevB : (allFrags.some(f => f.id === 'B1') ? 'B1' : (allFrags[0]?.id || ''));

@@ -4,7 +4,7 @@
 // assets/audio/ and add an entry to AUDIO_TRACKS below.
 
 const FRAGMENT_FILES = [
-  'A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'A6.xml',
+  'A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'A6.xml', 'A7.xml',
   'B1.xml', 'B2.xml', 'B3.xml', 'B4.xml', 'B5.xml',
   'B6.xml', 'B7.xml', 'B8.xml', 'B9.xml', 'B10.xml'
 ];
@@ -17,7 +17,7 @@ const FRAGMENT_FILES = [
 // exact same tempo (no drift). To add more tempo steps to an existing track:
 // render a new assets/audio/<id>_<bpm>.mp3 file and add that bpm to "tempos".
 const AUDIO_TRACKS = [
-  { id: 'afoxe',    name: 'Ijexá (16 bars)',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'baiao',    name: 'Baião (16 bars)',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'batucada', name: 'Batucada (16 bars)', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
+  { id: 'afoxe',    name: 'Ijexá',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'baiao',    name: 'Baião',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'batucada', name: 'Batucada', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
 ];

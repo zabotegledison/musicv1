@@ -12,7 +12,7 @@ brazilian-syncopation-lab/
 ├── notation.html           # Rhythmic Representation
 ├── research.html           # Research Background
 ├── assets/
-│   ├── fragments/          # MusicXML rhythm cells (A1–A6, B1–B10) — 1 quarter note each
+│   ├── fragments/          # MusicXML rhythm cells (A1–A7, B1–B10) — 1 quarter note each
 │   └── audio/               # Backing tracks (mp3, 100 BPM, 16 bars)
 ├── src/
 │   ├── css/style.css        # All styling
