@@ -1010,20 +1010,29 @@
   async function preparePadPlayer() {
     const t = getSelectedPad();
     if (!t) return false;
-    if (!state.padPlayer || state.currentPadUrl !== t.url) {
-      stopPad();
-      if (state.padPlayer) { try { state.padPlayer.dispose(); } catch(e) {} }
-      if (state.padPitchShift) { try { state.padPitchShift.dispose(); } catch(e) {} }
-      state.padPitchShift = new Tone.PitchShift({ pitch: 0 }).toDestination();
-      state.padPlayer = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 0.5, fadeOut: 0.5 }).connect(state.padPitchShift);
-      state.currentPadUrl = t.url;
-      await Tone.loaded();
+    try {
+      if (!state.padPlayer || state.currentPadUrl !== t.url) {
+        stopPad();
+        if (state.padPlayer) { try { state.padPlayer.dispose(); } catch(e) {} }
+        if (state.padPitchShift) { try { state.padPitchShift.dispose(); } catch(e) {} }
+        state.padPlayer = null; state.padPitchShift = null; state.currentPadUrl = null;
+        const pitchShift = new Tone.PitchShift({ pitch: 0 }).toDestination();
+        const player = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 0.5, fadeOut: 0.5 }).connect(pitchShift);
+        await Tone.loaded();
+        state.padPitchShift = pitchShift;
+        state.padPlayer = player;
+        state.currentPadUrl = t.url;
+      }
+      const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
+      const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
+      state.padPitchShift.pitch = targetSemitone - rootSemitone;
+      state.padPitchShift.volume.value = getPadVolumeDb();
+      return true;
+    } catch (err) {
+      console.warn('Pad failed to load, continuing without it:', err);
+      setStatus('audioStatus', 'Pad could not be loaded — playing without it.', true);
+      return false;
     }
-    const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
-    const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
-    state.padPitchShift.pitch = targetSemitone - rootSemitone;
-    state.padPitchShift.volume.value = getPadVolumeDb();
-    return true;
   }
 
   function getPadVolumeDb() {
