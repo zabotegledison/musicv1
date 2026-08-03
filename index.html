@@ -180,6 +180,38 @@
       </div>
 
       <div class="group">
+        <label>Harmonic Pad <span class="small">(experimental)</span></label>
+        <div class="hint">Optional sustained chord under the study, transposed live — no tempo/loop matching needed.</div>
+        <div style="height:8px"></div>
+        <label class="small">Pad</label>
+        <select id="padSelect"><option value="">No pad</option></select>
+        <div style="height:10px"></div>
+        <div class="row">
+          <div>
+            <label class="small">Key</label>
+            <select id="padKeySelect">
+              <option value="C" selected>C</option>
+              <option value="C#">C# / Db</option>
+              <option value="D">D</option>
+              <option value="D#">D# / Eb</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F# / Gb</option>
+              <option value="G">G</option>
+              <option value="G#">G# / Ab</option>
+              <option value="A">A</option>
+              <option value="A#">A# / Bb</option>
+              <option value="B">B</option>
+            </select>
+          </div>
+          <div>
+            <label class="small">Pad volume</label>
+            <input id="padVolumeInput" type="range" min="0" max="100" value="70" />
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
         <label>Saved Studies / Favorites</label>
         <div class="row">
           <button id="deleteStudyBtn" class="danger" type="button" disabled>Delete</button>
@@ -218,8 +250,8 @@
   </footer>
 
 
-<script src="src/js/manifest.js?v=7"></script>
-<script src="src/js/patterns.js?v=7"></script>
-<script src="src/js/app.js?v=7"></script>
+<script src="src/js/manifest.js?v=8"></script>
+<script src="src/js/patterns.js?v=8"></script>
+<script src="src/js/app.js?v=8"></script>
 </body>
 </html>

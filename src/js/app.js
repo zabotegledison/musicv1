@@ -5,7 +5,8 @@
   const state = {
     fragments: [], sequence: [], generatedXml: null, osmd: null, events: [], savedStudies: [], currentStudyMeta: null,
     synthClick: null, synthAccent: null, synthTamborim: null, synthRimshot: null, synthWoodblock: null, synthClave: null, synthClap: null, synthMetronome: null,
-    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, currentPlayerUrl: null, isPlaying: false, isStarting: false, backingLoopHandler: null, scoreDark: false
+    audioTracks: [], audioEl: new Audio(), currentAudioUrl: null, backingPlayer: null, currentPlayerTrackId: null, currentPlayerUrl: null, isPlaying: false, isStarting: false, backingLoopHandler: null, scoreDark: false,
+    padTracks: [], padPlayer: null, padPitchShift: null, currentPadUrl: null
   };
   state.audioEl.loop = true;
 
@@ -928,6 +929,7 @@
     Tone.Transport.loop = false;
     Tone.Transport.position = 0;
     stopBacking();
+    stopPad();
   }
   function stopPlayback() { resetPlayback(); state.isPlaying = false; updatePlayButtonState(); }
   function invalidatePlayback() { if (state.isPlaying) resetPlayback(); state.isPlaying = false; updatePlayButtonState(); }
@@ -954,6 +956,7 @@
       let loopEndSec = countInSec + studyLenSec;
 
       const hasBackingTrack = await prepareBackingPlayer();
+      const hasPad = await preparePadPlayer();
 
       for (let i = 0; i < countInQ; i++) {
         Tone.Transport.schedule(time => triggerCountIn(i, time), i * quarterSec);
@@ -977,6 +980,7 @@
       }
 
       scheduleBacking(countInSec, loopEndSec, countInSec, quarterSec);
+      if (hasPad && state.padPlayer) { try { state.padPlayer.start('+0.05'); } catch(e) { console.warn(e); } }
       Tone.Transport.start('+0.05');
       state.isPlaying = true;
     } finally {
@@ -990,6 +994,47 @@
     renderAudioTracks();
     setStatus('audioStatus', state.audioTracks.length ? `${state.audioTracks.length} backing track(s) loaded from assets/audio/.` : 'No backing tracks found in assets/audio/.', !state.audioTracks.length);
   }
+
+  // --- Experimental: harmonic pad (tempo-free, transposed live) ---
+  const PAD_KEY_SEMITONES = { C:0, 'C#':1, D:2, 'D#':3, E:4, F:5, 'F#':6, G:7, 'G#':8, A:9, 'A#':10, B:11 };
+
+  function loadPadLibrary() {
+    state.padTracks = (typeof PAD_TRACKS !== 'undefined' ? PAD_TRACKS : []).map(t => Object.assign({}, t));
+    const select = $('padSelect');
+    if (!select) return;
+    select.innerHTML = '<option value="">No pad</option>' + state.padTracks.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
+  }
+
+  function getSelectedPad() { return state.padTracks.find(t => t.id === $('padSelect')?.value) || null; }
+
+  async function preparePadPlayer() {
+    const t = getSelectedPad();
+    if (!t) return false;
+    if (!state.padPlayer || state.currentPadUrl !== t.url) {
+      stopPad();
+      if (state.padPlayer) { try { state.padPlayer.dispose(); } catch(e) {} }
+      if (state.padPitchShift) { try { state.padPitchShift.dispose(); } catch(e) {} }
+      state.padPitchShift = new Tone.PitchShift({ pitch: 0 }).toDestination();
+      state.padPlayer = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 0.5, fadeOut: 0.5 }).connect(state.padPitchShift);
+      state.currentPadUrl = t.url;
+      await Tone.loaded();
+    }
+    const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
+    const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
+    state.padPitchShift.pitch = targetSemitone - rootSemitone;
+    state.padPitchShift.volume.value = getPadVolumeDb();
+    return true;
+  }
+
+  function getPadVolumeDb() {
+    const v = Number($('padVolumeInput')?.value ?? 70) / 100;
+    return v <= 0 ? -Infinity : (20 * Math.log10(v));
+  }
+
+  function stopPad() {
+    try { if (state.padPlayer) { state.padPlayer.stop(Tone.now()); } } catch(e) {}
+  }
+  // --- end experimental pad ---
 
 
 
@@ -1174,6 +1219,16 @@
   $('bpmInput').addEventListener('input', () => { $('bpmValue').textContent = $('bpmInput').value; invalidatePlayback(); });
   $('bpmInput').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
   $('trackVolumeInput').addEventListener('input', () => { state.audioEl.volume = Number($('trackVolumeInput').value || 70)/100; if (state.backingPlayer) state.backingPlayer.volume.value = getTrackVolumeDb(); });
+  if ($('padSelect')) $('padSelect').addEventListener('change', invalidatePlayback);
+  if ($('padKeySelect')) $('padKeySelect').addEventListener('change', () => {
+    const t = getSelectedPad();
+    if (t && state.padPitchShift) {
+      const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
+      const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect').value] ?? 0;
+      state.padPitchShift.pitch = targetSemitone - rootSemitone;
+    }
+  });
+  if ($('padVolumeInput')) $('padVolumeInput').addEventListener('input', () => { if (state.padPitchShift) state.padPitchShift.volume.value = getPadVolumeDb(); });
   $('studyVolumeInput').addEventListener('input', () => { $('studyVolumeValue').textContent = $('studyVolumeInput').value; });
 
   $('saveStudyBtn').addEventListener('click', saveCurrentStudy);
@@ -1186,6 +1241,7 @@
   if ($('hybridFormSelect')) $('hybridFormSelect').addEventListener('change', updateHybridModeUI);
   loadFragmentLibrary();
   loadAudioLibrary();
+  loadPadLibrary();
   restoreSavedStudiesFromBrowser();
   populatePatternSelects();
   updateModeUI();

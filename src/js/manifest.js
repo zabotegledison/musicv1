@@ -21,3 +21,12 @@ const AUDIO_TRACKS = [
   { id: 'baiao',    name: 'Baião',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
   { id: 'batucada', name: 'Batucada', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
 ];
+
+// Experimental: harmonic pads (tempo-free, transposed live via pitch-shift).
+// Each entry is ONE recording in a reference root ("rootNote"); the app
+// transposes it in real time to whichever key the user selects. To add a
+// new chord quality: drop the file in assets/audio/pads/ and add an entry
+// here with its reference root note.
+const PAD_TRACKS = [
+  { id: 'm11', name: 'Minor 11', url: 'assets/audio/pads/m11.mp3', rootNote: 'C' }
+];
