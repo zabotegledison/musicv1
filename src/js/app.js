@@ -1030,7 +1030,7 @@
       return true;
     } catch (err) {
       console.warn('Pad failed to load, continuing without it:', err);
-      setStatus('audioStatus', 'Pad could not be loaded — playing without it.', true);
+      setStatus('audioStatus', `Pad could not be loaded (${err && err.message ? err.message : err}) — playing without it.`, true);
       return false;
     }
   }
