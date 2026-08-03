@@ -1026,7 +1026,7 @@
       const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
       const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
       state.padPitchShift.pitch = targetSemitone - rootSemitone;
-      state.padPitchShift.volume.value = getPadVolumeDb();
+      state.padPlayer.volume.value = getPadVolumeDb();
       return true;
     } catch (err) {
       console.warn('Pad failed to load, continuing without it:', err);
@@ -1237,7 +1237,7 @@
       state.padPitchShift.pitch = targetSemitone - rootSemitone;
     }
   });
-  if ($('padVolumeInput')) $('padVolumeInput').addEventListener('input', () => { if (state.padPitchShift) state.padPitchShift.volume.value = getPadVolumeDb(); });
+  if ($('padVolumeInput')) $('padVolumeInput').addEventListener('input', () => { if (state.padPlayer) state.padPlayer.volume.value = getPadVolumeDb(); });
   $('studyVolumeInput').addEventListener('input', () => { $('studyVolumeValue').textContent = $('studyVolumeInput').value; });
 
   $('saveStudyBtn').addEventListener('click', saveCurrentStudy);
