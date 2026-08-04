@@ -23,10 +23,21 @@ const AUDIO_TRACKS = [
 ];
 
 // Experimental: harmonic pads (tempo-free, transposed live via pitch-shift).
-// Each entry is ONE recording in a reference root ("rootNote"); the app
-// transposes it in real time to whichever key the user selects. To add a
-// new chord quality: drop the file in assets/audio/pads/ and add an entry
-// here with its reference root note.
+// Each chord "quality" now ships with SEVERAL reference recordings (spaced a
+// minor third apart) instead of just one. The app picks whichever reference
+// is closest to the requested key and pitch-shifts only the remaining
+// distance (max 1-2 semitones), which keeps the pitch-shift artifacts to a
+// minimum. To add a new chord quality: record references spaced a minor or
+// major third apart, drop them in assets/audio/pads/, and list them here.
 const PAD_TRACKS = [
-  { id: 'm11', name: 'Minor 11', url: 'assets/audio/pads/m11.mp3', rootNote: 'C' }
+  {
+    id: 'm11',
+    name: 'Minor 11',
+    refs: [
+      { rootNote: 'C',  url: 'assets/audio/pads/m11_C.mp3' },
+      { rootNote: 'D#', url: 'assets/audio/pads/m11_Eb.mp3' },
+      { rootNote: 'F#', url: 'assets/audio/pads/m11_Fs.mp3' },
+      { rootNote: 'A',  url: 'assets/audio/pads/m11_A.mp3' }
+    ]
+  }
 ];

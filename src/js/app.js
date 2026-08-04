@@ -980,7 +980,10 @@
       }
 
       scheduleBacking(countInSec, loopEndSec, countInSec, quarterSec);
-      if (hasPad && state.padPlayer) { try { state.padPlayer.start('+0.05'); } catch(e) { console.warn(e); } }
+      if (hasPad && state.padPlayer) {
+        try { state.padPlayer.stop(); } catch(e) {}
+        Tone.Transport.scheduleOnce((time) => { try { state.padPlayer.start(time); } catch(e) { console.warn(e); } }, countInSec);
+      }
       Tone.Transport.start('+0.05');
       state.isPlaying = true;
     } finally {
@@ -1007,25 +1010,40 @@
 
   function getSelectedPad() { return state.padTracks.find(t => t.id === $('padSelect')?.value) || null; }
 
+  // Picks whichever reference recording is tonally closest to targetSemitone
+  // (shortest signed distance around the 12-note circle), so the live
+  // pitch-shift only ever has to cover a small gap.
+  function pickNearestPadRef(t, targetSemitone) {
+    if (!t || !Array.isArray(t.refs) || !t.refs.length) return null;
+    let best = null, bestShift = null;
+    for (const ref of t.refs) {
+      const rootSemitone = PAD_KEY_SEMITONES[ref.rootNote] ?? 0;
+      const shift = (((targetSemitone - rootSemitone) + 6) % 12 + 12) % 12 - 6; // range -6..5
+      if (best === null || Math.abs(shift) < Math.abs(bestShift)) { best = ref; bestShift = shift; }
+    }
+    return { ref: best, shift: bestShift };
+  }
+
   async function preparePadPlayer() {
     const t = getSelectedPad();
     if (!t) return false;
     try {
-      if (!state.padPlayer || state.currentPadUrl !== t.url) {
+      const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
+      const picked = pickNearestPadRef(t, targetSemitone);
+      if (!picked) return false;
+      if (!state.padPlayer || state.currentPadUrl !== picked.ref.url) {
         stopPad();
         if (state.padPlayer) { try { state.padPlayer.dispose(); } catch(e) {} }
         if (state.padPitchShift) { try { state.padPitchShift.dispose(); } catch(e) {} }
         state.padPlayer = null; state.padPitchShift = null; state.currentPadUrl = null;
         const pitchShift = new Tone.PitchShift({ pitch: 0 }).toDestination();
-        const player = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 1.5, fadeOut: 1.5 }).connect(pitchShift);
+        const player = new Tone.Player({ url: picked.ref.url, loop: true, autostart: false, fadeIn: 1.5, fadeOut: 1.5 }).connect(pitchShift);
         await Tone.loaded();
         state.padPitchShift = pitchShift;
         state.padPlayer = player;
-        state.currentPadUrl = t.url;
+        state.currentPadUrl = picked.ref.url;
       }
-      const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
-      const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect')?.value || 'C'] ?? 0;
-      state.padPitchShift.pitch = targetSemitone - rootSemitone;
+      state.padPitchShift.pitch = picked.shift;
       state.padPlayer.volume.value = getPadVolumeDb();
       return true;
     } catch (err) {
@@ -1229,14 +1247,7 @@
   $('bpmInput').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
   $('trackVolumeInput').addEventListener('input', () => { state.audioEl.volume = Number($('trackVolumeInput').value || 70)/100; if (state.backingPlayer) state.backingPlayer.volume.value = getTrackVolumeDb(); });
   if ($('padSelect')) $('padSelect').addEventListener('change', invalidatePlayback);
-  if ($('padKeySelect')) $('padKeySelect').addEventListener('change', () => {
-    const t = getSelectedPad();
-    if (t && state.padPitchShift) {
-      const rootSemitone = PAD_KEY_SEMITONES[t.rootNote] ?? 0;
-      const targetSemitone = PAD_KEY_SEMITONES[$('padKeySelect').value] ?? 0;
-      state.padPitchShift.pitch = targetSemitone - rootSemitone;
-    }
-  });
+  if ($('padKeySelect')) $('padKeySelect').addEventListener('change', invalidatePlayback);
   if ($('padVolumeInput')) $('padVolumeInput').addEventListener('input', () => { if (state.padPlayer) state.padPlayer.volume.value = getPadVolumeDb(); });
   $('studyVolumeInput').addEventListener('input', () => { $('studyVolumeValue').textContent = $('studyVolumeInput').value; });
 
