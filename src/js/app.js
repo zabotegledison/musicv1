@@ -1010,16 +1010,18 @@
 
   function getSelectedPad() { return state.padTracks.find(t => t.id === $('padSelect')?.value) || null; }
 
-  // Picks whichever reference recording is tonally closest to targetSemitone
-  // (shortest signed distance around the 12-note circle), so the live
-  // pitch-shift only ever has to cover a small gap.
+  // Picks the reference recording to pitch-shift UP from (never down — on
+  // this pad content, downward shifts of Tone.PitchShift produce an audible
+  // doubling/phasing artifact even at just 1 semitone, while upward shifts
+  // of 1-2 semitones stay clean). So we always take the nearest reference
+  // at or below the target and shift up to reach it.
   function pickNearestPadRef(t, targetSemitone) {
     if (!t || !Array.isArray(t.refs) || !t.refs.length) return null;
     let best = null, bestShift = null;
     for (const ref of t.refs) {
       const rootSemitone = PAD_KEY_SEMITONES[ref.rootNote] ?? 0;
-      const shift = (((targetSemitone - rootSemitone) + 6) % 12 + 12) % 12 - 6; // range -6..5
-      if (best === null || Math.abs(shift) < Math.abs(bestShift)) { best = ref; bestShift = shift; }
+      const shift = ((targetSemitone - rootSemitone) % 12 + 12) % 12; // always 0..11, upward-only
+      if (best === null || shift < bestShift) { best = ref; bestShift = shift; }
     }
     return { ref: best, shift: bestShift };
   }
