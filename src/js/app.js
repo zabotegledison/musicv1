@@ -1017,7 +1017,7 @@
         if (state.padPitchShift) { try { state.padPitchShift.dispose(); } catch(e) {} }
         state.padPlayer = null; state.padPitchShift = null; state.currentPadUrl = null;
         const pitchShift = new Tone.PitchShift({ pitch: 0 }).toDestination();
-        const player = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 0.5, fadeOut: 0.5 }).connect(pitchShift);
+        const player = new Tone.Player({ url: t.url, loop: true, autostart: false, fadeIn: 1.5, fadeOut: 1.5 }).connect(pitchShift);
         await Tone.loaded();
         state.padPitchShift = pitchShift;
         state.padPlayer = player;
