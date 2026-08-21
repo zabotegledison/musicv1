@@ -6,20 +6,30 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=5" />
+  <link rel="stylesheet" href="src/css/style.css?v=16" />
 </head>
 <body>
 
   <header>
     <nav class="topnav">
       <a href="index.html" class="active">App</a>
-      <a href="about.html">How the Method Works</a>
+      <a href="about.html">How It Works</a>
       <a href="matrix.html">Rhythmic Matrix</a>
-      <a href="notation.html">Rhythmic Representation</a>
-      <a href="research.html">Research Background</a>
+      <a href="research.html">Research &amp; Context</a>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
-    <p>A pedagogical method for developing a Brazilian-inspired rhythmic vocabulary for improvisation and musical creation.</p>
+    <p>Rhythm, improvisation and Brazilian Instrumental Music. An interactive environment for exploring and applying rhythmic material to melodic improvisation.</p>
+    <p class="small" style="margin-top:6px;">Prototype — Pedagogical Testing Version</p>
+    <div class="cycle-visual" style="max-width:640px;">
+      <div class="cycle-node">HEAR</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node">INTERNALIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node">MELODICIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node">IMPROVISE</div>
+    </div>
+    <p class="hint">Apply each rhythm to scales, pentatonics, arpeggios, intervals or your own vocabulary, then explore it over a selected rhythmic backing and modal centre.</p>
   </header>
 
   <main>
@@ -50,7 +60,7 @@
         <div class="hint">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
         <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
         <div id="randomOptions" style="margin-top:10px">
-          <div class="hint" style="margin-bottom:8px;">Hear fragments combined freely, with no fixed pattern. This builds raw exposure to the full rhythmic vocabulary before any structure is introduced.</div>
+          <div class="hint" style="margin-bottom:8px;">Generate variable sequences from the rhythmic matrix. Repeat, transform and apply them to your instrument.</div>
           <label class="small">Repetitions</label>
           <select id="repeatSelect">
             <option value="allow">Allowed</option>
@@ -59,7 +69,7 @@
           </select>
         </div>
         <div id="manualOptions" style="display:none;margin-top:12px">
-          <div class="hint" style="margin-bottom:8px;">Get to know two fragments up close. Starts with A1 (tension) and B1 (resolution), but you can freely combine any of the 15 fragments in either position. This builds the very first two-bar phrase of the method.</div>
+          <div class="hint" style="margin-bottom:8px;">Explore the rhythmic fragments individually. Listen, repeat and apply them to your own melodic material. Starts with A1 (tension) and B1 (resolution), but you can freely combine any of the 15 fragments in either position.</div>
           <label class="small">First Fragment</label>
           <select id="practiceASelect"></select>
           <div style="height:10px"></div>
@@ -71,14 +81,14 @@
 
         <div id="traditionalBox" class="pattern-box">
           <label>Traditional Patterns</label>
-          <div class="hint" style="margin-bottom:8px;">Explore a collection of traditional patterns and fragments inspired by classic melodies and rhythmic practices of Brazilian music. Study one or two patterns at a time before moving on to continuous rotation and hybrid combinations.</div>
+          <div class="hint" style="margin-bottom:8px;">Practice rhythmic patterns from Brazilian musical contexts. Listen, recognize and apply them to melodic improvisation. Study one or two patterns at a time before moving on to continuous rotation and hybrid combinations.</div>
           <select id="traditionalPatternSelect"></select>
           <div id="traditionalPatternInfo" class="pattern-meta"></div>
         </div>
 
         <div id="progressionBox" class="pattern-box">
           <label>Pattern Rotation</label>
-          <div class="hint" style="margin-bottom:8px;">Study the transition from one pattern to another without stopping.</div>
+          <div class="hint" style="margin-bottom:8px;">Move between different patterns while maintaining pulse and melodic flow.</div>
           <label class="small">Progression mode</label>
           <select id="progressionModeSelect">
             <option value="manual">Manual pattern choice</option>
@@ -95,7 +105,7 @@
 
         <div id="hybridBox" class="pattern-box">
           <label>Hybrid Pattern/Random</label>
-          <div class="hint" style="margin-bottom:8px;">Mix 2-bar traditional-pattern blocks with 2-bar random-fragment blocks. This tests how free fragments work inside a traditional rhythmic grammar.</div>
+          <div class="hint" style="margin-bottom:8px;">Alternate recognizable patterns with freely generated rhythmic material. This tests how free fragments work inside a traditional rhythmic grammar.</div>
           <div id="hybridPatternSourceBox">
             <label class="small">Pattern source</label>
             <select id="hybridPatternSourceSelect">
@@ -126,7 +136,7 @@
               <option value="matchColor">Match A/B color profile</option>
             </select>
           </div>
-          <div id="hybridGrammarHint" class="hint" style="display:none;">This step chooses everything automatically: pattern opening or pattern ending, free random or A/B color-matched random. No extra choices.</div>
+          <div id="hybridGrammarHint" class="hint" style="display:none;">Move beyond the written pattern and improvise freely. This step chooses everything automatically: pattern opening or pattern ending, free random or A/B color-matched random. No extra choices.</div>
           <div class="hint">Block size is fixed at 2 bars: 4 fragments. Opening/ending forms replace one bar inside the pattern phrase.</div>
         </div>
       </div>
@@ -144,7 +154,7 @@
       <div class="group">
         <label class="small">Backing track</label>
         <select id="backingSelect"><option value="">No track — metronome only</option></select>
-        <div class="hint">Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
+        <div class="hint">Practice the material over different Brazilian rhythmic environments. Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
         <div id="audioStatus" class="status">Loading backing tracks…</div>
       </div>
 
@@ -225,7 +235,7 @@
         <div style="height:10px"></div>
         <button id="importStudiesBtn" class="secondary" type="button" style="width:100%">Import saved studies</button>
         <input id="importStudiesInput" type="file" accept=".json" style="display:none" />
-        <div class="hint">Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
+        <div class="hint">Save useful studies for future practice. Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
         <div id="savedStudiesStatus" class="status">No saved study yet.</div>
       </div>
     </aside>

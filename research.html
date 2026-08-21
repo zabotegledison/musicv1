@@ -3,46 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research Background — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=5" />
+  <title>Research &amp; Context — Brazilian Syncopation Lab</title>
+  <link rel="stylesheet" href="src/css/style.css?v=16" />
 </head>
 <body>
   <header>
     <nav class="topnav">
-      <a href="index.html">App</a>
-      <a href="about.html">How the Method Works</a>
-      <a href="matrix.html">Rhythmic Matrix</a>
-      <a href="notation.html">Rhythmic Representation</a>
-      <a href="research.html" class="active">Research Background</a>
+      <div class="topnav-row">
+        <a href="index.html" data-i18n-nav="app">App</a>
+        <a href="about.html" data-i18n-nav="how">How It Works</a>
+        <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
+        <a href="research.html" class="active" data-i18n-nav="research">Research &amp; Context</a>
+        <div class="lang-switch" id="langSwitch">
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="pt">PT</button>
+        </div>
+      </div>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
     <p>A pedagogical method for developing a Brazilian-inspired rhythmic vocabulary for improvisation and musical creation.</p>
   </header>
 
   <main class="doc-page">
-    <h2>Musicological inspiration</h2>
-    <p class="lede">Brazilian Syncopation Lab is designed around the idea that the rhythmic language heard across Brazilian popular styles — samba, partido alto, baião, maxixe, afoxé, and related traditions — shares a recognizable underlying grammar, even as its surface forms vary widely from style to style.</p>
-    <p>The project draws on that broader observation, common in writing on Brazilian popular music, without claiming to be a musicological study in itself. It is a pedagogical application of that observation, built by a practicing musician for practical studio and practice-room use.</p>
-
-    <h2>The matrix as a guiding hypothesis</h2>
-    <p>The A/B rhythmic matrix described on the <a href="matrix.html">Rhythmic Matrix</a> page proposes that a single characteristic-syncopation cell, split into a "tension" and a "resolution" half, can generate a workable rhythmic vocabulary broad enough to support both faithful traditional-pattern study and free improvisatory use. This is offered as a guiding hypothesis for the project, not a proven or exhaustive theory of Brazilian rhythm.</p>
-
-    <h2>What the project explores</h2>
-    <ul>
-      <li>Whether a small, well-defined set of rhythmic fragments is sufficient to internalize a recognizably Brazilian-inspired rhythmic feel.</li>
-      <li>Whether structured randomization (Random Generator, Pattern Rotation, Hybrid Pattern) may facilitate faster internalization than rote memorization of fixed patterns alone.</li>
-      <li>Whether a rhythm-first, pitch-independent vocabulary transfers cleanly into other idioms — jazz, fusion, contemporary, and hybrid contexts — once internalized.</li>
-    </ul>
-
-    <h2>Method, not proof</h2>
-    <p>Claims in this project are intentionally kept modest. Where the interface or documentation describes an effect of the method, it is framed as something the design <em>is intended to</em> support, <em>explores</em>, or <em>proposes</em> — not as an empirically established result. Formal evaluation of the method's effectiveness is future work, not something this prototype claims to have already demonstrated.</p>
-
-    <h2>Literature and further reading</h2>
-    <p>This section is intentionally left open for future expansion, as specific sources, references, and citations relevant to Brazilian rhythmic theory and pedagogy are compiled.</p>
+    <h2 data-i18n="title">Research &amp; Context</h2>
+    <div data-i18n="body"></div>
   </main>
 
   <footer class="site-footer">
     <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
   </footer>
+
+  <script>
+    window.BSL_I18N_CONTENT = {
+      en: {
+        title: 'Research & Context',
+        body: `
+          <p class="lede">In this project, Música Instrumental Brasileira (MIB) is used as an operational term for the broad field of Brazilian instrumental and improvised practices considered by the research, including areas of interaction with jazz. This usage intentionally simplifies a historically and stylistically much more complex field (Mongiovi, 2017).</p>
+          <p>BSL begins with a question:</p>
+          <p><em>How can a melodically free and personal improvisational language maintain strong rhythmic coherence across different contexts of Música Instrumental Brasileira?</em></p>
+          <p>The research explores how intentional and digitally assisted rhythmic practice may contribute to the transition from studied material to autonomous improvisational use, and what roles micro-units, patterns, context and variation may play in this process.</p>
+          <p>BSL is an evolving prototype developed through artistic practice, pedagogical experimentation and research.</p>
+        `
+      },
+      it: {
+        title: 'Ricerca e contesto',
+        body: `
+          <p class="lede">In questo progetto, Música Instrumental Brasileira (MIB) è utilizzato come termine operativo per indicare l’ampio campo di pratiche strumentali e improvvisative brasiliane considerate dalla ricerca, comprese le aree di interazione con il jazz. La scelta semplifica consapevolmente un panorama storico e stilistico molto più articolato (Mongiovi, 2017).</p>
+          <p>Il BSL nasce da una domanda:</p>
+          <p><em>Come sviluppare un’improvvisazione melodicamente libera e personale che mantenga una forte coerenza ritmica con differenti contesti della Música Instrumental Brasileira?</em></p>
+          <p>La ricerca esplora come una pratica ritmica intenzionale e digitalmente assistita possa contribuire al passaggio dal materiale studiato al suo utilizzo autonomo nell’improvvisazione, e quale ruolo possano avere micro-unità, pattern, contesto e variazione in questo processo.</p>
+          <p>Il BSL è un prototipo in evoluzione, sviluppato attraverso pratica artistica, sperimentazione pedagogica e ricerca.</p>
+        `
+      },
+      pt: {
+        title: 'Pesquisa e contexto',
+        body: `
+          <p class="lede">Neste projeto, Música Instrumental Brasileira (MIB) é utilizada como termo operacional para designar o amplo campo de práticas instrumentais e improvisativas brasileiras consideradas pela pesquisa, incluindo áreas de interação com o jazz. Essa escolha simplifica conscientemente um panorama histórico e estilístico muito mais complexo (Mongiovi, 2017).</p>
+          <p>O BSL nasce de uma pergunta:</p>
+          <p><em>Como desenvolver uma improvisação melodicamente livre e pessoal que mantenha forte coerência rítmica em diferentes contextos da Música Instrumental Brasileira?</em></p>
+          <p>A pesquisa investiga como uma prática rítmica intencional e assistida digitalmente pode contribuir para a passagem do material estudado ao seu uso autônomo na improvisação, e qual papel micro-unidades, padrões, contexto e variação podem desempenhar nesse processo.</p>
+          <p>O BSL é um protótipo em evolução, desenvolvido por meio da prática artística, da experimentação pedagógica e da pesquisa.</p>
+        `
+      }
+    };
+  </script>
+  <script src="src/js/i18n.js?v=1"></script>
 </body>
 </html>

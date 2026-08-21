@@ -3,53 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How the Method Works — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=5" />
+  <title>How It Works — Brazilian Syncopation Lab</title>
+  <link rel="stylesheet" href="src/css/style.css?v=16" />
 </head>
 <body>
   <header>
     <nav class="topnav">
-      <a href="index.html">App</a>
-      <a href="about.html" class="active">How the Method Works</a>
-      <a href="matrix.html">Rhythmic Matrix</a>
-      <a href="notation.html">Rhythmic Representation</a>
-      <a href="research.html">Research Background</a>
+      <div class="topnav-row">
+        <a href="index.html" data-i18n-nav="app">App</a>
+        <a href="about.html" class="active" data-i18n-nav="how">How It Works</a>
+        <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
+        <a href="research.html" data-i18n-nav="research">Research &amp; Context</a>
+        <div class="lang-switch" id="langSwitch">
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="pt">PT</button>
+        </div>
+      </div>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
     <p>A pedagogical method for developing a Brazilian-inspired rhythmic vocabulary for improvisation and musical creation.</p>
   </header>
 
   <main class="doc-page">
-    <h2>Purpose</h2>
-    <p class="lede">Brazilian Syncopation Lab is not a method for learning how to play Brazilian music.</p>
-    <p>Its purpose is to help musicians develop a rhythmic vocabulary inspired by the rhythmic organization of Brazilian music — a vocabulary intended primarily for improvisation, motivic development, composition, and creative exploration. That vocabulary can later be applied wherever it's useful: in Brazilian music itself, but just as naturally in jazz, fusion, contemporary music, or any hybrid context.</p>
+    <h2 data-i18n="title">How it works</h2>
+    <p class="lede" data-i18n="intro"></p>
 
-    <h2>Where the idea came from</h2>
-    <p>Over the years, one question kept coming back in different forms: <em>"How do you manage to improvise with a language that sounds so Brazilian, and yet so free within jazz?"</em> This project is an attempt to observe, organize, and turn that intuitive knowledge into a pedagogical system — a way of teaching what had, until now, mostly lived as instinct.</p>
+    <div class="cycle-visual">
+      <div class="cycle-node" data-i18n="cycle1">HEAR</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="cycle2">INTERNALIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="cycle3">MELODICIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="cycle4">CONTEXTUALIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="cycle5">IMPROVISE</div>
+    </div>
 
-    <h2>Pedagogical principle</h2>
-    <p>The whole method follows the same logic: <strong>Exposure → Internalization → Creative Use.</strong> The goal was never to memorize patterns. The goal is continuous, coherent exposure to rhythmic behaviors until they become part of the student's internal vocabulary — available without conscious recall, the way any fluent musical language works. Every feature in the application exists to serve that one goal.</p>
+    <div data-i18n="body"></div>
 
-    <h2>The rhythmic matrix and the 15 fragments</h2>
-    <p>The system is built from a single rhythmic cell, the <em>Síncope Característica</em>, split into two complementary families: Family A (tension) and Family B (resolution). Combining and varying these produced the current library of 17 one-beat fragments. See the <a href="matrix.html">Rhythmic Matrix</a> page for the full reasoning behind this choice.</p>
+    <h2 data-i18n="subheadTitle">Reading the notation</h2>
+    <div data-i18n="subheadBody"></div>
 
-    <h2>Learning pathway</h2>
-    <p>The application is organized as a sequence of stages, not a menu of unrelated features:</p>
-    <ol class="pathway-list">
-      <li><strong>Fragment Library</strong> — recognize each fragment individually: its pulse placement and rhythmic identity.</li>
-      <li><strong>Random Generator</strong> — hear fragments combined freely, building raw vocabulary exposure.</li>
-      <li><strong>Traditional Patterns</strong> — study the fixed, named formulas of the Brazilian tradition, one or two at a time.</li>
-      <li><strong>Pattern Rotation</strong> — continuous, randomized exposure across the traditional pattern library, building quick recognition and natural rhythmic reaction rather than memorization.</li>
-      <li><strong>Hybrid Pattern</strong> — traditional grammar blended with random material, testing how free fragments behave inside a coherent rhythmic structure.</li>
-      <li><strong>Creative Flow</strong> <em>(working name)</em> — the point where the vocabulary is fluent enough to use freely: improvisation and composition.</li>
-    </ol>
-
-    <h2>Toward improvisation and composition</h2>
-    <p>Later stages of the method are designed to move from consuming generated studies to producing original musical ideas: using the same fragments and grammar as raw material for improvised lines, motives, and written compositions — first over the built-in Brazilian backing tracks, and eventually in any harmonic or stylistic context the musician chooses.</p>
+    <h2 data-i18n="practiceCycleTitle">Practice cycle</h2>
+    <p class="small" data-i18n="practiceCycleCaption"></p>
+    <div class="cycle-visual">
+      <div class="cycle-node" data-i18n="pc1">RHYTHM</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="pc2">MELODICIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="pc3">CONTEXTUALIZE</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-node" data-i18n="pc4">IMPROVISE</div>
+    </div>
+    <p class="hint" data-i18n="practiceCycleFoot"></p>
   </main>
 
   <footer class="site-footer">
     <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
   </footer>
+
+  <script>
+    window.BSL_I18N_CONTENT = {
+      en: {
+        title: 'How it works',
+        intro: 'Brazilian Syncopation Lab temporarily focuses attention on the rhythm of the melodic line: first on when attacks occur, and then on the notes used to realize them.',
+        cycle1: 'HEAR', cycle2: 'INTERNALIZE', cycle3: 'MELODICIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
+        body: `
+          <p>The rhythm is first heard, repeated and internalized. Once stable, each onset is replaced with freely chosen pitches drawn from material the musician already knows: scales, pentatonics, arpeggios, intervals or personal vocabulary.</p>
+          <p>The musician then chooses a Brazilian rhythmic context and a single chord or modal centre. The harmonic field is intentionally static, temporarily reducing harmonic demands so attention can remain focused on rhythmic phrasing.</p>
+          <p>From there, the exercise is progressively varied until it leads into free improvisation, without requiring the studied material to be reproduced literally.</p>
+          <p>This process is repeated within every BSL module, from individual fragments to patterns and generative combinations.</p>
+        `,
+        subheadTitle: 'Reading the notation',
+        subheadBody: `
+          <p>BSL notation primarily highlights onset points. A written rest after an onset does not necessarily require the previous sound to stop: duration, articulation, accent and phrasing remain open to interpretation.</p>
+          <p>The notation intentionally isolates one aspect of rhythm in order to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>
+        `,
+        practiceCycleTitle: 'Practice cycle',
+        practiceCycleCaption: 'Melodic application happens after internalizing each exercise — not only once, at the very end of the whole method.',
+        pc1: 'RHYTHM', pc2: 'MELODICIZE', pc3: 'CONTEXTUALIZE', pc4: 'IMPROVISE',
+        practiceCycleFoot: 'This short loop repeats inside every module of the method, at whatever scale the module works at — a single fragment, a traditional pattern, or a fully generated study.'
+      },
+      it: {
+        title: 'Come funziona',
+        intro: 'Il Brazilian Syncopation Lab concentra temporaneamente l’attenzione sul ritmo della linea melodica: prima sul quando avvengono gli attacchi, poi sulle note che li realizzano.',
+        cycle1: 'ASCOLTA', cycle2: 'INTERIORIZZA', cycle3: 'MELODICIZZA', cycle4: 'CONTESTUALIZZA', cycle5: 'IMPROVVISA',
+        body: `
+          <p>Il ritmo viene prima ascoltato, ripetuto e interiorizzato. Una volta stabile, ogni attacco viene sostituito da note scelte liberamente da materiali già conosciuti dal musicista: scale, pentatoniche, arpeggi, intervalli o altro vocabolario personale.</p>
+          <p>Il musicista sceglie quindi un contesto ritmico brasiliano e un singolo accordo o centro modale. La staticità armonica è intenzionale: riduce temporaneamente il carico armonico per concentrare l’attenzione sull’organizzazione ritmica della frase.</p>
+          <p>Da qui l’esercizio viene progressivamente variato fino all’improvvisazione libera, senza l’obbligo di riprodurre letteralmente il materiale studiato.</p>
+          <p>Questo processo si ripete all’interno di ogni modulo del BSL, dai singoli frammenti ai pattern e alle combinazioni generative.</p>
+        `,
+        subheadTitle: 'Come leggere la notazione',
+        subheadBody: `
+          <p>La notazione evidenzia principalmente i punti di attacco. Una pausa dopo un attacco non implica necessariamente l’interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all’interpretazione.</p>
+          <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo più facile da osservare e manipolare; non rappresenta l’intera performance musicale.</p>
+        `,
+        practiceCycleTitle: 'Ciclo di pratica',
+        practiceCycleCaption: 'L’applicazione melodica avviene dopo l’interiorizzazione di ogni singolo esercizio — non solo una volta, alla fine dell’intero metodo.',
+        pc1: 'RITMO', pc2: 'MELODIZZA', pc3: 'CONTESTUALIZZA', pc4: 'IMPROVVISA',
+        practiceCycleFoot: 'Questo breve ciclo si ripete dentro ogni modulo del metodo, alla scala in cui quel modulo lavora — un singolo frammento, un pattern tradizionale, oppure uno studio generato per intero.'
+      },
+      pt: {
+        title: 'Como funciona',
+        intro: 'O Brazilian Syncopation Lab concentra temporariamente a atenção no ritmo da linha melódica: primeiro em quando os ataques acontecem e, depois, nas notas utilizadas para realizá-los.',
+        cycle1: 'OUÇA', cycle2: 'INTERIORIZE', cycle3: 'MELODIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
+        body: `
+          <p>O ritmo é primeiro ouvido, repetido e interiorizado. Quando estiver estável, cada ataque é substituído por notas escolhidas livremente a partir de materiais que o músico já conhece: escalas, pentatônicas, arpejos, intervalos ou seu próprio vocabulário.</p>
+          <p>Em seguida, o músico escolhe um contexto rítmico brasileiro e um único acorde ou centro modal. A estabilidade harmônica é intencional: reduz temporariamente a demanda harmônica para concentrar a atenção na organização rítmica da frase.</p>
+          <p>A partir daí, o exercício é progressivamente variado até chegar à improvisação livre, sem a obrigação de reproduzir literalmente o material estudado.</p>
+          <p>Esse processo se repete dentro de cada módulo do BSL, dos fragmentos individuais aos padrões e às combinações generativas.</p>
+        `,
+        subheadTitle: 'Como ler a notação',
+        subheadBody: `
+          <p>A notação do BSL destaca principalmente os pontos de ataque. Uma pausa escrita depois de um ataque não implica necessariamente a interrupção do som anterior: duração, articulação, acentuação e fraseado permanecem abertos à interpretação.</p>
+          <p>A representação isola intencionalmente um aspecto do ritmo para torná-lo mais fácil de observar e manipular; ela não representa a totalidade da performance musical.</p>
+        `,
+        practiceCycleTitle: 'Ciclo de prática',
+        practiceCycleCaption: 'A aplicação melódica acontece após a interiorização de cada exercício — não apenas uma vez, ao final de todo o método.',
+        pc1: 'RITMO', pc2: 'MELODIZE', pc3: 'CONTEXTUALIZE', pc4: 'IMPROVISE',
+        practiceCycleFoot: 'Esse pequeno ciclo se repete dentro de cada módulo do método, na escala em que aquele módulo trabalha — um único fragmento, um padrão tradicional, ou um estudo gerado por completo.'
+      }
+    };
+  </script>
+  <script src="src/js/i18n.js?v=1"></script>
 </body>
 </html>
