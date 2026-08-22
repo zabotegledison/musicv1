@@ -125,12 +125,32 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .cycle-arrow { display:flex; align-items:center; justify-content:center; color:var(--brazil-green); font-weight:900; font-size:16px; flex:0 0 auto; padding:0 2px; }
 @media (max-width:640px) { .cycle-visual { flex-direction:column; } .cycle-arrow { transform:rotate(90deg); padding:2px 0; } }
 
-/* --- genealogical tree visual --- */
-.geneal-tree { display:flex; flex-direction:column; align-items:center; gap:6px; margin:20px 0 10px; }
-.tree-row { display:flex; align-items:stretch; justify-content:center; gap:14px; flex-wrap:wrap; width:100%; }
-.tree-node { background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:10px; padding:10px 14px; text-align:center; font-size:13px; font-weight:700; color:var(--text-primary); min-width:120px; }
-.tree-node.tree-root { font-size:13px; }
-.tree-node.tree-rest { background:transparent; border:1px dashed var(--border-subtle); color:var(--text-secondary); font-weight:600; font-style:italic; }
-.tree-node.tree-result { max-width:420px; background:var(--background-panel); border-color:var(--brazil-yellow); }
-.tree-caption { font-size:11px; font-weight:400; color:var(--text-secondary); margin-top:4px; }
-.tree-connector { color:var(--text-secondary); font-size:14px; line-height:1; }
+/* --- genealogy visual: real notation + onset dots, grouped by family --- */
+.genealogy-columns { display:flex; gap:32px; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin:22px 0 6px; }
+.genealogy-column { display:flex; flex-direction:column; align-items:center; gap:10px; width:260px; max-width:100%; }
+.family-head { font-size:13px; font-weight:800; letter-spacing:.04em; padding:5px 16px; border-radius:8px; margin-bottom:2px; }
+.genealogy-rest-row { display:flex; justify-content:center; margin:22px auto 8px; }
+.genealogy-rest-row .frag-card { width:170px; }
+
+.frag-card { background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:10px; padding:6px 12px 10px; width:100%; text-align:center; }
+.frag-id { font-size:12px; font-weight:800; color:var(--text-primary); margin-bottom:2px; }
+.frag-star { color:var(--brazil-yellow); font-size:10px; }
+.frag-notation { min-height:50px; background:#FBFBF8; border-radius:6px; margin:4px 0; }
+.frag-dots { font-size:14px; letter-spacing:5px; color:var(--text-secondary); margin-top:2px; }
+
+.frag-card.special { background:rgba(255,223,0,.09); border:1.5px solid var(--brazil-yellow); box-shadow:0 0 0 3px rgba(255,223,0,.12); }
+.frag-card.special .frag-notation { background:#FDF6D8; }
+
+/* --- HOME page --- */
+.home-hero { max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
+.home-hero .subtitle { color:var(--text-secondary); font-size:15px; margin:6px 0 22px; }
+.home-hero .emphasis { font-size:19px; font-weight:800; letter-spacing:-.01em; color:var(--text-primary); margin:0 0 20px; line-height:1.4; }
+.home-hero p { color:var(--text-secondary); font-size:15px; line-height:1.65; text-align:left; margin:0 0 14px; }
+.home-cta { display:inline-block; margin:14px 0 6px; padding:11px 22px; background:var(--brazil-green); color:#fff; font-weight:800; font-size:14px; border-radius:8px; text-decoration:none; }
+.home-cta:hover { opacity:.9; }
+.home-why { max-width:720px; margin:36px auto 0; text-align:left; padding:24px 24px 0; border-top:1px solid var(--border-subtle); }
+.home-why h2 { font-size:18px; margin:0 0 12px; }
+.home-why p { color:var(--text-secondary); font-size:14px; line-height:1.6; margin:0 0 12px; }
+
+/* --- shared emphasis line for approved copy (ALL CAPS callouts) --- */
+.doc-page .emphasis { font-weight:800; color:var(--text-primary); font-size:15.5px; letter-spacing:-.005em; margin:18px 0; }

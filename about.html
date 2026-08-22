@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=16" />
+  <link rel="stylesheet" href="src/css/style.css?v=18" />
 </head>
 <body>
   <header>
     <nav class="topnav">
       <div class="topnav-row">
+        <a href="home.html" data-i18n-nav="home">Home</a>
         <a href="index.html" data-i18n-nav="app">App</a>
         <a href="about.html" class="active" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
@@ -41,23 +42,27 @@
       <div class="cycle-node" data-i18n="cycle5">IMPROVISE</div>
     </div>
 
-    <div data-i18n="body"></div>
+    <div data-i18n="body1"></div>
+
+    <h3 data-i18n="bringTitle">Bring the rhythm into the music immediately</h3>
+    <div data-i18n="bringBody"></div>
+
+    <h2 data-i18n="pathTitle">Suggested path</h2>
+    <h3 data-i18n="p1Title">Fragment Practice — get to know the material</h3>
+    <div data-i18n="p1Body"></div>
+    <h3 data-i18n="p2Title">Random Generator — expand the possibilities</h3>
+    <div data-i18n="p2Body"></div>
+    <h3 data-i18n="p3Title">Traditional Patterns — return to context</h3>
+    <div data-i18n="p3Body"></div>
+    <h3 data-i18n="p4Title">Pattern Rotation — develop adaptability</h3>
+    <div data-i18n="p4Body"></div>
+    <h3 data-i18n="p5Title">Hybrid Pattern — connect patterns and generation</h3>
+    <div data-i18n="p5Body"></div>
+    <h3 data-i18n="p6Title">Creative Flow — give up control of the sequence</h3>
+    <div data-i18n="p6Body"></div>
 
     <h2 data-i18n="subheadTitle">Reading the notation</h2>
     <div data-i18n="subheadBody"></div>
-
-    <h2 data-i18n="practiceCycleTitle">Practice cycle</h2>
-    <p class="small" data-i18n="practiceCycleCaption"></p>
-    <div class="cycle-visual">
-      <div class="cycle-node" data-i18n="pc1">RHYTHM</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node" data-i18n="pc2">MELODICIZE</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node" data-i18n="pc3">CONTEXTUALIZE</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node" data-i18n="pc4">IMPROVISE</div>
-    </div>
-    <p class="hint" data-i18n="practiceCycleFoot"></p>
   </main>
 
   <footer class="site-footer">
@@ -70,61 +75,136 @@
         title: 'How it works',
         intro: 'Brazilian Syncopation Lab temporarily focuses attention on the rhythm of the melodic line: first on when attacks occur, and then on the notes used to realize them.',
         cycle1: 'HEAR', cycle2: 'INTERNALIZE', cycle3: 'MELODICIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
-        body: `
-          <p>The rhythm is first heard, repeated and internalized. Once stable, each onset is replaced with freely chosen pitches drawn from material the musician already knows: scales, pentatonics, arpeggios, intervals or personal vocabulary.</p>
-          <p>The musician then chooses a Brazilian rhythmic context and a single chord or modal centre. The harmonic field is intentionally static, temporarily reducing harmonic demands so attention can remain focused on rhythmic phrasing.</p>
-          <p>From there, the exercise is progressively varied until it leads into free improvisation, without requiring the studied material to be reproduced literally.</p>
-          <p>This process is repeated within every BSL module, from individual fragments to patterns and generative combinations.</p>
+        body1: `
+          <p>The rhythm is first heard, repeated and internalized. Once stable, its attacks are realized with freely chosen notes drawn from material the musician already knows: scales, pentatonics, arpeggios, intervals or other personal vocabulary.</p>
+          <p>The figure is then placed within a musical context and progressively varied, until it opens into improvisation without requiring the studied material to be reproduced literally.</p>
+        `,
+        bringTitle: 'Bring the rhythm into the music immediately',
+        bringBody: `
+          <p>When a figure begins to feel familiar, do not leave it as a purely rhythmic exercise.</p>
+          <p>In the app, choose a backing track in the Rhythmic Context section and a chord or modal centre in the Melodic Application section. Then realize the figure's attacks using scales, pentatonics, arpeggios, intervals or your own vocabulary, and begin to vary it progressively.</p>
+          <p class="emphasis">DO NOT WAIT UNTIL THE END OF THE PATH TO IMPROVISE: BRING EACH MATERIAL INTO MELODY FROM THE VERY BEGINNING.</p>
+          <p>The harmonic field is intentionally static: a single chord or modal centre temporarily reduces harmonic demands, allowing greater attention to remain on the rhythmic organization of the phrase.</p>
+        `,
+        pathTitle: 'Suggested path',
+        p1Title: 'Fragment Practice — get to know the material',
+        p1Body: `<p>Explore one micro-cell at a time. Learn to recognize its sound and notation, feel its attacks in relation to the pulse, and reproduce it with voice, body or instrument.</p>`,
+        p2Title: 'Random Generator — expand the possibilities',
+        p2Body: `
+          <p>Let the system create combinations you would not necessarily have chosen yourself. Spend a short amount of time with each sequence: listen to it, read it, recognize its structure and try to perform it while maintaining a stable pulse.</p>
+          <p>Continuous variation exposes the musician to different configurations and can also be used for sight-reading, rhythmic solfège and reacting to unprepared material.</p>
+        `,
+        p3Title: 'Traditional Patterns — return to context',
+        p3Body: `<p>Move from micro-units to musically recognizable patterns drawn from different Brazilian contexts. Observe how fragments already encountered acquire function and character inside larger structures.</p>`,
+        p4Title: 'Pattern Rotation — develop adaptability',
+        p4Body: `<p>Move from one pattern to another while maintaining pulse, continuity and phrasing. Periodic changes invite the musician to reorganize rhythmic behaviour without interrupting musical flow.</p>`,
+        p5Title: 'Hybrid Pattern — connect patterns and generation',
+        p5Body: `
+          <p>Alternate material drawn from recognizable patterns with freely generated combinations.</p>
+          <p>The module places an already contextualized rhythmic grammar in relation to less predictable material, exploring how free fragments can operate within more recognizable structures.</p>
+        `,
+        p6Title: 'Creative Flow — give up control of the sequence',
+        p6Body: `
+          <p>The system automatically combines the possibilities available in Hybrid Pattern, choosing without intervention from the musician between pattern openings or endings and different forms of generated material.</p>
+          <p>The task is to move through these changes without knowing in advance what will come next.</p>
+          <p>Use it as a transition towards freer improvisation.</p>
         `,
         subheadTitle: 'Reading the notation',
         subheadBody: `
-          <p>BSL notation primarily highlights onset points. A written rest after an onset does not necessarily require the previous sound to stop: duration, articulation, accent and phrasing remain open to interpretation.</p>
-          <p>The notation intentionally isolates one aspect of rhythm in order to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>
-        `,
-        practiceCycleTitle: 'Practice cycle',
-        practiceCycleCaption: 'Melodic application happens after internalizing each exercise — not only once, at the very end of the whole method.',
-        pc1: 'RHYTHM', pc2: 'MELODICIZE', pc3: 'CONTEXTUALIZE', pc4: 'IMPROVISE',
-        practiceCycleFoot: 'This short loop repeats inside every module of the method, at whatever scale the module works at — a single fragment, a traditional pattern, or a fully generated study.'
+          <p>BSL notation primarily highlights onset points.</p>
+          <p>A written rest following an attack does not necessarily require the previous sound to stop: duration, articulation, accent and phrasing remain open to interpretation.</p>
+          <p>The representation intentionally isolates one aspect of rhythm in order to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>
+        `
       },
       it: {
         title: 'Come funziona',
-        intro: 'Il Brazilian Syncopation Lab concentra temporaneamente l’attenzione sul ritmo della linea melodica: prima sul quando avvengono gli attacchi, poi sulle note che li realizzano.',
+        intro: 'Il Brazilian Syncopation Lab concentra temporaneamente l\u2019attenzione sul ritmo della linea melodica: prima sul quando avvengono gli attacchi, poi sulle note che li realizzano.',
         cycle1: 'ASCOLTA', cycle2: 'INTERIORIZZA', cycle3: 'MELODICIZZA', cycle4: 'CONTESTUALIZZA', cycle5: 'IMPROVVISA',
-        body: `
-          <p>Il ritmo viene prima ascoltato, ripetuto e interiorizzato. Una volta stabile, ogni attacco viene sostituito da note scelte liberamente da materiali già conosciuti dal musicista: scale, pentatoniche, arpeggi, intervalli o altro vocabolario personale.</p>
-          <p>Il musicista sceglie quindi un contesto ritmico brasiliano e un singolo accordo o centro modale. La staticità armonica è intenzionale: riduce temporaneamente il carico armonico per concentrare l’attenzione sull’organizzazione ritmica della frase.</p>
-          <p>Da qui l’esercizio viene progressivamente variato fino all’improvvisazione libera, senza l’obbligo di riprodurre letteralmente il materiale studiato.</p>
-          <p>Questo processo si ripete all’interno di ogni modulo del BSL, dai singoli frammenti ai pattern e alle combinazioni generative.</p>
+        body1: `
+          <p>Il ritmo viene prima ascoltato, ripetuto e interiorizzato. Una volta stabile, gli attacchi vengono realizzati con note scelte liberamente da materiali già conosciuti dal musicista: scale, pentatoniche, arpeggi, intervalli o altro vocabolario personale.</p>
+          <p>La figura viene quindi inserita in un contesto musicale e progressivamente variata, fino a lasciare spazio all'improvvisazione senza l'obbligo di riprodurre letteralmente il materiale studiato.</p>
+        `,
+        bringTitle: 'Porta subito il ritmo nella musica',
+        bringBody: `
+          <p>Quando una figura comincia a diventare familiare, non lasciarla come puro esercizio ritmico.</p>
+          <p>Nell'app scegli una backing track nella sezione Rhythmic Context e un accordo o centro modale nella sezione Melodic Application. Usa quindi gli attacchi della figura con scale, pentatoniche, arpeggi, intervalli o con il tuo vocabolario personale e comincia progressivamente a variarla.</p>
+          <p class="emphasis">NON ASPETTARE LA FINE DEL PERCORSO PER IMPROVVISARE: PORTA OGNI MATERIALE NELLA MELODIA FIN DALL'INIZIO.</p>
+          <p>La staticità armonica è intenzionale: un singolo accordo o centro modale riduce temporaneamente il carico armonico e permette di concentrare maggiormente l'attenzione sull'organizzazione ritmica della frase.</p>
+        `,
+        pathTitle: 'Percorso suggerito',
+        p1Title: 'Fragment Practice — conosci il materiale',
+        p1Body: `<p>Esplora una micro-cellula alla volta. Impara a riconoscerne il suono e la notazione, a sentirne gli attacchi rispetto alla pulsazione e a riprodurla con voce, corpo o strumento.</p>`,
+        p2Title: 'Random Generator — amplia le possibilità',
+        p2Body: `
+          <p>Lascia che il sistema costruisca combinazioni che non avresti necessariamente scelto da solo. Dedica un breve tempo a ciascuna sequenza: ascoltala, leggila, riconoscine la struttura e prova a realizzarla mantenendo stabile la pulsazione.</p>
+          <p>La variazione continua espone il musicista a configurazioni differenti e può essere utilizzata anche come esercizio di lettura a prima vista, solfeggio ritmico e reazione a materiale non preparato.</p>
+        `,
+        p3Title: 'Traditional Patterns — ritrova il contesto',
+        p3Body: `<p>Passa dalle micro-unità a pattern musicalmente riconoscibili provenienti da differenti contesti brasiliani. Osserva come frammenti già incontrati acquistano funzione e carattere all'interno di strutture più ampie.</p>`,
+        p4Title: 'Pattern Rotation — sviluppa adattabilità',
+        p4Body: `<p>Passa da un pattern all'altro mantenendo pulsazione, continuità e fraseggio. Il cambio periodico invita a riorganizzare il comportamento ritmico senza interrompere il flusso musicale.</p>`,
+        p5Title: 'Hybrid Pattern — metti in dialogo pattern e generazione',
+        p5Body: `
+          <p>Alterna materiale proveniente da pattern riconoscibili e combinazioni generate liberamente.</p>
+          <p>Il modulo mette così in relazione una grammatica ritmica già contestualizzata con materiale meno prevedibile, esplorando come i frammenti liberi possano inserirsi all'interno di strutture più riconoscibili.</p>
+        `,
+        p6Title: 'Creative Flow — rinuncia al controllo della sequenza',
+        p6Body: `
+          <p>Il sistema combina automaticamente le possibilità di Hybrid Pattern, scegliendo senza intervento del musicista tra aperture o chiusure di pattern e differenti forme di materiale generato.</p>
+          <p>Il compito è attraversare questi cambiamenti senza sapere in anticipo quale soluzione arriverà.</p>
+          <p>Usalo come passaggio verso un'improvvisazione più libera.</p>
         `,
         subheadTitle: 'Come leggere la notazione',
         subheadBody: `
-          <p>La notazione evidenzia principalmente i punti di attacco. Una pausa dopo un attacco non implica necessariamente l’interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all’interpretazione.</p>
-          <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo più facile da osservare e manipolare; non rappresenta l’intera performance musicale.</p>
-        `,
-        practiceCycleTitle: 'Ciclo di pratica',
-        practiceCycleCaption: 'L’applicazione melodica avviene dopo l’interiorizzazione di ogni singolo esercizio — non solo una volta, alla fine dell’intero metodo.',
-        pc1: 'RITMO', pc2: 'MELODIZZA', pc3: 'CONTESTUALIZZA', pc4: 'IMPROVVISA',
-        practiceCycleFoot: 'Questo breve ciclo si ripete dentro ogni modulo del metodo, alla scala in cui quel modulo lavora — un singolo frammento, un pattern tradizionale, oppure uno studio generato per intero.'
+          <p>La notazione del BSL evidenzia principalmente i punti di attacco.</p>
+          <p>Una pausa dopo un attacco non implica necessariamente l'interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all'interpretazione.</p>
+          <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo più facile da osservare e manipolare; non rappresenta l'intera performance musicale.</p>
+        `
       },
       pt: {
         title: 'Como funciona',
         intro: 'O Brazilian Syncopation Lab concentra temporariamente a atenção no ritmo da linha melódica: primeiro em quando os ataques acontecem e, depois, nas notas utilizadas para realizá-los.',
         cycle1: 'OUÇA', cycle2: 'INTERIORIZE', cycle3: 'MELODIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
-        body: `
-          <p>O ritmo é primeiro ouvido, repetido e interiorizado. Quando estiver estável, cada ataque é substituído por notas escolhidas livremente a partir de materiais que o músico já conhece: escalas, pentatônicas, arpejos, intervalos ou seu próprio vocabulário.</p>
-          <p>Em seguida, o músico escolhe um contexto rítmico brasileiro e um único acorde ou centro modal. A estabilidade harmônica é intencional: reduz temporariamente a demanda harmônica para concentrar a atenção na organização rítmica da frase.</p>
-          <p>A partir daí, o exercício é progressivamente variado até chegar à improvisação livre, sem a obrigação de reproduzir literalmente o material estudado.</p>
-          <p>Esse processo se repete dentro de cada módulo do BSL, dos fragmentos individuais aos padrões e às combinações generativas.</p>
+        body1: `
+          <p>O ritmo é primeiro ouvido, repetido e interiorizado. Quando estiver estável, seus ataques são realizados com notas escolhidas livremente a partir de materiais que o músico já conhece: escalas, pentatônicas, arpejos, intervalos ou outro vocabulário pessoal.</p>
+          <p>A figura é então inserida em um contexto musical e progressivamente variada, até abrir espaço para a improvisação sem a obrigação de reproduzir literalmente o material estudado.</p>
+        `,
+        bringTitle: 'Leve o ritmo imediatamente para a música',
+        bringBody: `
+          <p>Quando uma figura começar a se tornar familiar, não a deixe apenas como um exercício rítmico.</p>
+          <p>No app, escolha uma backing track na seção Rhythmic Context e um acorde ou centro modal na seção Melodic Application. Em seguida, realize os ataques da figura com escalas, pentatônicas, arpejos, intervalos ou com seu próprio vocabulário e comece progressivamente a variá-la.</p>
+          <p class="emphasis">NÃO ESPERE CHEGAR AO FIM DO PERCURSO PARA IMPROVISAR: LEVE CADA MATERIAL PARA A MELODIA DESDE O INÍCIO.</p>
+          <p>A estabilidade harmônica é intencional: um único acorde ou centro modal reduz temporariamente a demanda harmônica e permite concentrar mais atenção na organização rítmica da frase.</p>
+        `,
+        pathTitle: 'Percurso sugerido',
+        p1Title: 'Fragment Practice — conheça o material',
+        p1Body: `<p>Explore uma microcélula de cada vez. Aprenda a reconhecer seu som e sua notação, a sentir seus ataques em relação à pulsação e a reproduzi-la com voz, corpo ou instrumento.</p>`,
+        p2Title: 'Random Generator — amplie as possibilidades',
+        p2Body: `
+          <p>Deixe que o sistema crie combinações que você não escolheria necessariamente por conta própria. Dedique um breve tempo a cada sequência: ouça, leia, reconheça sua estrutura e tente realizá-la mantendo a pulsação estável.</p>
+          <p>A variação contínua expõe o músico a diferentes configurações e também pode ser utilizada como exercício de leitura à primeira vista, solfejo rítmico e reação a materiais não preparados.</p>
+        `,
+        p3Title: 'Traditional Patterns — reencontre o contexto',
+        p3Body: `<p>Passe das micro-unidades para padrões musicalmente reconhecíveis provenientes de diferentes contextos brasileiros. Observe como fragmentos já encontrados adquirem função e caráter dentro de estruturas maiores.</p>`,
+        p4Title: 'Pattern Rotation — desenvolva adaptabilidade',
+        p4Body: `<p>Passe de um padrão para outro mantendo pulsação, continuidade e fraseado. As mudanças periódicas convidam o músico a reorganizar seu comportamento rítmico sem interromper o fluxo musical.</p>`,
+        p5Title: 'Hybrid Pattern — coloque padrões e geração em diálogo',
+        p5Body: `
+          <p>Alterne materiais provenientes de padrões reconhecíveis com combinações geradas livremente.</p>
+          <p>O módulo coloca uma gramática rítmica já contextualizada em relação com materiais menos previsíveis, explorando como fragmentos livres podem funcionar dentro de estruturas mais reconhecíveis.</p>
+        `,
+        p6Title: 'Creative Flow — abra mão do controle da sequência',
+        p6Body: `
+          <p>O sistema combina automaticamente as possibilidades disponíveis no Hybrid Pattern, escolhendo sem intervenção do músico entre aberturas ou finais de padrões e diferentes formas de material gerado.</p>
+          <p>A tarefa é atravessar essas mudanças sem saber de antemão qual solução virá em seguida.</p>
+          <p>Use-o como uma passagem para uma improvisação mais livre.</p>
         `,
         subheadTitle: 'Como ler a notação',
         subheadBody: `
-          <p>A notação do BSL destaca principalmente os pontos de ataque. Uma pausa escrita depois de um ataque não implica necessariamente a interrupção do som anterior: duração, articulação, acentuação e fraseado permanecem abertos à interpretação.</p>
+          <p>A notação do BSL destaca principalmente os pontos de ataque.</p>
+          <p>Uma pausa escrita depois de um ataque não implica necessariamente a interrupção do som anterior: duração, articulação, acentuação e fraseado permanecem abertos à interpretação.</p>
           <p>A representação isola intencionalmente um aspecto do ritmo para torná-lo mais fácil de observar e manipular; ela não representa a totalidade da performance musical.</p>
-        `,
-        practiceCycleTitle: 'Ciclo de prática',
-        practiceCycleCaption: 'A aplicação melódica acontece após a interiorização de cada exercício — não apenas uma vez, ao final de todo o método.',
-        pc1: 'RITMO', pc2: 'MELODIZE', pc3: 'CONTEXTUALIZE', pc4: 'IMPROVISE',
-        practiceCycleFoot: 'Esse pequeno ciclo se repete dentro de cada módulo do método, na escala em que aquele módulo trabalha — um único fragmento, um padrão tradicional, ou um estudo gerado por completo.'
+        `
       }
     };
   </script>

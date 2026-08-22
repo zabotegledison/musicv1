@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rhythmic Matrix — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=16" />
+  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
+  <link rel="stylesheet" href="src/css/style.css?v=18" />
 </head>
 <body>
   <header>
     <nav class="topnav">
       <div class="topnav-row">
+        <a href="home.html" data-i18n-nav="home">Home</a>
         <a href="index.html" data-i18n-nav="app">App</a>
         <a href="about.html" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" class="active" data-i18n-nav="matrix">Rhythmic Matrix</a>
@@ -26,37 +28,87 @@
   </header>
 
   <main class="doc-page">
-    <h2 data-i18n="title">The Rhythmic Matrix</h2>
-    <div data-i18n="body"></div>
+    <h2 data-i18n="title">From one cell to a vocabulary</h2>
+    <div data-i18n="bodyBefore"></div>
 
-    <h2 data-i18n="treeTitle">Genealogy</h2>
-    <div class="geneal-tree">
-      <div class="tree-row">
-        <div class="tree-node tree-root"><span data-i18n="tMatrixCell">MATRIX CELL</span><div class="tree-caption">Mário de Andrade</div></div>
+    <div class="genealogy-columns">
+      <div class="genealogy-column" id="genColA">
+        <div class="family-head quality-a" data-i18n="tFamilyA">Family A</div>
       </div>
-      <div class="tree-connector" data-i18n="tSplit">↓ split into two beats</div>
-      <div class="tree-row">
-        <div class="tree-node quality-a">A1</div>
-        <div class="tree-node quality-b">B1</div>
-      </div>
-      <div class="tree-connector" data-i18n="tTransform">↓ local transformations</div>
-      <div class="tree-row">
-        <div class="tree-node quality-a" data-i18n="tFamilyA">A-family</div>
-        <div class="tree-node tree-rest" data-i18n="tRest">REST</div>
-        <div class="tree-node quality-b" data-i18n="tFamilyB">B-family</div>
-      </div>
-      <div class="tree-connector">↓</div>
-      <div class="tree-row">
-        <div class="tree-node tree-result"><span data-i18n="tVocab">RESULTING OPERATIONAL RHYTHMIC VOCABULARY</span><div class="tree-caption" data-i18n="tVocabCaption">15 non-empty onset configurations + REST</div></div>
-      </div>
-      <div class="tree-connector">↓</div>
-      <div class="tree-row">
-        <div class="tree-node" data-i18n="tRecomb">recombination / patterns</div>
-        <div class="tree-node" data-i18n="tMelodic">melodic application</div>
-        <div class="tree-node" data-i18n="tImprov">improvisation</div>
+      <div class="genealogy-column" id="genColB">
+        <div class="family-head quality-b" data-i18n="tFamilyB">Family B</div>
       </div>
     </div>
+    <div class="genealogy-rest-row" id="genRestRow"></div>
+
+    <div data-i18n="bodyAfter"></div>
   </main>
+
+  <script>
+    (function () {
+      const FRAG_DOTS = {
+        A1: '●●○●', A2: '○●○●', A3: '●○○●', A4: '●●○○', A5: '○●○○', A6: '○○○●', Rest: '○○○○',
+        B1: '●○●○', B7: '●○○○', B8: '○○●○', B2: '●●●●', B3: '●○●●', B4: '●●●○', B5: '○●●●', B6: '○●●○', B9: '○○●●'
+      };
+      const ORDER_A = ['A1','A2','A3','A4','A5','A6'];
+      const ORDER_B = ['B1','B7','B8','B2','B3','B4','B5','B6','B9'];
+      const SPECIAL = new Set(['A1','B1','B2']);
+      const FRAG_FILE = { Rest: 'B10' };
+
+      function dotsHtml(pattern) {
+        return pattern.split('').map(c => `<span>${c}</span>`).join('');
+      }
+
+      async function renderFragment(container, id) {
+        const isSpecial = SPECIAL.has(id);
+        const card = document.createElement('div');
+        card.className = 'frag-card' + (isSpecial ? ' special' : '');
+        const notationId = 'gen-osmd-' + id;
+        const idLabel = id === 'Rest' ? `<span data-i18n="tRest">Rest</span>` : id;
+        card.innerHTML = `
+          <div class="frag-id">${idLabel}${isSpecial ? ' <span class="frag-star">★</span>' : ''}</div>
+          <div class="frag-notation" id="${notationId}"></div>
+          <div class="frag-dots">${dotsHtml(FRAG_DOTS[id])}</div>
+        `;
+        container.appendChild(card);
+        try {
+          const fileName = FRAG_FILE[id] || id;
+          const resp = await fetch(`assets/fragments/${fileName}.xml`);
+          const xml = await resp.text();
+          const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(notationId, {
+            backend: 'svg', drawTitle: false, drawSubtitle: false, drawComposer: false,
+            drawPartNames: false, drawMeasureNumbers: false, autoResize: false
+          });
+          await osmd.load(xml);
+          osmd.EngravingRules.RenderTimeSignatures = false;
+          osmd.EngravingRules.PageBackgroundColor = isSpecial ? '#FDF6D8' : '#FBFBF8';
+          osmd.EngravingRules.DefaultColorMusic = '#000000';
+          osmd.zoom = 0.7;
+          osmd.render();
+        } catch (e) {
+          console.warn('Genealogy notation failed to load for', id, e);
+        }
+      }
+
+      async function buildGenealogy() {
+        const colA = document.getElementById('genColA');
+        const colB = document.getElementById('genColB');
+        const restRow = document.getElementById('genRestRow');
+        if (!colA || !colB || !restRow) return;
+        for (const id of ORDER_A) await renderFragment(colA, id);
+        await renderFragment(restRow, 'Rest');
+        for (const id of ORDER_B) await renderFragment(colB, id);
+        // The Rest label is created after i18n.js's initial translation pass, so translate it now.
+        let lang = 'en';
+        try { lang = localStorage.getItem('bslInfoLang') || 'en'; } catch (e) {}
+        const dict = (window.BSL_I18N_CONTENT && window.BSL_I18N_CONTENT[lang]) || {};
+        const restEl = restRow.querySelector('[data-i18n="tRest"]');
+        if (restEl && dict.tRest) restEl.textContent = dict.tRest;
+      }
+
+      document.addEventListener('DOMContentLoaded', buildGenealogy);
+    })();
+  </script>
 
   <footer class="site-footer">
     <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
@@ -65,58 +117,52 @@
   <script>
     window.BSL_I18N_CONTENT = {
       en: {
-        title: 'The Rhythmic Matrix',
-        body: `
-          <p class="lede">The BSL matrix begins with a rhythmic cell used as a historical and pedagogical starting point from Mário de Andrade.</p>
-          <p>The cell is first separated into its two beats, A1 and B1. From these structures, the vocabulary develops through local transformations: extending or joining adjacent events, replacing attacks with silence, and other variations that preserve the temporal structure of the starting material as much as possible.</p>
-          <p>The resulting system contains the 15 possible non-empty onset configurations across the four sixteenth-note positions of a beat, plus complete silence.</p>
-          <p>This completeness is an observable property of the resulting vocabulary, not the mathematical principle from which the method was constructed.</p>
-          <p>The fragments are operational micro-units. Their musical meaning emerges through their relationship with patterns, articulation, repertoire, context and improvisation.</p>
+        title: 'From one cell to a vocabulary',
+        bodyBefore: `
+          <p class="lede">BSL begins with the figure known in the literature as the síncopa característica, a term attributed to Mário de Andrade and connected to his reflections on Brazilian rhythm, also developed in the 1928 Ensaio sobre a música brasileira. Later literature continues to use this term for a figure recurrent in Brazilian music of the nineteenth and twentieth centuries.</p>
+          <p>By separating the cell into its two beats, I began treating them as small independent materials and asking:</p>
+          <p class="emphasis">WHAT HAPPENS IF I JOIN TWO EVENTS? IF I EXTEND ONE OF THEM? IF I REPLACE AN ATTACK WITH A REST?</p>
+          <p>From these simple transformations, the A and B families gradually emerged. The B branch also incorporates a different subdivision of the beat found in Mário de Andrade's material, from which further variants develop.</p>
+          <p>The two colors help to make the genealogy of the families visible and to recognize them when they are combined.</p>
         `,
-        treeTitle: 'Genealogy',
-        tMatrixCell: 'MATRIX CELL',
-        tSplit: '↓ split into two beats',
-        tTransform: '↓ local transformations',
-        tFamilyA: 'A-family', tFamilyB: 'B-family', tRest: 'REST',
-        tVocab: 'RESULTING OPERATIONAL RHYTHMIC VOCABULARY',
-        tVocabCaption: '15 non-empty onset configurations + REST',
-        tRecomb: 'recombination / patterns', tMelodic: 'melodic application', tImprov: 'improvisation'
+        bodyAfter: `
+          <p>Only later did an interesting property emerge: taken as a whole, the resulting vocabulary covers all 15 possible non-empty onset configurations across the four sixteenth-note positions of a beat. Complete silence is treated separately as REST.</p>
+          <p class="emphasis">THE COMPLETENESS OF THE 15 CONFIGURATIONS WAS NOT BSL'S STARTING POINT: IT IS A PROPERTY THAT EMERGED RETROSPECTIVELY FROM THE MATERIAL PRODUCED THROUGH THESE TRANSFORMATIONS.</p>
+          <p>The figures are therefore not presented as "the fundamental rhythms of Brazilian music." They are a small operational vocabulary to be heard, recognized, combined and transformed, and then continually brought back into patterns, repertoire, context and improvisation.</p>
+        `,
+        tFamilyA: 'Family A', tFamilyB: 'Family B', tRest: 'Rest'
       },
       it: {
-        title: 'La matrice ritmica',
-        body: `
-          <p class="lede">La matrice del BSL nasce da una cellula ritmica assunta come punto di partenza storico e pedagogico a partire da Mário de Andrade.</p>
-          <p>La cellula viene inizialmente separata nelle sue due pulsazioni, A1 e B1. Da queste strutture il vocabolario si sviluppa attraverso trasformazioni locali: prolungamento o fusione di eventi adiacenti, sostituzione di attacchi con silenzi e altre variazioni che mantengono riconoscibile la struttura temporale di partenza.</p>
-          <p>Il sistema risultante comprende 15 configurazioni non vuote di attacco possibili sulle quattro posizioni di semicroma della pulsazione, oltre al silenzio completo.</p>
-          <p>Questa completezza è una proprietà osservabile del vocabolario risultante, non il principio matematico da cui il metodo è stato costruito.</p>
-          <p>I frammenti sono micro-unità operative. Il loro significato musicale emerge nella relazione con pattern, articolazione, repertorio, contesto e improvvisazione.</p>
+        title: 'Da una cellula a un vocabolario',
+        bodyBefore: `
+          <p class="lede">Il BSL parte dalla figura nota nella letteratura come síncopa característica, denominazione attribuita a Mário de Andrade e legata alle sue riflessioni sul ritmo brasiliano sviluppate anche nell'Ensaio sobre a música brasileira del 1928. La letteratura successiva continua a utilizzare questa denominazione per una figura ricorrente nella musica brasiliana tra XIX e XX secolo.</p>
+          <p>Separando la cellula nelle sue due pulsazioni, ho iniziato a trattarle come piccoli materiali indipendenti e a chiedermi:</p>
+          <p class="emphasis">COSA SUCCEDE SE COLLEGO DUE EVENTI? SE NE PROLUNGO UNO? SE SOSTITUISCO UN ATTACCO CON UNA PAUSA?</p>
+          <p>Da queste semplici trasformazioni sono nate progressivamente le famiglie A e B. Nel ramo B entra inoltre una diversa suddivisione della pulsazione presente nel materiale di Mário de Andrade, dalla quale si sviluppano ulteriori varianti.</p>
+          <p>I due colori aiutano a rendere visibile la genealogia delle famiglie e a riconoscerle quando vengono combinate.</p>
         `,
-        treeTitle: 'Genealogia',
-        tMatrixCell: 'CELLULA MATRICE',
-        tSplit: '↓ divisa in due pulsazioni',
-        tTransform: '↓ trasformazioni locali',
-        tFamilyA: 'famiglia A', tFamilyB: 'famiglia B', tRest: 'SILENZIO',
-        tVocab: 'VOCABOLARIO RITMICO OPERATIVO RISULTANTE',
-        tVocabCaption: '15 configurazioni non vuote + SILENZIO',
-        tRecomb: 'ricombinazione / pattern', tMelodic: 'applicazione melodica', tImprov: 'improvvisazione'
+        bodyAfter: `
+          <p>Solo in seguito è emerso un fatto interessante: nel suo insieme, il vocabolario ottenuto copre tutte le 15 configurazioni non vuote possibili degli attacchi sulle quattro semicrome di una pulsazione. Il silenzio completo viene trattato separatamente come REST.</p>
+          <p class="emphasis">LA COMPLETEZZA DELLE 15 CONFIGURAZIONI NON ERA IL PUNTO DI PARTENZA DEL BSL: È UNA PROPRIETÀ EMERSA A POSTERIORI DAL MATERIALE COSTRUITO ATTRAVERSO QUESTE TRASFORMAZIONI.</p>
+          <p>Le figure non vengono quindi proposte come "i ritmi fondamentali della musica brasiliana". Sono un piccolo vocabolario operativo da ascoltare, riconoscere, combinare e trasformare, per poi riportarlo continuamente dentro pattern, repertorio, contesto e improvvisazione.</p>
+        `,
+        tFamilyA: 'Famiglia A', tFamilyB: 'Famiglia B', tRest: 'Rest'
       },
       pt: {
-        title: 'A matriz rítmica',
-        body: `
-          <p class="lede">A matriz do BSL parte de uma célula rítmica tomada como referência histórica e pedagógica a partir de Mário de Andrade.</p>
-          <p>A célula é inicialmente separada em suas duas pulsações, A1 e B1. A partir dessas estruturas, o vocabulário se desenvolve por meio de transformações locais: prolongamento ou união de eventos adjacentes, substituição de ataques por silêncios e outras variações que preservam, tanto quanto possível, a estrutura temporal do material de partida.</p>
-          <p>O sistema resultante contém as 15 configurações não vazias possíveis de ataques nas quatro posições de semicolcheia de uma pulsação, além do silêncio completo.</p>
-          <p>Essa completude é uma propriedade observável do vocabulário resultante, e não o princípio matemático a partir do qual o método foi construído.</p>
-          <p>Os fragmentos são micro-unidades operacionais. Seu significado musical emerge na relação com padrões, articulação, repertório, contexto e improvisação.</p>
+        title: 'De uma célula a um vocabulário',
+        bodyBefore: `
+          <p class="lede">O BSL parte da figura conhecida na literatura como síncopa característica, denominação atribuída a Mário de Andrade e ligada às suas reflexões sobre o ritmo brasileiro, desenvolvidas também no Ensaio sobre a música brasileira, de 1928. A literatura posterior continua utilizando essa denominação para uma figura recorrente na música brasileira dos séculos XIX e XX.</p>
+          <p>Ao separar a célula em suas duas pulsações, comecei a tratá-las como pequenos materiais independentes e a me perguntar:</p>
+          <p class="emphasis">O QUE ACONTECE SE EU UNIR DOIS EVENTOS? SE PROLONGAR UM DELES? SE SUBSTITUIR UM ATAQUE POR UMA PAUSA?</p>
+          <p>A partir dessas transformações simples surgiram progressivamente as famílias A e B. No ramo B aparece ainda uma diferente subdivisão da pulsação presente no material de Mário de Andrade, a partir da qual se desenvolvem outras variantes.</p>
+          <p>As duas cores ajudam a tornar visível a genealogia das famílias e a reconhecê-las quando são combinadas.</p>
         `,
-        treeTitle: 'Genealogia',
-        tMatrixCell: 'CÉLULA MATRIZ',
-        tSplit: '↓ dividida em duas pulsações',
-        tTransform: '↓ transformações locais',
-        tFamilyA: 'família A', tFamilyB: 'família B', tRest: 'SILÊNCIO',
-        tVocab: 'VOCABULÁRIO RÍTMICO OPERACIONAL RESULTANTE',
-        tVocabCaption: '15 configurações não vazias + SILÊNCIO',
-        tRecomb: 'recombinação / padrões', tMelodic: 'aplicação melódica', tImprov: 'improvisação'
+        bodyAfter: `
+          <p>Somente depois surgiu uma propriedade interessante: considerado em seu conjunto, o vocabulário obtido cobre todas as 15 configurações não vazias possíveis de ataques nas quatro posições de semicolcheia de uma pulsação. O silêncio completo é tratado separadamente como REST.</p>
+          <p class="emphasis">A COMPLETUDE DAS 15 CONFIGURAÇÕES NÃO FOI O PONTO DE PARTIDA DO BSL: É UMA PROPRIEDADE QUE EMERGIU POSTERIORMENTE DO MATERIAL CONSTRUÍDO POR MEIO DESSAS TRANSFORMAÇÕES.</p>
+          <p>As figuras, portanto, não são apresentadas como "os ritmos fundamentais da música brasileira". Elas constituem um pequeno vocabulário operacional a ser ouvido, reconhecido, combinado e transformado, para depois ser continuamente recolocado dentro de padrões, repertório, contexto e improvisação.</p>
+        `,
+        tFamilyA: 'Família A', tFamilyB: 'Família B', tRest: 'Rest'
       }
     };
   </script>

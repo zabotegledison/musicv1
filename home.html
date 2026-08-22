@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brazilian Syncopation Lab</title>
+  <link rel="stylesheet" href="src/css/style.css?v=18" />
+</head>
+<body>
+  <header>
+    <nav class="topnav">
+      <div class="topnav-row">
+        <a href="home.html" class="active" data-i18n-nav="home">Home</a>
+        <a href="index.html" data-i18n-nav="app">App</a>
+        <a href="about.html" data-i18n-nav="how">How It Works</a>
+        <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
+        <a href="research.html" data-i18n-nav="research">Research &amp; Context</a>
+        <div class="lang-switch" id="langSwitch">
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="pt">PT</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="home-hero">
+    <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
+    <p class="subtitle" data-i18n="subtitle">Rhythm, improvisation and Brazilian Instrumental Music</p>
+    <p class="emphasis" data-i18n="emphasis"></p>
+    <div data-i18n="intro"></div>
+    <a class="home-cta" href="index.html" data-i18n="cta">Explore the Lab →</a>
+
+    <div class="home-why">
+      <h2 data-i18n="whyTitle">Why "Syncopation"?</h2>
+      <div data-i18n="whyBody"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
+  </footer>
+
+  <script>
+    window.BSL_I18N_CONTENT = {
+      en: {
+        subtitle: 'Rhythm, improvisation and Brazilian Instrumental Music',
+        emphasis: 'TRAIN RHYTHM UNTIL IT BECOMES PART OF THE WAY YOU IMPROVISE.',
+        intro: `
+          <p>Brazilian Syncopation Lab is an artistic and pedagogical environment for exploring, internalizing and transforming rhythmic material, applying it directly to melodic phrasing and improvisation across different contexts of Música Instrumental Brasileira.</p>
+          <p>The path moves from rhythmic micro-units to patterns, from combination and variation to free improvisation. The goal is not to accumulate figures to reproduce, but to make rhythm progressively available for personal musical creation.</p>
+        `,
+        cta: 'Explore the Lab →',
+        whyTitle: 'Why "Syncopation"?',
+        whyBody: `
+          <p>The term syncopation / síncope does not have a single meaning in the literature: its theoretical limits have been discussed, and some authors prefer concepts such as offbeatness or contrametricity.</p>
+          <p>BSL uses "Syncopation" in an operational and historical sense, as a recognizable term connected to the project's starting point, without assuming that it can describe the complexity of Brazilian rhythm on its own.</p>
+        `
+      },
+      it: {
+        subtitle: 'Rhythm, improvisation and Brazilian Instrumental Music',
+        emphasis: 'ALLENA IL RITMO FINCHÉ DIVENTA PARTE DEL TUO MODO DI IMPROVVISARE.',
+        intro: `
+          <p>Brazilian Syncopation Lab è un ambiente artistico-pedagogico per esplorare, interiorizzare e trasformare materiale ritmico, applicandolo direttamente alla linea melodica e all'improvvisazione in differenti contesti della Música Instrumental Brasileira.</p>
+          <p>Il percorso va dalle micro-unità ritmiche ai pattern, dalla combinazione e variazione fino all'improvvisazione libera. L'obiettivo non è accumulare figure da riprodurre, ma rendere il ritmo progressivamente disponibile alla creazione musicale personale.</p>
+        `,
+        cta: 'Esplora il Lab →',
+        whyTitle: 'Perché "Syncopation"?',
+        whyBody: `
+          <p>Il termine syncopation / síncope non ha un significato unico nella letteratura: i suoi limiti teorici sono stati discussi e alcuni autori preferiscono concetti come offbeatness o contrametricità.</p>
+          <p>BSL utilizza "Syncopation" in senso operativo e storico, come termine riconoscibile legato al punto di partenza del progetto, senza assumere che esso descriva da solo la complessità del ritmo brasiliano.</p>
+        `
+      },
+      pt: {
+        subtitle: 'Ritmo, improvisação e Música Instrumental Brasileira',
+        emphasis: 'TREINE O RITMO ATÉ QUE ELE SE TORNE PARTE DA SUA MANEIRA DE IMPROVISAR.',
+        intro: `
+          <p>O Brazilian Syncopation Lab é um ambiente artístico-pedagógico para explorar, interiorizar e transformar materiais rítmicos, aplicando-os diretamente à linha melódica e à improvisação em diferentes contextos da Música Instrumental Brasileira.</p>
+          <p>O percurso vai das micro-unidades rítmicas aos padrões, da combinação e da variação até a improvisação livre. O objetivo não é acumular figuras para reproduzir, mas tornar o ritmo progressivamente disponível para a criação musical pessoal.</p>
+        `,
+        cta: 'Explore o Lab →',
+        whyTitle: 'Por que "Syncopation"?',
+        whyBody: `
+          <p>O termo syncopation / síncope não possui um significado único na literatura: seus limites teóricos têm sido discutidos e alguns autores preferem conceitos como offbeatness ou contrametricidade.</p>
+          <p>O BSL utiliza "Syncopation" em sentido operacional e histórico, como um termo reconhecível ligado ao ponto de partida do projeto, sem pressupor que ele possa, sozinho, descrever a complexidade do ritmo brasileiro.</p>
+        `
+      }
+    };
+  </script>
+  <script src="src/js/i18n.js?v=1"></script>
+</body>
+</html>

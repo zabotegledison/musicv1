@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Research &amp; Context — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=16" />
+  <link rel="stylesheet" href="src/css/style.css?v=18" />
 </head>
 <body>
   <header>
     <nav class="topnav">
       <div class="topnav-row">
+        <a href="home.html" data-i18n-nav="home">Home</a>
         <a href="index.html" data-i18n-nav="app">App</a>
         <a href="about.html" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
@@ -26,8 +27,17 @@
   </header>
 
   <main class="doc-page">
-    <h2 data-i18n="title">Research &amp; Context</h2>
-    <div data-i18n="body"></div>
+    <h2 data-i18n="title">From a musical question to BSL</h2>
+    <div data-i18n="intro"></div>
+
+    <h3 data-i18n="s1Title">A point of access for other musicians</h3>
+    <div data-i18n="s1Body"></div>
+
+    <h3 data-i18n="s2Title">From practice to research</h3>
+    <div data-i18n="s2Body"></div>
+
+    <h3>Música Instrumental Brasileira</h3>
+    <div data-i18n="s3Body"></div>
   </main>
 
   <footer class="site-footer">
@@ -37,33 +47,120 @@
   <script>
     window.BSL_I18N_CONTENT = {
       en: {
-        title: 'Research & Context',
-        body: `
-          <p class="lede">In this project, Música Instrumental Brasileira (MIB) is used as an operational term for the broad field of Brazilian instrumental and improvised practices considered by the research, including areas of interaction with jazz. This usage intentionally simplifies a historically and stylistically much more complex field (Mongiovi, 2017).</p>
-          <p>BSL begins with a question:</p>
-          <p><em>How can a melodically free and personal improvisational language maintain strong rhythmic coherence across different contexts of Música Instrumental Brasileira?</em></p>
-          <p>The research explores how intentional and digitally assisted rhythmic practice may contribute to the transition from studied material to autonomous improvisational use, and what roles micro-units, patterns, context and variation may play in this process.</p>
-          <p>BSL is an evolving prototype developed through artistic practice, pedagogical experimentation and research.</p>
+        title: 'From a musical question to BSL',
+        intro: `
+          <p class="lede">Brazilian Syncopation Lab grows out of a question that has accompanied me for many years as a Brazilian musician, saxophonist, improviser and teacher:</p>
+          <p class="emphasis">HOW CAN I DEVELOP MELODICALLY FREE AND PERSONAL IMPROVISATION WHILE MAINTAINING STRONG RHYTHMIC COHERENCE ACROSS DIFFERENT CONTEXTS OF MÚSICA INSTRUMENTAL BRASILEIRA?</p>
+          <p>My musical education developed between Brazilian music and jazz. Over time, I built a broad melodic and harmonic vocabulary — scales, arpeggios, chromaticism, bebop language, transcriptions — yet I continued to face a very practical difficulty: how could I use all this material freely without allowing my rhythmic phrasing to remain primarily tied to the jazz language I had studied?</p>
+          <p>One of my first responses was to work directly on rhythm: transcribing figures, observing percussion accents, applying rhythmic configurations to scales and other melodic materials, isolating patterns and bringing them onto the instrument.</p>
+          <p>This work produced results: precision, awareness and the availability of new possibilities increased. But one problem remained.</p>
+          <p class="emphasis">KNOWING AND BEING ABLE TO PERFORM A FIGURE OR PATTERN DOES NOT NECESSARILY MEAN BEING ABLE TO USE IT FREELY WHILE IMPROVISING.</p>
+          <p>I also tried collecting and cataloguing phrases that seemed particularly effective. But when separated from the process that had generated them, those phrases risked becoming simply new licks to memorize.</p>
+          <p>What interested me was not accumulating more finished products, but understanding how to generate rhythmic behaviour autonomously.</p>
+          <p>Working with complete patterns revealed a similar limitation: it was useful for developing precision and character, but could easily lead to reproducing the same organizations.</p>
+          <p>The question therefore gradually shifted from what to practise to how to make what is practised become part of one's musical behaviour.</p>
+        `,
+        s1Title: 'A point of access for other musicians',
+        s1Body: `
+          <p>The same problem gradually acquired a pedagogical dimension.</p>
+          <p>Working and teaching in a predominantly non-Brazilian context, I encountered musicians who already possessed sophisticated improvisational tools — scales, chords, arpeggios, jazz vocabulary — but were looking for a practical way to enter the rhythmic dimension of Brazilian music without simply placing their habitual phrasing over a samba or baião backing track.</p>
+          <p>This led to a second question:</p>
+          <p class="emphasis">IS IT POSSIBLE TO OFFER ALREADY-TRAINED MUSICIANS A PRAGMATIC POINT OF ACCESS TO THE RHYTHMIC DIMENSION OF MÚSICA INSTRUMENTAL BRASILEIRA, STARTING FROM THE MELODIC VOCABULARY THEY ALREADY POSSESS?</p>
+          <p>BSL is not intended to replace listening, repertoire, bodily practice, interaction with other musicians or direct engagement with Brazilian musical cultures.</p>
+          <p>Instead, it seeks to construct an intentional and practical point of entry: temporarily isolate the rhythm of the melodic line, make it observable and manipulable, and continually bring it back into real musical contexts.</p>
+          <p>It is from this double problem — personal and pedagogical — that the idea of decomposing, varying and recombining rhythmic material gradually emerged.</p>
+          <p>Generation introduces configurations that the musician would not necessarily choose independently; backing tracks allow them to be immediately returned to different contexts; and the app makes it possible to hear, read, combine and transform these materials quickly.</p>
+          <p class="emphasis">THE DIGITAL ENVIRONMENT IS THEREFORE NOT BSL'S STARTING POINT: IT IS A TOOL CREATED TO ADDRESS A PRE-EXISTING MUSICAL AND PEDAGOGICAL PROBLEM.</p>
+        `,
+        s2Title: 'From practice to research',
+        s2Body: `
+          <p>At this point, the question is not simply whether the exercises are useful while they are being practised.</p>
+          <p>What interests me most is what remains when the exercise disappears: when there is no longer a figure to read, when the pattern is no longer suggested and the musician must construct their own phrasing autonomously.</p>
+          <p>How does deliberately studied rhythmic material become spontaneous behaviour? Does it remain available over time? Can it be used without literally reproducing what was practised? How does it change when moving from one Brazilian rhythmic context to another? And what role can a digital environment play in supporting this process without creating dependence on the tool?</p>
+          <p>BSL therefore also becomes an evolving research prototype: artistic practice, pedagogical experimentation and technology are used together to observe the transition from studied material to autonomous improvisational production.</p>
+          <p>The research does not begin from the assumption that the current method is necessarily correct. One of its aims is to understand which parts of BSL actually support this transition, which need to be modified and which may ultimately prove unnecessary.</p>
+        `,
+        s3Body: `
+          <p>In this project, Música Instrumental Brasileira (MIB) is used as an operational term for the broad field of Brazilian instrumental and improvised practices considered by the research, including areas of interaction with jazz.</p>
+          <p>This choice intentionally simplifies a historically and stylistically much more complex field.</p>
         `
       },
       it: {
-        title: 'Ricerca e contesto',
-        body: `
-          <p class="lede">In questo progetto, Música Instrumental Brasileira (MIB) è utilizzato come termine operativo per indicare l’ampio campo di pratiche strumentali e improvvisative brasiliane considerate dalla ricerca, comprese le aree di interazione con il jazz. La scelta semplifica consapevolmente un panorama storico e stilistico molto più articolato (Mongiovi, 2017).</p>
-          <p>Il BSL nasce da una domanda:</p>
-          <p><em>Come sviluppare un’improvvisazione melodicamente libera e personale che mantenga una forte coerenza ritmica con differenti contesti della Música Instrumental Brasileira?</em></p>
-          <p>La ricerca esplora come una pratica ritmica intenzionale e digitalmente assistita possa contribuire al passaggio dal materiale studiato al suo utilizzo autonomo nell’improvvisazione, e quale ruolo possano avere micro-unità, pattern, contesto e variazione in questo processo.</p>
-          <p>Il BSL è un prototipo in evoluzione, sviluppato attraverso pratica artistica, sperimentazione pedagogica e ricerca.</p>
+        title: 'Da una domanda musicale al BSL',
+        intro: `
+          <p class="lede">Il Brazilian Syncopation Lab nasce da una domanda che mi accompagna da molti anni come musicista brasiliano, sassofonista, improvvisatore e insegnante:</p>
+          <p class="emphasis">COME SVILUPPARE UN'IMPROVVISAZIONE MELODICAMENTE LIBERA E PERSONALE CHE MANTENGA UNA FORTE COERENZA RITMICA CON DIFFERENTI CONTESTI DELLA MÚSICA INSTRUMENTAL BRASILEIRA?</p>
+          <p>La mia formazione si è sviluppata tra musica brasiliana e jazz. Nel tempo ho costruito un ampio vocabolario melodico-armonico — scale, arpeggi, cromatismi, linguaggio bebop, trascrizioni — ma continuavo a percepire una difficoltà molto concreta: come utilizzare liberamente tutto questo materiale senza lasciare che il fraseggio ritmico rimanga legato soprattutto al linguaggio jazzistico che avevo studiato?</p>
+          <p>Una delle prime risposte è stata lavorare direttamente sul ritmo: trascrivere figure, osservare gli accenti della percussione, applicare configurazioni ritmiche a scale e altri materiali melodici, isolare pattern e portarli sullo strumento.</p>
+          <p>Questo lavoro produceva risultati: aumentavano precisione, consapevolezza e disponibilità di nuove soluzioni. Ma rimaneva un problema.</p>
+          <p class="emphasis">CONOSCERE UNA FIGURA O UN PATTERN NON SIGNIFICA NECESSARIAMENTE RIUSCIRE A USARLO LIBERAMENTE QUANDO SI IMPROVVISA.</p>
+          <p>Ho provato anche a raccogliere e catalogare frasi che mi sembravano particolarmente efficaci. Ma, separate dal processo che le aveva generate, quelle frasi rischiavano di diventare semplicemente nuovi licks da memorizzare.</p>
+          <p>Il problema che mi interessava non era accumulare più prodotti finiti, ma capire come generare autonomamente un comportamento ritmico.</p>
+          <p>Anche il lavoro con pattern completi mostrava un limite simile: era utile per sviluppare precisione e carattere, ma poteva facilmente portare a riprodurre le stesse organizzazioni.</p>
+          <p>La domanda si è quindi progressivamente spostata dal che cosa studiare al come far diventare ciò che si studia parte del proprio comportamento musicale.</p>
+        `,
+        s1Title: "Una porta d'accesso per altri musicisti",
+        s1Body: `
+          <p>Lo stesso problema ha assunto progressivamente anche una dimensione pedagogica.</p>
+          <p>Lavorando e insegnando in un contesto prevalentemente non brasiliano, mi sono trovato di fronte a musicisti che possedevano già strumenti sofisticati per improvvisare — scale, accordi, arpeggi, linguaggio jazzistico — ma che cercavano un modo pratico per entrare nella dimensione ritmica della musica brasiliana senza limitarsi a sovrapporre il proprio fraseggio abituale a una base di samba o baião.</p>
+          <p>Da qui nasce una seconda domanda:</p>
+          <p class="emphasis">È POSSIBILE OFFRIRE A MUSICISTI GIÀ FORMATI UNA PORTA D'ACCESSO PRAGMATICA ALLA DIMENSIONE RITMICA DELLA MÚSICA INSTRUMENTAL BRASILEIRA, PARTENDO DAL VOCABOLARIO MELODICO CHE POSSIEDONO GIÀ?</p>
+          <p>Il BSL non vuole sostituire l'ascolto, il repertorio, la pratica corporea, l'interazione con altri musicisti o il rapporto diretto con le culture musicali brasiliane.</p>
+          <p>Cerca piuttosto di costruire un punto d'ingresso intenzionale e praticabile: isolare temporaneamente il ritmo della linea melodica, renderlo osservabile e manipolabile e poi riportarlo continuamente dentro contesti musicali reali.</p>
+          <p>È da questo doppio problema — personale e pedagogico — che nasce progressivamente l'idea di scomporre, variare e ricombinare il materiale ritmico.</p>
+          <p>La generazione introduce configurazioni che il musicista non sceglierebbe necessariamente da solo; le backing track permettono di riportarle immediatamente dentro differenti contesti; l'app rende possibile ascoltare, leggere, combinare e trasformare rapidamente questi materiali.</p>
+          <p class="emphasis">L'AMBIENTE DIGITALE NON È QUINDI IL PUNTO DI PARTENZA DEL BSL: È UNO STRUMENTO NATO PER AFFRONTARE UN PROBLEMA MUSICALE E PEDAGOGICO PRECEDENTE.</p>
+        `,
+        s2Title: 'Dalla pratica alla ricerca',
+        s2Body: `
+          <p>La domanda, a questo punto, non è semplicemente se gli esercizi siano utili mentre vengono praticati.</p>
+          <p>Mi interessa soprattutto capire che cosa rimane quando l'esercizio scompare: quando non c'è più una figura da leggere, quando il pattern non viene suggerito e il musicista deve costruire autonomamente il proprio fraseggio.</p>
+          <p>In che modo materiale ritmico deliberatamente studiato diventa comportamento spontaneo? Rimane disponibile nel tempo? Può essere utilizzato senza riprodurre letteralmente ciò che è stato allenato? Come cambia passando da un contesto ritmico brasiliano a un altro? E quale ruolo può avere un ambiente digitale nel favorire questo processo senza creare dipendenza dal supporto?</p>
+          <p>Il BSL diventa così anche un prototipo di ricerca in evoluzione: pratica artistica, sperimentazione pedagogica e tecnologia vengono utilizzate insieme per osservare il passaggio dal materiale studiato alla produzione improvvisativa autonoma.</p>
+          <p>La ricerca non parte dall'idea che il metodo attuale sia necessariamente corretto. Uno dei suoi obiettivi è capire quali parti del BSL favoriscono realmente questo passaggio, quali devono essere modificate e quali potrebbero rivelarsi inutili.</p>
+        `,
+        s3Body: `
+          <p>In questo progetto, Música Instrumental Brasileira (MIB) viene utilizzato come termine operativo per indicare l'ampio campo di pratiche strumentali e improvvisative brasiliane considerate dalla ricerca, comprese le aree di interazione con il jazz.</p>
+          <p>La scelta semplifica consapevolmente un panorama storico e stilistico molto più articolato.</p>
         `
       },
       pt: {
-        title: 'Pesquisa e contexto',
-        body: `
-          <p class="lede">Neste projeto, Música Instrumental Brasileira (MIB) é utilizada como termo operacional para designar o amplo campo de práticas instrumentais e improvisativas brasileiras consideradas pela pesquisa, incluindo áreas de interação com o jazz. Essa escolha simplifica conscientemente um panorama histórico e estilístico muito mais complexo (Mongiovi, 2017).</p>
-          <p>O BSL nasce de uma pergunta:</p>
-          <p><em>Como desenvolver uma improvisação melodicamente livre e pessoal que mantenha forte coerência rítmica em diferentes contextos da Música Instrumental Brasileira?</em></p>
-          <p>A pesquisa investiga como uma prática rítmica intencional e assistida digitalmente pode contribuir para a passagem do material estudado ao seu uso autônomo na improvisação, e qual papel micro-unidades, padrões, contexto e variação podem desempenhar nesse processo.</p>
-          <p>O BSL é um protótipo em evolução, desenvolvido por meio da prática artística, da experimentação pedagógica e da pesquisa.</p>
+        title: 'De uma pergunta musical ao BSL',
+        intro: `
+          <p class="lede">O Brazilian Syncopation Lab nasce de uma pergunta que me acompanha há muitos anos como músico brasileiro, saxofonista, improvisador e professor:</p>
+          <p class="emphasis">COMO DESENVOLVER UMA IMPROVISAÇÃO MELODICAMENTE LIVRE E PESSOAL QUE MANTENHA FORTE COERÊNCIA RÍTMICA EM DIFERENTES CONTEXTOS DA MÚSICA INSTRUMENTAL BRASILEIRA?</p>
+          <p>Minha formação se desenvolveu entre a música brasileira e o jazz. Ao longo do tempo, construí um amplo vocabulário melódico-harmônico — escalas, arpejos, cromatismos, linguagem bebop, transcrições — mas continuava percebendo uma dificuldade muito concreta: como utilizar livremente todo esse material sem deixar que meu fraseado rítmico permanecesse ligado principalmente à linguagem jazzística que eu havia estudado?</p>
+          <p>Uma das primeiras respostas foi trabalhar diretamente sobre o ritmo: transcrever figuras, observar acentos da percussão, aplicar configurações rítmicas a escalas e outros materiais melódicos, isolar padrões e levá-los para o instrumento.</p>
+          <p>Esse trabalho produzia resultados: aumentavam a precisão, a consciência e a disponibilidade de novas possibilidades. Mas um problema permanecia.</p>
+          <p class="emphasis">CONHECER E SABER EXECUTAR UMA FIGURA OU UM PADRÃO NÃO SIGNIFICA NECESSARIAMENTE CONSEGUIR UTILIZÁ-LO LIVREMENTE DURANTE A IMPROVISAÇÃO.</p>
+          <p>Também tentei reunir e catalogar frases que me pareciam particularmente eficazes. Mas, separadas do processo que as havia gerado, essas frases corriam o risco de se transformar simplesmente em novos licks a serem memorizados.</p>
+          <p>O que me interessava não era acumular mais produtos prontos, mas compreender como gerar autonomamente um comportamento rítmico.</p>
+          <p>O trabalho com padrões completos revelava um limite semelhante: era útil para desenvolver precisão e caráter, mas podia facilmente levar à reprodução das mesmas organizações.</p>
+          <p>A pergunta, portanto, deslocou-se progressivamente de o que estudar para como fazer com que aquilo que se estuda se torne parte do próprio comportamento musical.</p>
+        `,
+        s1Title: 'Uma porta de entrada para outros músicos',
+        s1Body: `
+          <p>O mesmo problema adquiriu progressivamente também uma dimensão pedagógica.</p>
+          <p>Trabalhando e ensinando em um contexto predominantemente não brasileiro, encontrei músicos que já possuíam ferramentas sofisticadas para improvisar — escalas, acordes, arpejos, vocabulário jazzístico — mas buscavam uma maneira prática de entrar na dimensão rítmica da música brasileira sem simplesmente sobrepor seu fraseado habitual a uma base de samba ou baião.</p>
+          <p>Daí surge uma segunda pergunta:</p>
+          <p class="emphasis">É POSSÍVEL OFERECER A MÚSICOS JÁ FORMADOS UMA PORTA DE ENTRADA PRAGMÁTICA PARA A DIMENSÃO RÍTMICA DA MÚSICA INSTRUMENTAL BRASILEIRA, PARTINDO DO VOCABULÁRIO MELÓDICO QUE ELES JÁ POSSUEM?</p>
+          <p>O BSL não pretende substituir a escuta, o repertório, a prática corporal, a interação com outros músicos ou o contato direto com as culturas musicais brasileiras.</p>
+          <p>Busca, antes, construir um ponto de entrada intencional e praticável: isolar temporariamente o ritmo da linha melódica, torná-lo observável e manipulável e depois recolocá-lo continuamente dentro de contextos musicais reais.</p>
+          <p>É desse duplo problema — pessoal e pedagógico — que nasce progressivamente a ideia de decompor, variar e recombinar o material rítmico.</p>
+          <p>A geração introduz configurações que o músico não escolheria necessariamente por conta própria; as backing tracks permitem recolocá-las imediatamente em diferentes contextos; e o app torna possível ouvir, ler, combinar e transformar rapidamente esses materiais.</p>
+          <p class="emphasis">O AMBIENTE DIGITAL, PORTANTO, NÃO É O PONTO DE PARTIDA DO BSL: É UMA FERRAMENTA CRIADA PARA ENFRENTAR UM PROBLEMA MUSICAL E PEDAGÓGICO ANTERIOR.</p>
+        `,
+        s2Title: 'Da prática à pesquisa',
+        s2Body: `
+          <p>A pergunta, neste ponto, não é simplesmente se os exercícios são úteis enquanto estão sendo praticados.</p>
+          <p>O que mais me interessa é o que permanece quando o exercício desaparece: quando já não há uma figura para ler, quando o padrão deixa de ser sugerido e o músico precisa construir autonomamente o próprio fraseado.</p>
+          <p>Como um material rítmico estudado deliberadamente se transforma em comportamento espontâneo? Ele permanece disponível ao longo do tempo? Pode ser utilizado sem reproduzir literalmente aquilo que foi praticado? Como se modifica ao passar de um contexto rítmico brasileiro para outro? E qual papel um ambiente digital pode desempenhar nesse processo sem criar dependência do suporte?</p>
+          <p>O BSL torna-se, assim, também um protótipo de pesquisa em evolução: prática artística, experimentação pedagógica e tecnologia são utilizadas conjuntamente para observar a passagem do material estudado à produção improvisativa autônoma.</p>
+          <p>A pesquisa não parte da ideia de que o método atual seja necessariamente correto. Um de seus objetivos é compreender quais partes do BSL realmente favorecem essa passagem, quais precisam ser modificadas e quais podem acabar se revelando desnecessárias.</p>
+        `,
+        s3Body: `
+          <p>Neste projeto, Música Instrumental Brasileira (MIB) é utilizada como termo operacional para designar o amplo campo de práticas instrumentais e improvisativas brasileiras consideradas pela pesquisa, incluindo áreas de interação com o jazz.</p>
+          <p>Essa escolha simplifica conscientemente um panorama histórico e estilístico muito mais complexo.</p>
         `
       }
     };

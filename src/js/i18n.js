@@ -8,9 +8,9 @@
 
 (function () {
   const NAV_LABELS = {
-    en: { app: 'App', how: 'How It Works', matrix: 'Rhythmic Matrix', research: 'Research & Context' },
-    it: { app: 'App', how: 'Come Funziona', matrix: 'Matrice Ritmica', research: 'Ricerca e Contesto' },
-    pt: { app: 'App', how: 'Como Funciona', matrix: 'Matriz Rítmica', research: 'Pesquisa e Contexto' }
+    en: { home: 'Home', app: 'App', how: 'How It Works', matrix: 'Rhythmic Matrix', research: 'Research & Context' },
+    it: { home: 'Home', app: 'App', how: 'Come Funziona', matrix: 'Matrice Ritmica', research: 'Ricerca e Contesto' },
+    pt: { home: 'Home', app: 'App', how: 'Como Funciona', matrix: 'Matriz Rítmica', research: 'Pesquisa e Contexto' }
   };
 
   function applyLanguage(lang) {
