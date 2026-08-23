@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=19" />
+  <link rel="stylesheet" href="src/css/style.css?v=20" />
 </head>
 <body>
   <header>
@@ -26,10 +26,28 @@
 
   <main class="home-hero">
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
-    <p class="subtitle" data-i18n="subtitle">Rhythm, improvisation and Brazilian Instrumental Music</p>
+    <p class="subtitle" data-i18n="headline" style="font-size:20px; font-weight:700; color:var(--text-primary); margin:6px 0 26px;"></p>
+
+    <div class="pulse-visual" aria-hidden="true">
+      <div class="pulse-bar on"></div>
+      <div class="pulse-bar on"></div>
+      <div class="pulse-bar"></div>
+      <div class="pulse-bar on"></div>
+    </div>
+
     <p class="emphasis" data-i18n="emphasis"></p>
-    <div data-i18n="intro"></div>
+
     <a class="home-cta" href="index.html" data-i18n="cta">Explore the App →</a>
+
+    <div class="module-teaser">
+      <span class="module-chip">Fragment Practice</span>
+      <span class="module-chip">Random Generator</span>
+      <span class="module-chip">Creative Flow</span>
+    </div>
+
+    <div data-i18n="intro"></div>
+
+    <div class="mib-note" data-i18n="mibNote"></div>
 
     <div class="home-why">
       <h2 data-i18n="whyTitle">Why "Syncopation"?</h2>
@@ -44,13 +62,14 @@
   <script>
     window.BSL_I18N_CONTENT = {
       en: {
-        subtitle: 'Rhythm, improvisation and Brazilian Instrumental Music',
+        headline: 'From Brazilian rhythms to your own improvisational phrasing.',
         emphasis: 'TRAIN RHYTHM UNTIL IT BECOMES PART OF HOW YOU IMPROVISE.',
         intro: `
           <p>Brazilian Syncopation Lab is an artistic and pedagogical environment for exploring, internalizing and transforming rhythmic material, bringing it directly into melodic phrasing and improvisation across different contexts of Música Instrumental Brasileira.</p>
           <p>The practice moves from rhythmic micro-units to patterns, from combination and variation to free improvisation. The goal is not to accumulate ready-made phrases or licks, but to make rhythm increasingly available as material for personal musical creation.</p>
         `,
         cta: 'Explore the App →',
+        mibNote: '<strong>Música Instrumental Brasileira (MIB)</strong><br>Música Instrumental Brasileira (MIB) is used here as a broad term for Brazilian instrumental and improvisational practices, including areas often associated with what is commonly called <span class="en-term">Brazilian jazz</span>.',
         whyTitle: 'Why "Syncopation"?',
         whyBody: `
           <p>The term syncopation / síncope does not have a single meaning in the literature: its theoretical limits have been debated, and some authors prefer concepts such as offbeatness or contrametricity.</p>
@@ -58,13 +77,14 @@
         `
       },
       it: {
-        subtitle: 'Rhythm, improvisation and Brazilian Instrumental Music',
+        headline: 'Dai ritmi del Brasile al fraseggio personale.',
         emphasis: 'ALLENA IL RITMO FINCHÉ DIVENTA PARTE DEL TUO MODO DI IMPROVVISARE.',
         intro: `
           <p>Brazilian Syncopation Lab è un ambiente artistico-pedagogico per esplorare, interiorizzare e trasformare materiale ritmico, applicandolo direttamente alla linea melodica e all'improvvisazione in differenti contesti della Música Instrumental Brasileira.</p>
           <p>Il percorso va dalle micro-unità ritmiche ai pattern, dalla combinazione e variazione fino all'improvvisazione libera. L'obiettivo non è accumulare figure da riprodurre, ma rendere il ritmo progressivamente disponibile alla creazione musicale personale.</p>
         `,
         cta: 'Esplora l\u2019app →',
+        mibNote: '<strong>Música Instrumental Brasileira (MIB)</strong><br>L\u2019espressione Música Instrumental Brasileira (MIB) è qui usata come termine ampio per indicare pratiche strumentali e improvvisative brasiliane, comprese quelle spesso associate al cosiddetto <span class="en-term">Brazilian jazz</span>.',
         whyTitle: 'Perché "Syncopation"?',
         whyBody: `
           <p>Il termine syncopation / síncope non ha un significato unico nella letteratura: i suoi limiti teorici sono stati discussi e alcuni autori preferiscono concetti come offbeatness o contrametricità.</p>
@@ -72,13 +92,14 @@
         `
       },
       pt: {
-        subtitle: 'Ritmo, improvisação e Música Instrumental Brasileira',
+        headline: 'Dos ritmos do Brasil ao seu próprio fraseado.',
         emphasis: 'TREINE O RITMO ATÉ ELE SE TORNAR PARTE DA SUA FORMA DE IMPROVISAR.',
         intro: `
           <p>O Brazilian Syncopation Lab é um ambiente artístico-pedagógico para explorar, interiorizar e transformar materiais rítmicos, levando-os diretamente ao fraseado melódico e à improvisação em diferentes contextos da Música Instrumental Brasileira.</p>
           <p>O percurso vai das micro-unidades rítmicas aos padrões, da combinação e da variação até a improvisação livre. O objetivo não é acumular frases prontas ou licks, mas tornar o ritmo cada vez mais disponível como material para a criação musical pessoal.</p>
         `,
         cta: 'Explore o App →',
+        mibNote: '<strong>Música Instrumental Brasileira (MIB)</strong><br>Música Instrumental Brasileira (MIB) é usada aqui como um termo amplo para práticas instrumentais e improvisativas brasileiras, incluindo vertentes frequentemente associadas ao chamado jazz brasileiro.',
         whyTitle: 'Por que "Syncopation"?',
         whyBody: `
           <p>O termo syncopation / síncope não possui um único significado na literatura: seus limites teóricos vêm sendo discutidos e alguns autores preferem conceitos como offbeatness ou contrametricidade.</p>

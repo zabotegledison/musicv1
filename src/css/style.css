@@ -155,14 +155,72 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .home-hero { max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
 .home-hero h1 { font-size:46px; text-align:center; margin:8px 0 4px; }
 .home-hero .subtitle { color:var(--text-secondary); font-size:15px; margin:6px 0 22px; }
+
+/* CSS-only rhythm pulse (A1: attack, attack, sustain, attack) */
+.pulse-visual { display:flex; justify-content:center; gap:10px; margin:0 0 28px; height:40px; align-items:flex-end; }
+.pulse-bar { width:13px; border-radius:4px 4px 2px 2px; background:var(--border-subtle); height:12px; animation:pulseBeat 1.8s infinite; }
+.pulse-bar.on { background:var(--brazil-green); }
+.pulse-bar:nth-child(1) { animation-delay:0s; }
+.pulse-bar:nth-child(2) { animation-delay:.18s; }
+.pulse-bar:nth-child(3) { animation-delay:.36s; }
+.pulse-bar:nth-child(4) { animation-delay:.54s; }
+@keyframes pulseBeat { 0%{height:12px;opacity:.5;} 12%{height:40px;opacity:1;} 30%{height:12px;opacity:.5;} 100%{height:12px;opacity:.5;} }
+@media (prefers-reduced-motion: reduce) { .pulse-bar { animation:none; height:24px; opacity:.85; } }
+
 .home-hero .emphasis { font-size:19px; font-weight:800; letter-spacing:-.01em; color:var(--text-primary); margin:0 0 20px; line-height:1.4; }
-.home-hero p { color:var(--text-secondary); font-size:15px; line-height:1.65; text-align:left; margin:0 0 14px; }
-.home-cta { display:inline-block; margin:14px 0 6px; padding:7px 16px; background:var(--brazil-green); color:#fff; font-weight:700; font-size:13px; border-radius:7px; text-decoration:none; }
+
+.home-cta { display:inline-block; margin:0 0 26px; padding:7px 16px; background:var(--brazil-green); color:#fff; font-weight:700; font-size:13px; border-radius:7px; text-decoration:none; }
 .home-cta:hover { opacity:.9; }
+
+.module-teaser { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:0 0 30px; }
+.module-chip { font-size:11px; color:var(--text-secondary); border:1px solid var(--border-subtle); border-radius:20px; padding:5px 11px; font-style:italic; font-weight:700; }
+
+.home-hero p { color:var(--text-secondary); font-size:15px; line-height:1.65; text-align:left; margin:0 0 14px; }
+
+.mib-note { text-align:left; font-size:12.5px; color:var(--text-secondary); background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:8px; padding:10px 14px; margin:0 0 18px; line-height:1.55; }
+.mib-note strong { color:var(--text-primary); }
+
 @media (max-width:640px) { .home-hero h1 { font-size:34px; } }
 .home-why { max-width:720px; margin:36px auto 0; text-align:left; padding:24px 24px 0; border-top:1px solid var(--border-subtle); }
-.home-why h2 { font-size:18px; margin:0 0 12px; }
-.home-why p { color:var(--text-secondary); font-size:14px; line-height:1.6; margin:0 0 12px; }
+.home-why h2 { font-size:15px; margin:0 0 10px; color:var(--text-secondary); font-weight:700; }
+.home-why p { color:var(--text-secondary); font-size:13px; line-height:1.6; margin:0 0 12px; }
+
+/* --- inline English terms kept untranslated within localized prose --- */
+.en-term { font-style:italic; font-weight:700; }
 
 /* --- shared emphasis line for approved copy (ALL CAPS callouts) --- */
 .doc-page .emphasis { font-weight:800; color:var(--text-primary); font-size:15.5px; letter-spacing:-.005em; margin:18px 0; }
+
+/* --- Research & Context: pull-quote treatment for emphasis lines --- */
+.doc-page .emphasis.pull-quote { border-left:3px solid var(--brazil-yellow); padding:2px 0 2px 16px; margin:22px 0; }
+
+/* --- How It Works: numbered module rail for Suggested Path --- */
+.module-rail { display:flex; flex-direction:column; }
+.module-rail .module-row { display:flex; gap:14px; padding:16px 0; border-top:1px solid var(--border-subtle); }
+.module-rail .module-row:first-child { border-top:1px solid var(--border-subtle); }
+.module-rail .module-num { flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:var(--background-elevated); border:1px solid var(--border-subtle); color:var(--brazil-green); font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; margin-top:2px; }
+.module-rail .module-row h3 { font-size:14.5px; margin:0 0 5px; }
+.module-rail .module-row .module-body p { margin:0 0 8px; }
+.module-rail .module-row .module-body p:last-child { margin-bottom:0; }
+
+/* --- Rhythmic Matrix: cell-split teaser above the approved tree --- */
+.cell-teaser { display:flex; align-items:center; justify-content:center; gap:12px; margin:16px 0 24px; flex-wrap:wrap; }
+.cell-teaser .cell-box { display:flex; gap:3px; align-items:flex-end; height:26px; padding:7px 9px; background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:8px; }
+.cell-teaser .cell-box .b { width:8px; border-radius:2px; background:var(--text-secondary); }
+.cell-teaser .cell-box.a .b { background:var(--brazil-green); }
+.cell-teaser .cell-box.b .b { background:var(--brazil-yellow); }
+.cell-teaser .cell-arrow { color:var(--text-secondary); font-size:15px; }
+
+/* --- App: compact animated mode dropdown (visual layer over #modeSelect) --- */
+.mode-dropdown { position:relative; }
+.mode-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:9px; padding:10px 12px; cursor:pointer; color:var(--text-primary); font-size:13.5px; font-weight:700; transition:border-color .18s ease; font-family:inherit; }
+.mode-trigger:hover { border-color:rgba(0,151,57,.5); }
+.mode-trigger .chevron { color:var(--brazil-green); font-size:11px; transition:transform .25s ease; }
+.mode-dropdown.open .mode-trigger .chevron { transform:rotate(180deg); }
+.mode-panel { position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:20; background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:10px; padding:6px; box-shadow:0 12px 30px rgba(0,0,0,.5); max-height:0; overflow:hidden; opacity:0; transform:translateY(-6px); transition:max-height .28s ease, opacity .2s ease, transform .2s ease; }
+.mode-dropdown.open .mode-panel { max-height:320px; opacity:1; transform:translateY(0); }
+.mode-option { display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:none; border:none; border-radius:7px; padding:9px 10px; cursor:pointer; color:var(--text-secondary); font-size:12.5px; font-weight:600; transition:background .15s ease, color .15s ease; font-family:inherit; }
+.mode-option:hover { background:rgba(0,151,57,.12); color:var(--text-primary); }
+.mode-option.selected { color:var(--brazil-green); }
+.mode-option .dot { width:6px; height:6px; border-radius:50%; background:var(--border-subtle); flex:0 0 auto; }
+.mode-option.selected .dot { background:var(--brazil-green); }

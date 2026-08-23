@@ -6,7 +6,7 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=19" />
+  <link rel="stylesheet" href="src/css/style.css?v=20" />
 </head>
 <body>
 
@@ -37,7 +37,7 @@
       <div class="cycle-arrow">→</div>
       <div class="cycle-node">IMPROVISE</div>
     </div>
-    <p class="hint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian backing track and a chord or modal centre.</p>
+    <p class="hint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class="en-term">backing track</span> and a chord or modal centre.</p>
   </header>
 
   <main>
@@ -45,7 +45,7 @@
 <div id="loadStatus" class="status" style="display:none"></div>
       <div class="group">
         <label>Generate Study</label>
-        <select id="modeSelect">
+        <select id="modeSelect" style="position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
           <option value="manual">1. Fragment Practice</option>
           <option value="random">2. Random Generator</option>
           <option value="traditional">3. Traditional Patterns</option>
@@ -53,6 +53,20 @@
           <option value="hybrid">5. Hybrid Pattern</option>
           <option value="creativeFlow">6. Creative Flow</option>
         </select>
+        <div class="mode-dropdown" id="modeDropdown">
+          <button type="button" class="mode-trigger" id="modeTrigger">
+            <span id="modeTriggerLabel">Fragment Practice</span>
+            <span class="chevron">▾</span>
+          </button>
+          <div class="mode-panel" id="modePanel">
+            <button type="button" class="mode-option selected" data-value="manual"><span class="dot"></span>Fragment Practice</button>
+            <button type="button" class="mode-option" data-value="random"><span class="dot"></span>Random Generator</button>
+            <button type="button" class="mode-option" data-value="traditional"><span class="dot"></span>Traditional Patterns</button>
+            <button type="button" class="mode-option" data-value="progression"><span class="dot"></span>Pattern Rotation</button>
+            <button type="button" class="mode-option" data-value="hybrid"><span class="dot"></span>Hybrid Pattern</button>
+            <button type="button" class="mode-option" data-value="creativeFlow"><span class="dot"></span>Creative Flow</button>
+          </div>
+        </div>
         <div style="height:10px"></div>
         <div id="barsBox">
           <label class="small">Study Length</label>
@@ -282,7 +296,7 @@
       modTraditional: 'Explore patterns drawn from different Brazilian musical contexts and observe how the micro-units come together in larger structures.',
       modRotation: 'Move from one pattern to another while keeping the pulse, continuity and phrasing intact.',
       modHybrid: 'Alternate recognizable patterns with generated material, moving between contextualized structures and less predictable combinations.',
-      modCreative: 'Let the system automatically choose among the different possibilities available in Hybrid Pattern. Use it as a bridge from the exercise to improvisation itself.',
+      modCreative: 'Let the system automatically choose among the different possibilities available in <span class="en-term">Hybrid Pattern</span>. Use it as a bridge from the exercise to improvisation itself.',
       modRhythmicContext: 'Choose the Brazilian rhythmic context in which you want to practise the material.',
       modMelodicApplication: 'Bring the rhythm into melody using scales, pentatonics, arpeggios, intervals or your own musical vocabulary.',
       modSaved: 'Save the studies you want to return to and develop further.'
@@ -293,7 +307,7 @@
       modTraditional: 'Esplora pattern provenienti da differenti contesti musicali brasiliani e osserva come le micro-unità si organizzano in strutture più ampie.',
       modRotation: "Passa da un pattern all'altro mantenendo pulsazione, continuità e fraseggio.",
       modHybrid: 'Alterna pattern riconoscibili e materiale generato, mettendo in relazione strutture contestualizzate e combinazioni meno prevedibili.',
-      modCreative: "Lascia che il sistema scelga automaticamente tra le diverse possibilità di Hybrid Pattern. Usalo come passaggio verso un'improvvisazione più libera.",
+      modCreative: "Lascia che il sistema scelga automaticamente tra le diverse possibilità di <span class=\"en-term\">Hybrid Pattern</span>. Usalo come passaggio verso un'improvvisazione più libera.",
       modRhythmicContext: 'Scegli il contesto ritmico brasiliano nel quale praticare il materiale.',
       modMelodicApplication: 'Porta il ritmo nella melodia utilizzando scale, pentatoniche, arpeggi, intervalli o il tuo vocabolario personale.',
       modSaved: 'Salva gli studi che vuoi riprendere e approfondire successivamente.'
@@ -304,7 +318,7 @@
       modTraditional: 'Explore padrões provenientes de diferentes contextos musicais brasileiros e observe como as micro-unidades se articulam em estruturas maiores.',
       modRotation: 'Passe de um padrão a outro sem perder a pulsação, a continuidade e o fraseado.',
       modHybrid: 'Alterne padrões reconhecíveis com material gerado, transitando entre estruturas contextualizadas e combinações menos previsíveis.',
-      modCreative: 'Deixe o sistema escolher automaticamente entre as diferentes possibilidades do Hybrid Pattern. Use-o como uma ponte para a improvisação de fato.',
+      modCreative: 'Deixe o sistema escolher automaticamente entre as diferentes possibilidades do <span class="en-term">Hybrid Pattern</span>. Use-o como uma ponte para a improvisação de fato.',
       modRhythmicContext: 'Escolha o contexto rítmico brasileiro em que deseja praticar o material.',
       modMelodicApplication: 'Leve o ritmo para a melodia usando escalas, pentatônicas, arpejos, intervalos ou seu próprio vocabulário musical.',
       modSaved: 'Salve os estudos que deseja retomar e desenvolver depois.'
@@ -312,5 +326,47 @@
   };
 </script>
 <script src="src/js/i18n.js?v=1"></script>
+<script>
+  // Compact animated dropdown: purely a visual layer over the existing
+  // #modeSelect. It never reimplements mode logic — it only sets the real
+  // select's value and dispatches the same 'change' event app.js already
+  // listens for, so every existing behavior (invalidatePlayback,
+  // updateModeUI, etc.) fires exactly as before.
+  (function () {
+    document.addEventListener('DOMContentLoaded', function () {
+      const realSelect = document.getElementById('modeSelect');
+      const dropdown = document.getElementById('modeDropdown');
+      const trigger = document.getElementById('modeTrigger');
+      const triggerLabel = document.getElementById('modeTriggerLabel');
+      const options = dropdown ? dropdown.querySelectorAll('.mode-option') : [];
+      if (!realSelect || !dropdown) return;
+
+      function syncFromSelect() {
+        const val = realSelect.value;
+        options.forEach(opt => {
+          const isMatch = opt.getAttribute('data-value') === val;
+          opt.classList.toggle('selected', isMatch);
+          if (isMatch) triggerLabel.textContent = opt.textContent.trim();
+        });
+      }
+
+      trigger.addEventListener('click', () => dropdown.classList.toggle('open'));
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          realSelect.value = opt.getAttribute('data-value');
+          realSelect.dispatchEvent(new Event('change'));
+          syncFromSelect();
+          dropdown.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
+      });
+      realSelect.addEventListener('change', syncFromSelect);
+
+      syncFromSelect();
+    });
+  })();
+</script>
 </body>
 </html>
