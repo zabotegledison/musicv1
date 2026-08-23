@@ -126,8 +126,9 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 @media (max-width:640px) { .cycle-visual { flex-direction:column; } .cycle-arrow { transform:rotate(90deg); padding:2px 0; } }
 
 /* --- genealogy visual: real notation + onset dots, grouped by family --- */
-.genealogy-columns { display:flex; gap:32px; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin:22px 0 6px; }
-.genealogy-column { display:flex; flex-direction:column; align-items:center; gap:10px; width:260px; max-width:100%; }
+.genealogy-columns { display:grid; grid-template-columns: minmax(220px,280px) minmax(220px,280px); gap:32px; justify-content:center; align-items:start; margin:22px 0 6px; }
+.genealogy-column { display:flex; flex-direction:column; align-items:center; gap:10px; }
+@media (max-width:600px) { .genealogy-columns { grid-template-columns: 1fr; justify-items:center; } }
 .family-head { font-size:13px; font-weight:800; letter-spacing:.04em; padding:5px 16px; border-radius:8px; margin-bottom:2px; }
 .genealogy-rest-row { display:flex; justify-content:center; margin:22px auto 8px; }
 .genealogy-rest-row .frag-card { width:170px; }
@@ -141,13 +142,24 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .frag-card.special { background:rgba(255,223,0,.09); border:1.5px solid var(--brazil-yellow); box-shadow:0 0 0 3px rgba(255,223,0,.12); }
 .frag-card.special .frag-notation { background:#FDF6D8; }
 
+/* --- suggested path: consistent heading/paragraph rhythm --- */
+.suggested-path { text-align:left; }
+.suggested-path h3 { margin:22px 0 6px; text-align:left; }
+.suggested-path p { margin:0 0 10px; text-align:left; }
+.suggested-path p:last-child { margin-bottom:0; }
+
+/* --- placeholder area reserved for future written notation examples --- */
+.notation-examples-slot { min-height:1px; margin-top:14px; }
+
 /* --- HOME page --- */
 .home-hero { max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
+.home-hero h1 { font-size:46px; text-align:center; margin:8px 0 4px; }
 .home-hero .subtitle { color:var(--text-secondary); font-size:15px; margin:6px 0 22px; }
 .home-hero .emphasis { font-size:19px; font-weight:800; letter-spacing:-.01em; color:var(--text-primary); margin:0 0 20px; line-height:1.4; }
 .home-hero p { color:var(--text-secondary); font-size:15px; line-height:1.65; text-align:left; margin:0 0 14px; }
-.home-cta { display:inline-block; margin:14px 0 6px; padding:11px 22px; background:var(--brazil-green); color:#fff; font-weight:800; font-size:14px; border-radius:8px; text-decoration:none; }
+.home-cta { display:inline-block; margin:14px 0 6px; padding:7px 16px; background:var(--brazil-green); color:#fff; font-weight:700; font-size:13px; border-radius:7px; text-decoration:none; }
 .home-cta:hover { opacity:.9; }
+@media (max-width:640px) { .home-hero h1 { font-size:34px; } }
 .home-why { max-width:720px; margin:36px auto 0; text-align:left; padding:24px 24px 0; border-top:1px solid var(--border-subtle); }
 .home-why h2 { font-size:18px; margin:0 0 12px; }
 .home-why p { color:var(--text-secondary); font-size:14px; line-height:1.6; margin:0 0 12px; }
