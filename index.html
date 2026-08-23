@@ -6,7 +6,7 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=20" />
+  <link rel="stylesheet" href="src/css/style.css?v=22" />
 </head>
 <body>
 
@@ -26,19 +26,24 @@
       </div>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
-    <p>Rhythm, improvisation and Brazilian Instrumental Music. An interactive environment for exploring and applying rhythmic material to melodic improvisation.</p>
-    <p class="small" style="margin-top:6px;">Prototype — Pedagogical Testing Version</p>
-    <div class="cycle-visual" style="max-width:640px;">
-      <div class="cycle-node">HEAR</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node">INTERNALIZE</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node">MELODICIZE</div>
-      <div class="cycle-arrow">→</div>
-      <div class="cycle-node">IMPROVISE</div>
-    </div>
-    <p class="hint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class="en-term">backing track</span> and a chord or modal centre.</p>
+    <p class="app-tagline">Rhythm, improvisation and Brazilian Instrumental Music — Prototype, pedagogical testing version</p>
   </header>
+
+  <details class="app-about">
+    <summary>Practice flow &amp; about this prototype</summary>
+    <div class="app-about-body">
+      <div class="cycle-visual" style="max-width:640px;">
+        <div class="cycle-node">HEAR</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">INTERNALIZE</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">MELODICIZE</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-node">IMPROVISE</div>
+      </div>
+      <p class="hint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class="en-term">backing track</span> and a chord or modal centre.</p>
+    </div>
+  </details>
 
   <main>
     <aside>
@@ -97,7 +102,9 @@
           <div style="height:10px"></div>
           <label class="small">Second Fragment</label>
           <select id="practiceBSelect"></select>
-          <div id="manualGrid" style="display:none"></div>
+          <div style="height:10px"></div>
+          <label class="small">Fragments (per bar) — unset slots default to Rest</label>
+          <div id="manualGrid" style="display:grid; gap:6px; margin-top:6px;"></div>
         </div>
         <div id="library" style="display:none"></div>
 
@@ -287,7 +294,7 @@
 
 <script src="src/js/manifest.js?v=13"></script>
 <script src="src/js/patterns.js?v=13"></script>
-<script src="src/js/app.js?v=15"></script>
+<script src="src/js/app.js?v=17"></script>
 <script>
   window.BSL_I18N_CONTENT = {
     en: {

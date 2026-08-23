@@ -58,6 +58,13 @@
     return q === "B" ? "quality-b" : "quality-a";
   }
 
+  // Used only by the Fragment Practice per-slot grid, so Rest gets its own
+  // neutral color there without touching qualityClass() (which every other
+  // mode/badge in the app relies on for the green/yellow A/B coloring).
+  function isRestFragmentId(id) { return id === 'A7' || id === 'B10'; }
+  function manualFragLabel(f) { return isRestFragmentId(f?.id) ? 'Rest' : f?.id; }
+  function manualSlotClass(f) { return isRestFragmentId(f?.id) ? 'quality-rest' : qualityClass(f); }
+
   function normalizeFragment(fileName, text, quality = null) {
     const doc = parseXml(text);
     if (doc.querySelector('parsererror')) throw new Error(`${fileName}: MusicXML non leggibile.`);
@@ -194,9 +201,11 @@
     const aId = $('practiceASelect')?.value, bId = $('practiceBSelect')?.value;
     if (!aId || !bId) return;
     const grid = $('manualGrid');
-    if (grid) grid.innerHTML = [aId, bId, aId, bId]
-      .map((id, i) => `<select class="manualSelect" data-index="${i}" style="display:none"><option value="${escapeXml(id)}" selected>${escapeXml(id)}</option></select>`)
-      .join('');
+    if (!grid) return;
+    if (!grid.querySelector('select')) buildManualGrid(true);
+    const selects = Array.from(grid.querySelectorAll('select'));
+    if (selects[0]) { selects[0].value = aId; applySelectQualityStyle(selects[0], aId); }
+    if (selects[1]) { selects[1].value = bId; applySelectQualityStyle(selects[1], bId); }
     if (doGenerate && $('modeSelect').value === 'manual') generate();
   }
 
@@ -415,19 +424,28 @@
     const total = getTotalFragments();
     if (!state.fragments.length) { grid.innerHTML = '<div class="small">Load fragments first.</div>'; return; }
     const previous = reset ? [] : Array.from(grid.querySelectorAll('select')).map(s => s.value);
-    const options = state.fragments.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(f.id)}</option>`).join('');
+    const restId = state.fragments.some(f => f.id === 'B10') ? 'B10' : (state.fragments[0]?.id || '');
+    const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a');
+    const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
+    const options = `
+      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>
+      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>`;
     let html = '';
     for (let i=0; i<total; i++) {
-      const val = previous[i] || state.fragments[i % state.fragments.length].id;
-      const frag = state.fragments.find(f => f.id === val) || state.fragments[i % state.fragments.length];
-      html += `<div class="manual-slot ${qualityClass(frag)}"><span>${i+1}</span><select class="manualSelect ${qualityClass(frag)}" data-index="${i}">${options}</select></div>`;
+      const val = previous[i] || restId;
+      const frag = state.fragments.find(f => f.id === val) || state.fragments.find(f => f.id === restId);
+      const cls = manualSlotClass(frag);
+      html += `<div class="manual-slot ${cls}"><span>${i+1}</span><select class="manualSelect ${cls}" data-index="${i}">${options}</select></div>`;
     }
     grid.innerHTML = html;
     Array.from(grid.querySelectorAll('select')).forEach((s,i) => {
-      const currentId = previous[i] || state.fragments[i % state.fragments.length].id;
+      const currentId = previous[i] || restId;
       s.value = currentId;
       applySelectQualityStyle(s, currentId);
-      s.addEventListener('change', () => applySelectQualityStyle(s, s.value));
+      s.addEventListener('change', () => {
+        applySelectQualityStyle(s, s.value);
+        if ($('modeSelect').value === 'manual') generate();
+      });
     });
   }
 
@@ -435,11 +453,11 @@
 
   function applySelectQualityStyle(selectEl, fragmentId) {
     const frag = state.fragments.find(f => f.id === fragmentId);
-    const cls = qualityClass(frag);
-    selectEl.classList.remove('quality-a','quality-b');
+    const cls = manualSlotClass(frag);
+    selectEl.classList.remove('quality-a','quality-b','quality-rest');
     selectEl.classList.add(cls);
     const slot = selectEl.closest('.manual-slot');
-    if (slot) { slot.classList.remove('quality-a','quality-b'); slot.classList.add(cls); }
+    if (slot) { slot.classList.remove('quality-a','quality-b','quality-rest'); slot.classList.add(cls); }
   }
 
   function getManualSequence() {
@@ -448,13 +466,12 @@
   }
 
   function getFragmentMusicColor(fragment) {
-    if (fragment?.quality === 'REST') return '#777777';
+    if (fragment?.quality === 'REST' || fragment?.id === 'A7' || fragment?.id === 'B10') return '#777777';
     return fragment?.quality === 'B' ? '#d4a000' : '#2f8f46';
   }
 
   function tintNodeForFragment(node, fragment) {
     if (!node || node.nodeType !== 1) return node;
-    if (fragment?.quality === 'REST') return node;
     if (node.nodeName === 'note') {
       const color = getFragmentMusicColor(fragment);
       node.setAttribute('color', color);
