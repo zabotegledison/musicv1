@@ -24,16 +24,22 @@ h1 .t-lab { color:var(--brazil-yellow); }
 header p { margin:0; color:var(--text-secondary); max-width:1080px; line-height:1.45; }
 .app-tagline { font-size:13px; color:var(--text-secondary); margin:0; max-width:1080px; }
 
-.app-about { max-width:1080px; margin:0 auto; padding:0 32px; border-bottom:1px solid var(--border-subtle); }
-.app-about summary { cursor:pointer; font-size:12.5px; font-weight:700; color:var(--text-secondary); padding:10px 0; list-style:none; user-select:none; }
+.app-about { position:relative; max-width:1080px; margin:0 auto; padding:0 32px; }
+.app-about summary { display:inline-block; cursor:pointer; font-size:11.5px; font-weight:700; color:var(--text-secondary); padding:8px 0; list-style:none; user-select:none; }
 .app-about summary:hover { color:var(--text-primary); }
 .app-about summary::-webkit-details-marker { display:none; }
 .app-about summary::before { content:'▸ '; color:var(--brazil-green); }
 .app-about[open] summary::before { content:'▾ '; }
-.app-about-body { padding:0 0 16px; }
-.app-about-body .cycle-visual { margin:8px 0 10px; }
-.app-about-body .hint { margin:0; }
-@media (max-width:980px) { .app-about { padding:0 18px; } }
+.app-about-body {
+  position:absolute; left:32px; right:32px; top:100%; z-index:15;
+  background:var(--background-panel); border:1px solid var(--border-subtle); border-radius:10px;
+  padding:14px 16px; margin-top:2px; box-shadow:0 12px 28px rgba(0,0,0,.45);
+  max-width:520px;
+}
+.app-about-body .cycle-visual { margin:0 0 10px; }
+.app-about-body .cycle-node { font-size:11px; padding:8px 6px; }
+.app-about-body .hint { margin:0; font-size:12.5px; }
+@media (max-width:980px) { .app-about { padding:0 18px; } .app-about-body { left:18px; right:18px; max-width:none; } }
 main { padding:24px 32px 44px; display:grid; grid-template-columns:400px 1fr; gap:22px; }
 aside, section.viewer { background:var(--background-panel); border:1px solid var(--border-subtle); border-radius:14px; }
 aside { padding:18px; height:fit-content; position:sticky; top:104px; }
@@ -138,7 +144,11 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .cycle-visual { display:flex; align-items:stretch; flex-wrap:wrap; gap:10px; margin:18px 0 8px; }
 .cycle-node { flex:1 1 120px; background:var(--background-elevated); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 10px; text-align:center; font-weight:800; font-size:12.5px; letter-spacing:.02em; color:var(--text-primary); display:flex; align-items:center; justify-content:center; }
 .cycle-arrow { display:flex; align-items:center; justify-content:center; color:var(--brazil-green); font-weight:900; font-size:16px; flex:0 0 auto; padding:0 2px; }
-@media (max-width:640px) { .cycle-visual { flex-direction:column; } .cycle-arrow { transform:rotate(90deg); padding:2px 0; } }
+@media (max-width:640px) {
+  .cycle-visual { flex-direction:column; gap:6px; }
+  .cycle-node { flex:0 0 auto; width:100%; padding:8px 10px; font-size:11.5px; }
+  .cycle-arrow { transform:rotate(90deg); padding:2px 0; font-size:13px; }
+}
 
 /* --- genealogy visual: real notation + onset dots, grouped by family --- */
 .genealogy-columns { display:grid; grid-template-columns: minmax(220px,280px) minmax(220px,280px); gap:32px; justify-content:center; align-items:start; margin:22px 0 6px; }
@@ -165,6 +175,14 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 
 /* --- placeholder area reserved for future written notation examples --- */
 .notation-examples-slot { min-height:1px; margin-top:14px; }
+.notation-example { margin-bottom:28px; padding-bottom:22px; border-bottom:1px dashed var(--border-subtle); }
+.notation-example:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.notation-example-title { font-size:12px; font-weight:800; color:var(--brazil-yellow); margin-bottom:10px; }
+.notation-example-row { margin-bottom:10px; }
+.notation-example-row:last-child { margin-bottom:0; }
+.notation-example-label { font-size:10.5px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+.notation-example-box { background:#FBFBF8; border-radius:8px; min-height:50px; overflow-x:auto; }
+.notation-example-box svg { max-width:100%; height:auto !important; display:block; margin:0 auto; }
 
 /* --- HOME page --- */
 .home-hero { max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
@@ -182,7 +200,8 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 @keyframes pulseBeat { 0%{height:12px;opacity:.5;} 12%{height:40px;opacity:1;} 30%{height:12px;opacity:.5;} 100%{height:12px;opacity:.5;} }
 @media (prefers-reduced-motion: reduce) { .pulse-bar { animation:none; height:24px; opacity:.85; } }
 
-.home-hero .emphasis { font-size:19px; font-weight:800; letter-spacing:-.01em; color:var(--text-primary); margin:0 0 20px; line-height:1.4; }
+/* --- shared emphasis line for approved copy (ALL CAPS, bold, white callouts) --- */
+.doc-page .emphasis { font-weight:800; color:var(--text-primary); font-size:15.5px; letter-spacing:-.005em; margin:18px 0; border-left:3px solid var(--brazil-yellow); padding:2px 0 2px 16px; }
 
 .home-cta { display:inline-block; margin:0 0 26px; padding:7px 16px; background:var(--brazil-green); color:#fff; font-weight:700; font-size:13px; border-radius:7px; text-decoration:none; }
 .home-cta:hover { opacity:.9; }
@@ -203,11 +222,7 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 /* --- inline English terms kept untranslated within localized prose --- */
 .en-term { font-style:italic; font-weight:700; }
 
-/* --- shared emphasis line for approved copy (ALL CAPS callouts) --- */
-.doc-page .emphasis { font-weight:800; color:var(--text-primary); font-size:15.5px; letter-spacing:-.005em; margin:18px 0; }
-
-/* --- Research & Context: pull-quote treatment for emphasis lines --- */
-.doc-page .emphasis.pull-quote { border-left:3px solid var(--brazil-yellow); padding:2px 0 2px 16px; margin:22px 0; }
+/* --- shared emphasis line for approved copy (ALL CAPS, bold, white callouts) --- */
 
 /* --- How It Works: numbered module rail for Suggested Path --- */
 .module-rail { display:flex; flex-direction:column; }

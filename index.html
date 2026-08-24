@@ -6,7 +6,7 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=22" />
+  <link rel="stylesheet" href="src/css/style.css?v=25" />
 </head>
 <body>
 
@@ -292,7 +292,7 @@
   </footer>
 
 
-<script src="src/js/manifest.js?v=13"></script>
+<script src="src/js/manifest.js?v=14"></script>
 <script src="src/js/patterns.js?v=13"></script>
 <script src="src/js/app.js?v=17"></script>
 <script>
@@ -372,6 +372,18 @@
       realSelect.addEventListener('change', syncFromSelect);
 
       syncFromSelect();
+    });
+  })();
+
+  // Close the floating "Practice flow & about" popover when clicking
+  // outside it, so it never lingers over the app on mobile.
+  (function () {
+    document.addEventListener('DOMContentLoaded', function () {
+      const aboutEl = document.querySelector('.app-about');
+      if (!aboutEl) return;
+      document.addEventListener('click', (e) => {
+        if (aboutEl.open && !aboutEl.contains(e.target)) aboutEl.removeAttribute('open');
+      });
     });
   })();
 </script>

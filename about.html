@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=22" />
+  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
+  <link rel="stylesheet" href="src/css/style.css?v=25" />
 </head>
 <body>
   <header>
@@ -95,7 +96,9 @@
 
     <h2 data-i18n="subheadTitle">Reading the notation</h2>
     <div data-i18n="subheadBody"></div>
-    <div class="notation-examples-slot" id="notationExamplesSlot"></div>
+    <div class="notation-examples-slot" id="notationExamplesSlot">
+      <div id="notationExamplesRoot"></div>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -147,7 +150,8 @@
           <p>BSL notation focuses primarily on onset points.</p>
           <p>A written rest following an onset does not necessarily mean that the previous sound must stop: duration, articulation, accents and phrasing remain open to interpretation.</p>
           <p>The notation deliberately isolates one aspect of rhythm to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>
-        `
+        `,
+        exRowStudy: 'Study', exRowExecution: 'Possible performance'
       },
       it: {
         title: 'Come funziona',
@@ -192,7 +196,8 @@
           <p>La notazione del BSL evidenzia principalmente i punti di attacco.</p>
           <p>Una pausa dopo un attacco non implica necessariamente l'interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all'interpretazione.</p>
           <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo più facile da osservare e manipolare; non rappresenta l'intera performance musicale.</p>
-        `
+        `,
+        exRowStudy: 'Studio', exRowExecution: 'Possibile esecuzione'
       },
       pt: {
         title: 'Como funciona',
@@ -237,10 +242,85 @@
           <p>A notação do BSL destaca principalmente os pontos de ataque.</p>
           <p>Uma pausa escrita depois de um ataque não significa necessariamente que o som anterior deva ser interrompido: duração, articulação, acentuação e fraseado permanecem abertos à interpretação.</p>
           <p>A notação isola intencionalmente um aspecto do ritmo para torná-lo mais fácil de observar e manipular; ela não representa a totalidade da performance musical.</p>
-        `
+        `,
+        exRowStudy: 'Estudo', exRowExecution: 'Possível execução'
       }
     };
   </script>
   <script src="src/js/i18n.js?v=1"></script>
+  <script>
+    // Reading the notation — worked examples. Renders 6 pre-built MusicXML
+    // files (3 pairs of study/possible-performance) via the same OSMD setup
+    // used elsewhere on the site. The "possible performance" files already
+    // encode: rests converted to sustained notes at their own original
+    // duration (no values invented), a tie from the preceding note into
+    // each converted note, and beaming scoped to stay within a single pulse.
+    (function () {
+      const EXAMPLES = [
+        { id: 1, label: 'B2 + A4 | A2 + B8' },
+        { id: 2, label: 'B8 + B5 | A2 + B2' },
+        { id: 3, label: 'A1+B1 | B9+B1 | A2+B8 | A2+B6' }
+      ];
+
+      async function renderOne(elId, url) {
+        const resp = await fetch(url);
+        const xml = await resp.text();
+        const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(elId, {
+          backend: 'svg', drawTitle: false, drawSubtitle: false, drawComposer: false,
+          drawPartNames: false, drawMeasureNumbers: false, autoResize: false
+        });
+        await osmd.load(xml);
+        osmd.EngravingRules.RenderTimeSignatures = true;
+        osmd.EngravingRules.PageBackgroundColor = '#FBFBF8';
+        osmd.EngravingRules.DefaultColorMusic = '#000000';
+        osmd.zoom = 0.85;
+        osmd.render();
+      }
+
+      async function buildExamples() {
+        const root = document.getElementById('notationExamplesRoot');
+        if (!root) return;
+        let lang = 'en';
+        try { lang = localStorage.getItem('bslInfoLang') || 'en'; } catch (e) {}
+        const dict = (window.BSL_I18N_CONTENT && window.BSL_I18N_CONTENT[lang]) || {};
+        const studyLabel = dict.exRowStudy || 'Study';
+        const execLabel = dict.exRowExecution || 'Possible performance';
+
+        for (const ex of EXAMPLES) {
+          const block = document.createElement('div');
+          block.className = 'notation-example';
+          block.innerHTML = `
+            <div class="notation-example-title">${ex.label}</div>
+            <div class="notation-example-row">
+              <div class="notation-example-label label-study">${studyLabel}</div>
+              <div class="notation-example-box" id="ex${ex.id}-estudo"></div>
+            </div>
+            <div class="notation-example-row">
+              <div class="notation-example-label label-exec">${execLabel}</div>
+              <div class="notation-example-box" id="ex${ex.id}-execucao"></div>
+            </div>
+          `;
+          root.appendChild(block);
+          await renderOne(`ex${ex.id}-estudo`, `assets/notation-examples/ex${ex.id}_estudo.xml`);
+          await renderOne(`ex${ex.id}-execucao`, `assets/notation-examples/ex${ex.id}_execucao.xml`);
+        }
+
+        // Keep the row labels in sync with the language selector without
+        // re-rendering the notation itself.
+        const langSwitch = document.getElementById('langSwitch');
+        if (langSwitch) {
+          langSwitch.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-lang]');
+            if (!btn) return;
+            const d = (window.BSL_I18N_CONTENT && window.BSL_I18N_CONTENT[btn.getAttribute('data-lang')]) || {};
+            document.querySelectorAll('.label-study').forEach(el => { el.textContent = d.exRowStudy || 'Study'; });
+            document.querySelectorAll('.label-exec').forEach(el => { el.textContent = d.exRowExecution || 'Possible performance'; });
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', buildExamples);
+    })();
+  </script>
 </body>
 </html>
