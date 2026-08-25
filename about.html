@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=28" />
+  <link rel="stylesheet" href="src/css/style.css?v=29" />
 </head>
 <body>
   <header>
@@ -267,12 +267,13 @@
         const xml = await resp.text();
         const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(elId, {
           backend: 'svg', drawTitle: false, drawSubtitle: false, drawComposer: false,
-          drawPartNames: false, drawMeasureNumbers: false, autoResize: true
+          drawPartNames: false, drawMeasureNumbers: false, autoResize: false
         });
         await osmd.load(xml);
         osmd.EngravingRules.RenderTimeSignatures = true;
         osmd.EngravingRules.PageBackgroundColor = '#FBFBF8';
         osmd.EngravingRules.DefaultColorMusic = '#000000';
+        osmd.zoom = 0.85;
         osmd.render();
       }
 
