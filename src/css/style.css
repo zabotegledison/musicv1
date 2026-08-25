@@ -151,6 +151,7 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 }
 
 /* --- genealogy visual: real notation + onset dots, grouped by family --- */
+.genealogy-image { display:block; width:100%; max-width:600px; height:auto; margin:22px auto 6px; border-radius:10px; }
 .genealogy-columns { display:grid; grid-template-columns: minmax(220px,280px) minmax(220px,280px); gap:32px; justify-content:center; align-items:start; margin:22px 0 6px; }
 .genealogy-column { display:flex; flex-direction:column; align-items:center; gap:10px; }
 @media (max-width:600px) { .genealogy-columns { grid-template-columns: 1fr; justify-items:center; } }
@@ -174,13 +175,21 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .suggested-path p:last-child { margin-bottom:0; }
 
 /* --- placeholder area reserved for future written notation examples --- */
-.notation-examples-slot { min-height:1px; margin-top:14px; }
-.notation-example { margin-bottom:28px; padding-bottom:22px; border-bottom:1px dashed var(--border-subtle); }
+.notation-examples-slot { min-height:1px; margin-top:14px; max-width:1200px; width:100%; margin-left:auto; margin-right:auto; }
+@media (min-width: 900px) { .notation-examples-slot { margin-left:calc(50% - 50vw + 24px); margin-right:calc(50% - 50vw + 24px); width:calc(100vw - 48px); max-width:1200px; } }
+.notation-example { margin-bottom:32px; padding-bottom:26px; border-bottom:1px dashed var(--border-subtle); }
 .notation-example:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
-.notation-example-title { font-size:12px; font-weight:800; color:var(--brazil-yellow); margin-bottom:10px; }
-.notation-example-row { margin-bottom:10px; }
+.notation-example-title { font-size:12px; font-weight:800; color:var(--brazil-yellow); margin-bottom:14px; text-align:center; }
+.notation-example-row { border-radius:10px; padding:12px 16px 16px; margin-bottom:12px; }
 .notation-example-row:last-child { margin-bottom:0; }
-.notation-example-label { font-size:10.5px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+.notation-example-row.row-study { background:var(--background-elevated); border-left:3px solid var(--text-secondary); }
+.notation-example-row.row-exec { background:rgba(255,223,0,0.06); border-left:3px solid var(--brazil-yellow); }
+.notation-example-label { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; }
+.notation-example-row.row-study .notation-example-label { color:var(--text-secondary); }
+.notation-example-row.row-exec .notation-example-label { color:var(--brazil-yellow); }
+.notation-example-badge { font-size:9px; padding:2px 7px; border-radius:10px; font-weight:800; }
+.notation-example-row.row-study .notation-example-badge { background:var(--background-panel); color:var(--text-secondary); border:1px solid var(--border-subtle); }
+.notation-example-row.row-exec .notation-example-badge { background:rgba(255,223,0,0.15); color:var(--brazil-yellow); border:1px solid rgba(255,223,0,0.5); }
 .notation-example-box { background:#FBFBF8; border-radius:8px; min-height:50px; overflow-x:auto; }
 .notation-example-box svg { max-width:100%; height:auto !important; display:block; margin:0 auto; }
 

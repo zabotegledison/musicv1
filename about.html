@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=25" />
+  <link rel="stylesheet" href="src/css/style.css?v=27" />
 </head>
 <body>
   <header>
@@ -291,12 +291,12 @@
           block.className = 'notation-example';
           block.innerHTML = `
             <div class="notation-example-title">${ex.label}</div>
-            <div class="notation-example-row">
-              <div class="notation-example-label label-study">${studyLabel}</div>
+            <div class="notation-example-row row-study">
+              <div class="notation-example-label label-study"><span class="notation-example-badge">1</span>${studyLabel}</div>
               <div class="notation-example-box" id="ex${ex.id}-estudo"></div>
             </div>
-            <div class="notation-example-row">
-              <div class="notation-example-label label-exec">${execLabel}</div>
+            <div class="notation-example-row row-exec">
+              <div class="notation-example-label label-exec"><span class="notation-example-badge">2</span>${execLabel}</div>
               <div class="notation-example-box" id="ex${ex.id}-execucao"></div>
             </div>
           `;
@@ -313,8 +313,8 @@
             const btn = e.target.closest('button[data-lang]');
             if (!btn) return;
             const d = (window.BSL_I18N_CONTENT && window.BSL_I18N_CONTENT[btn.getAttribute('data-lang')]) || {};
-            document.querySelectorAll('.label-study').forEach(el => { el.textContent = d.exRowStudy || 'Study'; });
-            document.querySelectorAll('.label-exec').forEach(el => { el.textContent = d.exRowExecution || 'Possible performance'; });
+            document.querySelectorAll('.label-study').forEach(el => { el.innerHTML = `<span class="notation-example-badge">1</span>${d.exRowStudy || 'Study'}`; });
+            document.querySelectorAll('.label-exec').forEach(el => { el.innerHTML = `<span class="notation-example-badge">2</span>${d.exRowExecution || 'Possible performance'}`; });
           });
         }
       }

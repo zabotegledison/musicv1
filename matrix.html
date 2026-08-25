@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rhythmic Matrix — Brazilian Syncopation Lab</title>
-  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=25" />
+  <link rel="stylesheet" href="src/css/style.css?v=27" />
 </head>
 <body>
   <header>
@@ -51,84 +50,10 @@
 
     <div data-i18n="bodyBefore"></div>
 
-    <div class="genealogy-columns">
-      <div class="genealogy-column" id="genColA">
-        <div class="family-head quality-a" data-i18n="tFamilyA">Family A</div>
-      </div>
-      <div class="genealogy-column" id="genColB">
-        <div class="family-head quality-b" data-i18n="tFamilyB">Family B</div>
-      </div>
-    </div>
-    <div class="genealogy-rest-row" id="genRestRow"></div>
+    <img class="genealogy-image" src="assets/matrix/genealogy.png" alt="BSL genealogical tree: Matrix Cell splits into Family A and Family B, with REST shown separately outside both families." />
 
     <div data-i18n="bodyAfter"></div>
   </main>
-
-  <script>
-    (function () {
-      const FRAG_DOTS = {
-        A1: '●●○●', A2: '○●○●', A3: '●○○●', A4: '●●○○', A5: '○●○○', A6: '○○○●', Rest: '○○○○',
-        B1: '●○●○', B7: '●○○○', B8: '○○●○', B2: '●●●●', B3: '●○●●', B4: '●●●○', B5: '○●●●', B6: '○●●○', B9: '○○●●'
-      };
-      const ORDER_A = ['A1','A2','A3','A4','A5','A6'];
-      const ORDER_B = ['B1','B7','B8','B2','B3','B4','B5','B6','B9'];
-      const SPECIAL = new Set(['A1','B1','B2']);
-      const FRAG_FILE = { Rest: 'B10' };
-
-      function dotsHtml(pattern) {
-        return pattern.split('').map(c => `<span>${c}</span>`).join('');
-      }
-
-      async function renderFragment(container, id) {
-        const isSpecial = SPECIAL.has(id);
-        const card = document.createElement('div');
-        card.className = 'frag-card' + (isSpecial ? ' special' : '');
-        const notationId = 'gen-osmd-' + id;
-        const idLabel = id === 'Rest' ? `<span data-i18n="tRest">Rest</span>` : id;
-        card.innerHTML = `
-          <div class="frag-id">${idLabel}${isSpecial ? ' <span class="frag-star">★</span>' : ''}</div>
-          <div class="frag-notation" id="${notationId}"></div>
-          <div class="frag-dots">${dotsHtml(FRAG_DOTS[id])}</div>
-        `;
-        container.appendChild(card);
-        try {
-          const fileName = FRAG_FILE[id] || id;
-          const resp = await fetch(`assets/fragments/${fileName}.xml`);
-          const xml = await resp.text();
-          const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(notationId, {
-            backend: 'svg', drawTitle: false, drawSubtitle: false, drawComposer: false,
-            drawPartNames: false, drawMeasureNumbers: false, autoResize: false
-          });
-          await osmd.load(xml);
-          osmd.EngravingRules.RenderTimeSignatures = false;
-          osmd.EngravingRules.PageBackgroundColor = isSpecial ? '#FDF6D8' : '#FBFBF8';
-          osmd.EngravingRules.DefaultColorMusic = '#000000';
-          osmd.zoom = 0.7;
-          osmd.render();
-        } catch (e) {
-          console.warn('Genealogy notation failed to load for', id, e);
-        }
-      }
-
-      async function buildGenealogy() {
-        const colA = document.getElementById('genColA');
-        const colB = document.getElementById('genColB');
-        const restRow = document.getElementById('genRestRow');
-        if (!colA || !colB || !restRow) return;
-        for (const id of ORDER_A) await renderFragment(colA, id);
-        await renderFragment(restRow, 'Rest');
-        for (const id of ORDER_B) await renderFragment(colB, id);
-        // The Rest label is created after i18n.js's initial translation pass, so translate it now.
-        let lang = 'en';
-        try { lang = localStorage.getItem('bslInfoLang') || 'en'; } catch (e) {}
-        const dict = (window.BSL_I18N_CONTENT && window.BSL_I18N_CONTENT[lang]) || {};
-        const restEl = restRow.querySelector('[data-i18n="tRest"]');
-        if (restEl && dict.tRest) restEl.textContent = dict.tRest;
-      }
-
-      document.addEventListener('DOMContentLoaded', buildGenealogy);
-    })();
-  </script>
 
   <footer class="site-footer">
     <p>© 2026 Gledison Zabote. All rights reserved.<br>Brazilian Syncopation Lab is an original pedagogical and research project.</p>
