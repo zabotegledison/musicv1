@@ -100,7 +100,7 @@
       } catch (err) { console.warn(`Could not load fragment ${fileName}:`, err); }
     }
     state.fragments = loaded.sort(compareIds);
-    renderLibrary(); updateGenerateState(); buildManualGridIfNeeded(); renderPracticeSelectors();
+    renderLibrary(); updateGenerateState(); buildManualGridIfNeeded();
     setStatus('loadStatus', state.fragments.length ? `${state.fragments.length} fragments loaded from assets/fragments/.` : 'No fragments found in assets/fragments/.', !state.fragments.length);
   }
 
@@ -176,37 +176,6 @@
     if (!names || !names.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
     box.innerHTML = names.map((n, i) => `<span class="pill">${i + 1}. ${escapeXml(n)}</span>`).join('');
     box.style.display = 'flex';
-  }
-
-  function renderPracticeSelectors() {
-    const aSel = $('practiceASelect'), bSel = $('practiceBSelect');
-    if (!aSel || !bSel) return;
-    const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a');
-    const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
-    if (!aFrags.length && !bFrags.length) return;
-    const prevA = aSel.value, prevB = bSel.value;
-    const restLabel = (f) => (f.id === 'A7' || f.id === 'B10') ? 'Rest' : f.id;
-    const buildOptions = () => `
-      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(restLabel(f))}</option>`).join('')}</optgroup>
-      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(restLabel(f))}</option>`).join('')}</optgroup>`;
-    aSel.innerHTML = buildOptions();
-    bSel.innerHTML = buildOptions();
-    const allFrags = aFrags.concat(bFrags);
-    aSel.value = allFrags.some(f => f.id === prevA) ? prevA : (allFrags.some(f => f.id === 'A1') ? 'A1' : (allFrags[0]?.id || ''));
-    bSel.value = allFrags.some(f => f.id === prevB) ? prevB : (allFrags.some(f => f.id === 'B1') ? 'B1' : (allFrags[0]?.id || ''));
-    applyPracticeChoice(false);
-  }
-
-  function applyPracticeChoice(doGenerate = true) {
-    const aId = $('practiceASelect')?.value, bId = $('practiceBSelect')?.value;
-    if (!aId || !bId) return;
-    const grid = $('manualGrid');
-    if (!grid) return;
-    if (!grid.querySelector('select')) buildManualGrid(true);
-    const selects = Array.from(grid.querySelectorAll('select'));
-    if (selects[0]) { selects[0].value = aId; applySelectQualityStyle(selects[0], aId); }
-    if (selects[1]) { selects[1].value = bId; applySelectQualityStyle(selects[1], bId); }
-    if (doGenerate && $('modeSelect').value === 'manual') generate();
   }
 
   function pickRandomSequence(total, mode) {
@@ -412,12 +381,76 @@
   }
 
 
-  function buildManualGridIfNeeded() {
+  async function buildManualGridIfNeeded() {
     updateModePanels();
     if ($('modeSelect').value !== 'manual') return;
+    await buildFragmentSvgCache();
     buildManualGrid(false);
   }
 
+
+  // Notation previews are rendered once per fragment and reused across every
+  // slot picker (17 fragments x N slots would otherwise be very slow), then
+  // cropped to the figure's real bounding box so the preview shows the figure
+  // rather than OSMD's mostly-empty page canvas.
+  const fragSvgCache = {};
+
+  function cropRenderedSvg(svg) {
+    try {
+      let box = null;
+      svg.querySelectorAll('path, rect, ellipse, circle, line, polygon, text').forEach(el => {
+        let b;
+        try { b = el.getBBox(); } catch (e) { return; }
+        if (!b || (!b.width && !b.height)) return;
+        if (!box) { box = { x1:b.x, y1:b.y, x2:b.x+b.width, y2:b.y+b.height }; return; }
+        box.x1 = Math.min(box.x1, b.x); box.y1 = Math.min(box.y1, b.y);
+        box.x2 = Math.max(box.x2, b.x+b.width); box.y2 = Math.max(box.y2, b.y+b.height);
+      });
+      if (!box) return svg.outerHTML;
+      const pad = 2;
+      svg.setAttribute('viewBox', `${box.x1-pad} ${box.y1-pad} ${(box.x2-box.x1)+pad*2} ${(box.y2-box.y1)+pad*2}`);
+      svg.removeAttribute('width');
+      svg.removeAttribute('height');
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      return svg.outerHTML;
+    } catch (e) { return svg.outerHTML; }
+  }
+
+  async function buildFragmentSvgCache() {
+    if (Object.keys(fragSvgCache).length) return;
+    let host = $('fragSvgCacheHost');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'fragSvgCacheHost';
+      host.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:300px;';
+      document.body.appendChild(host);
+    }
+    for (const frag of state.fragments) {
+      try {
+        const div = document.createElement('div');
+        div.style.width = '300px';
+        host.appendChild(div);
+        const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(div, {
+          backend:'svg', drawTitle:false, drawSubtitle:false, drawComposer:false,
+          drawPartNames:false, drawMeasureNumbers:false, autoResize:false
+        });
+        // strip the reference label baked into the source files (e.g. "A1")
+        await osmd.load(frag.text.replace(/<direction\b[\s\S]*?<\/direction>/g, ''));
+        osmd.EngravingRules.RenderTimeSignatures = false;
+        osmd.EngravingRules.PageBackgroundColor = '#FBFBF8';
+        osmd.EngravingRules.DefaultColorMusic = '#000000';
+        ['PageLeftMargin','PageRightMargin','PageTopMargin','PageBottomMargin'].forEach(k => {
+          if (k in osmd.EngravingRules) osmd.EngravingRules[k] = 0;
+        });
+        osmd.zoom = 0.6;
+        osmd.render();
+        const svg = div.querySelector('svg');
+        if (svg) fragSvgCache[frag.id] = cropRenderedSvg(svg);
+      } catch (e) {
+        console.warn('Preview failed for', frag.id, e);
+      }
+    }
+  }
 
   function buildManualGrid(reset=true) {
     const grid = $('manualGrid');
@@ -425,31 +458,81 @@
     if (!state.fragments.length) { grid.innerHTML = '<div class="small">Load fragments first.</div>'; return; }
     const previous = reset ? [] : Array.from(grid.querySelectorAll('select')).map(s => s.value);
     const restId = state.fragments.some(f => f.id === 'B10') ? 'B10' : (state.fragments[0]?.id || '');
-    const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a');
-    const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b');
-    const options = `
-      <optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>
-      <optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>`;
+    const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a' && f.id !== 'A7');
+    const bFrags = state.fragments.filter(f => qualityClass(f) === 'quality-b' && f.id !== 'B10');
+    const restFrag = state.fragments.find(f => f.id === restId);
+
+    const options = `<optgroup label="Family A">${aFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>`
+      + `<optgroup label="Family B">${bFrags.map(f => `<option value="${escapeXml(f.id)}">${escapeXml(manualFragLabel(f))}</option>`).join('')}</optgroup>`
+      + (restFrag ? `<optgroup label="Rest"><option value="${escapeXml(restFrag.id)}">Rest</option></optgroup>` : '');
+
+    const optionRow = (f, selectedId) => `
+      <button type="button" class="fp-option ${f.id===selectedId?'selected':''}" data-value="${escapeXml(f.id)}">
+        <span class="fp-opt-id">${escapeXml(manualFragLabel(f))}</span>
+        <span class="fp-opt-notation">${fragSvgCache[f.id] || ''}</span>
+      </button>`;
+    const panelHtml = (selectedId) =>
+      `<div class="fp-group-label">Family A</div>${aFrags.map(f => optionRow(f, selectedId)).join('')}`
+      + `<div class="fp-group-label">Family B</div>${bFrags.map(f => optionRow(f, selectedId)).join('')}`
+      + (restFrag ? `<div class="fp-group-label">Rest</div>${optionRow(restFrag, selectedId)}` : '');
+
     let html = '';
     for (let i=0; i<total; i++) {
       const val = previous[i] || restId;
-      const frag = state.fragments.find(f => f.id === val) || state.fragments.find(f => f.id === restId);
+      const frag = state.fragments.find(f => f.id === val) || restFrag;
       const cls = manualSlotClass(frag);
-      html += `<div class="manual-slot ${cls}"><span>${i+1}</span><select class="manualSelect ${cls}" data-index="${i}">${options}</select></div>`;
+      html += `<div class="manual-slot"><span>${i+1}</span>
+        <div class="fp-dropdown" data-index="${i}">
+          <select class="manualSelect" data-index="${i}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;">${options}</select>
+          <button type="button" class="fp-trigger ${cls}">
+            <span class="fp-left">
+              <span class="fp-id">${escapeXml(manualFragLabel(frag))}</span>
+              <span class="fp-mini">${fragSvgCache[frag?.id] || ''}</span>
+            </span>
+            <span class="chevron">▾</span>
+          </button>
+          <div class="fp-panel">${panelHtml(val)}</div>
+        </div></div>`;
     }
     grid.innerHTML = html;
-    Array.from(grid.querySelectorAll('select')).forEach((s,i) => {
+
+    Array.from(grid.querySelectorAll('.fp-dropdown')).forEach((dd, i) => {
+      const select = dd.querySelector('select');
+      const trigger = dd.querySelector('.fp-trigger');
       const currentId = previous[i] || restId;
-      s.value = currentId;
-      applySelectQualityStyle(s, currentId);
-      s.addEventListener('change', () => {
-        applySelectQualityStyle(s, s.value);
-        if ($('modeSelect').value === 'manual') generate();
+      select.value = currentId;
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        grid.querySelectorAll('.fp-dropdown').forEach(o => { if (o !== dd) o.classList.remove('open'); });
+        dd.classList.toggle('open');
+      });
+
+      dd.querySelectorAll('.fp-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const id = opt.getAttribute('data-value');
+          const frag = state.fragments.find(f => f.id === id);
+          select.value = id;
+          trigger.className = 'fp-trigger ' + manualSlotClass(frag);
+          trigger.querySelector('.fp-id').textContent = manualFragLabel(frag);
+          trigger.querySelector('.fp-mini').innerHTML = fragSvgCache[id] || '';
+          dd.querySelectorAll('.fp-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          dd.classList.remove('open');
+          if ($('modeSelect').value === 'manual') generate();
+        });
       });
     });
+
+    if (!grid.dataset.outsideBound) {
+      document.addEventListener('click', (e) => {
+        if (!grid.contains(e.target)) grid.querySelectorAll('.fp-dropdown').forEach(o => o.classList.remove('open'));
+      });
+      grid.dataset.outsideBound = '1';
+    }
   }
 
-  function clearManualGrid() { Array.from(document.querySelectorAll('.manualSelect')).forEach((s,i) => { if (state.fragments[i % state.fragments.length]) { s.value = state.fragments[i % state.fragments.length].id; applySelectQualityStyle(s, s.value); } }); }
+  function clearManualGrid() { Array.from(document.querySelectorAll('.manualSelect')).forEach((s,i) => { if (state.fragments[i % state.fragments.length]) { s.value = state.fragments[i % state.fragments.length].id; } }); }
 
   function applySelectQualityStyle(selectEl, fragmentId) {
     const frag = state.fragments.find(f => f.id === fragmentId);
@@ -1191,7 +1274,7 @@
   function updateModeUI() {
     updateModePanels();
     const mode = $('modeSelect').value;
-    if (mode === 'manual') buildManualGrid(false);
+    if (mode === 'manual') buildFragmentSvgCache().then(() => buildManualGrid(false));
     const barsSelect = $('barsInput');
     const longOptions = Array.from(barsSelect.options).filter(o => ['8','16','32'].includes(o.value));
     if (mode === 'manual') {
@@ -1211,9 +1294,7 @@
   }
 
   $('backingSelect').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
-  $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); if ($('modeSelect').value === 'manual') applyPracticeChoice(true); });
-  if ($('practiceASelect')) $('practiceASelect').addEventListener('change', () => applyPracticeChoice(true));
-  if ($('practiceBSelect')) $('practiceBSelect').addEventListener('change', () => applyPracticeChoice(true));
+  $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); });
   $('traditionalPatternSelect').addEventListener('change', updateTraditionalPatternInfo);
   $('progressionModeSelect').addEventListener('change', updateProgressionModeUI);
   $('barsInput').addEventListener('change', () => { invalidatePlayback(); buildManualGridIfNeeded(); });
