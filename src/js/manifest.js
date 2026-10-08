@@ -17,9 +17,16 @@ const FRAGMENT_FILES = [
 // exact same tempo (no drift). To add more tempo steps to an existing track:
 // render a new assets/audio/<id>_<bpm>.mp3 file and add that bpm to "tempos".
 const AUDIO_TRACKS = [
-  { id: 'batucada', name: 'Batucada', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'baiao',    name: 'Baião',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'afoxe',    name: 'Ijexá',    tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
+  { id: 'baiao',       name: 'Baião',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'batucada',    name: 'Batucada',     tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'frevo',       name: 'Frevo',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'afoxe',       name: 'Ijexá',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'maracatu',    name: 'Maracatu',     tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'partidoalto', name: 'Partido Alto', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'samba',       name: 'Samba',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'sambafunk',   name: 'Samba Funk',   tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'sambafunk2',  name: 'Samba Funk 2', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
+  { id: 'xote',        name: 'Xote',         tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
 ];
 
 // Experimental: harmonic pads (tempo-free, transposed live via pitch-shift).
