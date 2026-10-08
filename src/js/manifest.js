@@ -16,17 +16,20 @@ const FRAGMENT_FILES = [
 // tempo whenever a track is selected, so notation and audio always share the
 // exact same tempo (no drift). To add more tempo steps to an existing track:
 // render a new assets/audio/<id>_<bpm>.mp3 file and add that bpm to "tempos".
+// "suggestedBpm" is only a starting point: selecting a track sets the study
+// BPM to this value, and the musician is then free to change it at will.
+// Must be one of the values listed in that track's "tempos".
+const ALL_TEMPOS = [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140];
 const AUDIO_TRACKS = [
-  { id: 'baiao',       name: 'Baião',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'batucada',    name: 'Batucada',     tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'frevo',       name: 'Frevo',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'afoxe',       name: 'Ijexá',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'maracatu',    name: 'Maracatu',     tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'partidoalto', name: 'Partido Alto', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'samba',       name: 'Samba',        tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'sambafunk',   name: 'Samba Funk',   tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'sambafunk2',  name: 'Samba Funk 2', tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] },
-  { id: 'xote',        name: 'Xote',         tempos: [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140] }
+  { id: 'baiao',       name: 'Baião',        suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'batucada',    name: 'Batucada',     suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'frevo',       name: 'Frevo',        suggestedBpm: 120, tempos: ALL_TEMPOS },
+  { id: 'afoxe',       name: 'Ijexá',        suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'maracatu',    name: 'Maracatu',     suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'partidoalto', name: 'Partido Alto', suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'samba',       name: 'Samba',        suggestedBpm: 100, tempos: ALL_TEMPOS },
+  { id: 'sambafunk',   name: 'Samba Funk',   suggestedBpm: 95,  tempos: ALL_TEMPOS },
+  { id: 'xote',        name: 'Xote',         suggestedBpm: 100, tempos: ALL_TEMPOS }
 ];
 
 // Experimental: harmonic pads (tempo-free, transposed live via pitch-shift).

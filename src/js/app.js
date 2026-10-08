@@ -1186,6 +1186,18 @@
   }
   function updateTrackBpmFromSelection() { /* no-op: originalBpm now comes from manifest.js per track */ }
 
+  // Selecting a rhythm jumps the study BPM to that groove's suggested starting
+  // tempo. It's only a starting point — the BPM slider stays fully free
+  // afterwards, and nothing here constrains it.
+  function applySuggestedBpm() {
+    const t = getSelectedTrack();
+    if (!t || !t.suggestedBpm) return false;
+    if (t.tempos && !t.tempos.includes(t.suggestedBpm)) return false;
+    $('bpmInput').value = t.suggestedBpm;
+    $('bpmValue').textContent = t.suggestedBpm;
+    return true;
+  }
+
   function closestTempoUrl(t, studyBpm) {
     if (!t.tempos || !t.tempos.length) return null;
     let best = t.tempos[0];
@@ -1293,7 +1305,7 @@
     }
   }
 
-  $('backingSelect').addEventListener('change', () => { snapBpmToTrack(); invalidatePlayback(); });
+  $('backingSelect').addEventListener('change', () => { if (!applySuggestedBpm()) snapBpmToTrack(); invalidatePlayback(); });
   $('modeSelect').addEventListener('change', () => { invalidatePlayback(); updateModeUI(); });
   $('traditionalPatternSelect').addEventListener('change', updateTraditionalPatternInfo);
   $('progressionModeSelect').addEventListener('change', updateProgressionModeUI);
