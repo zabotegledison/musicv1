@@ -1168,7 +1168,9 @@
   }
 
   function getPadVolumeDb() {
-    const v = Number($('padVolumeInput')?.value ?? 70) / 100;
+    // pads are recorded ~9 dB hotter than the backing tracks, so the default
+    // sits lower than the backing slider to land at a comparable level
+    const v = Number($('padVolumeInput')?.value ?? 25) / 100;
     return v <= 0 ? -Infinity : (20 * Math.log10(v));
   }
 
