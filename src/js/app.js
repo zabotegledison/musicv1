@@ -1105,7 +1105,19 @@
     state.padTracks = (typeof PAD_TRACKS !== 'undefined' ? PAD_TRACKS : []).map(t => Object.assign({}, t));
     const select = $('padSelect');
     if (!select) return;
-    select.innerHTML = '<option value="">No pad</option>' + state.padTracks.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
+    // group by chord category, keeping the manifest order inside each group
+    const groups = [];
+    state.padTracks.forEach(t => {
+      const cat = t.category || '';
+      let g = groups.find(x => x.cat === cat);
+      if (!g) { g = { cat, items: [] }; groups.push(g); }
+      g.items.push(t);
+    });
+    const optionsHtml = groups.map(g => {
+      const opts = g.items.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
+      return g.cat ? `<optgroup label="${escapeXml(g.cat)}">${opts}</optgroup>` : opts;
+    }).join('');
+    select.innerHTML = '<option value="">No pad</option>' + optionsHtml;
   }
 
   function getSelectedPad() { return state.padTracks.find(t => t.id === $('padSelect')?.value) || null; }
