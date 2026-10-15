@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<score-partwise version="3.0">
+  <part-list>
+    <score-part id="P1">
+      <part-name>P1</part-name>
+    </score-part>
+  </part-list>
+  <part id="P1">
+    <measure number="1">
+      <attributes>
+        <divisions>256</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <time>
+          <beats>2</beats>
+          <beat-type>4</beat-type>
+        </time>
+        <clef>
+          <sign>percussion</sign>
+          <line>2</line>
+        </clef>
+      </attributes>
+      <note default-x="76" color="#2f8f46">
+        <rest />
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">16th</type>
+        <staff>1</staff>
+      </note>
+      <note color="#2f8f46" default-x="365" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>128</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">eighth</type>
+        <stem color="#2f8f46">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#2f8f46">begin</beam>
+      </note>
+      <note color="#2f8f46" default-x="743" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">16th</type>
+        <stem color="#2f8f46">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#2f8f46">end</beam>
+        <beam number="2" color="#2f8f46">backward hook</beam>
+      </note>
+      <note default-x="76" color="#d4a000">
+        <rest />
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#d4a000">16th</type>
+        <staff>1</staff>
+      </note>
+      <note color="#d4a000" default-x="365" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#d4a000">16th</type>
+        <stem color="#d4a000">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#d4a000">begin</beam>
+        <beam number="2" color="#d4a000">forward hook</beam>
+      </note>
+      <note color="#d4a000" default-x="655" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>128</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#d4a000">eighth</type>
+        <stem color="#d4a000">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#d4a000">end</beam>
+      </note>
+    </measure>
+    <measure number="2">
+      <note color="#d4a000" default-x="76" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>128</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#d4a000">eighth</type>
+        <stem color="#d4a000">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#d4a000">begin</beam>
+      </note>
+      <note color="#d4a000" default-x="554" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>128</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#d4a000">eighth</type>
+        <stem color="#d4a000">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#d4a000">end</beam>
+      </note>
+      <note color="#2f8f46" default-x="76" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">16th</type>
+        <stem color="#2f8f46">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#2f8f46">begin</beam>
+        <beam number="2" color="#2f8f46">forward hook</beam>
+      </note>
+      <note color="#2f8f46" default-x="365" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>128</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">eighth</type>
+        <stem color="#2f8f46">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#2f8f46">continue</beam>
+      </note>
+      <note color="#2f8f46" default-x="743" default-y="-52">
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>64</duration>
+        <instrument id="P1-I1" />
+        <voice>1</voice>
+        <type color="#2f8f46">16th</type>
+        <stem color="#2f8f46">down</stem>
+        <staff>1</staff>
+        <beam number="1" color="#2f8f46">end</beam>
+        <beam number="2" color="#2f8f46">backward hook</beam>
+      </note>
+    </measure>
+  </part>
+</score-partwise>

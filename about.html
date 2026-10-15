@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=34" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css?v=38" />
 </head>
 <body>
   <header>
@@ -16,11 +19,7 @@
         <a href="about.html" class="active" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
         <a href="research.html" data-i18n-nav="research">Research &amp; Context</a>
-        <div class="lang-switch" id="langSwitch">
-          <button type="button" data-lang="it">IT</button>
-          <button type="button" data-lang="en">EN</button>
-          <button type="button" data-lang="pt">PT</button>
-        </div>
+        <div class="lang-switch" id="langSwitch"></div>
       </div>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
@@ -117,11 +116,11 @@
       en: {
         title: "How it works",
         intro: "BSL starts with a small rhythmic configuration. You can listen to it, recognize it, play it on your instrument, turn it into a melodic phrase, and test it in different Brazilian jazz contexts.",
-        cycle1: "LISTEN",
-        cycle2: "INTERNALIZE",
-        cycle3: "TURN IT INTO MELODY",
-        cycle4: "CONTEXTUALIZE",
-        cycle5: "IMPROVISE",
+        cycle1: "Listen",
+        cycle2: "Internalize",
+        cycle3: "Turn it into melody",
+        cycle4: "Contextualize",
+        cycle5: "Improvise",
         body1: "\n          <h3>1. Listen</h3>\n          <p>Listen to the rhythm several times. Before playing it, identify where the attacks fall in relation to the pulse.</p>\n          <h3>2. Internalize</h3>\n          <p>Repeat the material with your voice, your body, or your instrument. The aim is to make the rhythm stable in both listening and physical response, rather than simply accurate on the page.</p>\n          <h3>3. Turn it into melody</h3>\n          <p>Apply the attacks to notes you already know: scales, pentatonics, arpeggios, intervals, chromatic material, or other personal resources. The rhythm provides the starting point; the musician chooses the notes.</p>\n          <h3>4. Contextualize</h3>\n          <p>Choose a rhythmic environment and test the material within it. Notice what changes when the same configuration is played in different Brazilian jazz contexts.</p>\n          <h3>5. Improvise</h3>\n          <p>Gradually reduce the support provided by notation, the generator, and the backing. Vary the material, move away from the initial figure, and observe what emerges in your improvisation.</p>\n          <p class=\"hint\">This is one simple way to begin. The application modules are not fixed levels: you can return to an earlier stage, change the material, or work in a different way according to your needs.</p>\n        ",
         pathTitle: "Ways to work with the material",
         pathIntro: "The modules offer different ways to listen to, combine, transform, and recontextualize the material. They are not meant to be followed as a fixed sequence.",
@@ -151,11 +150,11 @@
       it: {
         title: "Come funziona",
         intro: "Il BSL parte da una piccola configurazione ritmica. Puoi ascoltarla, riconoscerla, portarla sullo strumento, trasformarla in una frase melodica e provarla in diversi contesti del Jazz Brasileiro.",
-        cycle1: "ASCOLTA",
-        cycle2: "INTERIORIZZA",
-        cycle3: "MELODICIZZA",
-        cycle4: "CONTESTUALIZZA",
-        cycle5: "IMPROVVISA",
+        cycle1: "Ascolta",
+        cycle2: "Interiorizza",
+        cycle3: "Melodicizza",
+        cycle4: "Contestualizza",
+        cycle5: "Improvvisa",
         body1: "\n          <h3>1. Ascolta</h3>\n          <p>Ascolta il ritmo pi&#249; volte. Cerca di riconoscere dove cadono gli attacchi rispetto alla pulsazione prima di suonarlo.</p>\n          <h3>2. Interiorizza</h3>\n          <p>Ripeti il materiale con la voce, il corpo o lo strumento. L&#8217;obiettivo &#232; renderlo stabile nell&#8217;ascolto e nel gesto, non soltanto corretto nella lettura.</p>\n          <h3>3. Melodicizza</h3>\n          <p>Applica gli attacchi a note che gi&#224; conosci: scale, pentatoniche, arpeggi, intervalli, cromatismi o altro materiale personale. Il ritmo resta il punto di partenza; le note sono scelte dal musicista.</p>\n          <h3>4. Contestualizza</h3>\n          <p>Scegli un ambiente ritmico e prova il materiale al suo interno. Confronta che cosa cambia quando la stessa configurazione viene suonata in contesti differenti del Jazz Brasileiro.</p>\n          <h3>5. Improvvisa</h3>\n          <p>Riduci progressivamente il supporto della notazione, del generatore e del backing. Varia il materiale, allontanati dalla figura iniziale e osserva che cosa emerge nella tua improvvisazione.</p>\n          <p class=\"hint\">Questa &#232; una modalit&#224; semplice per iniziare. I moduli dell&#8217;applicazione non costituiscono una sequenza obbligatoria: puoi tornare a una fase precedente, cambiare materiale o lavorare in modo diverso secondo le tue esigenze.</p>\n        ",
         pathTitle: "Modi di lavorare con il materiale",
         pathIntro: "I moduli offrono modalit&#224; diverse per ascoltare, combinare, trasformare e contestualizzare il materiale. Non costituiscono una sequenza obbligatoria.",
@@ -185,11 +184,11 @@
       pt: {
         title: "Como funciona",
         intro: "O BSL parte de uma pequena configura&#231;&#227;o r&#237;tmica. Voc&#234; pode ouvi-la, reconhec&#234;-la, lev&#225;-la para o instrumento, transform&#225;-la em uma frase mel&#243;dica e experiment&#225;-la em diferentes contextos do Jazz Brasileiro.",
-        cycle1: "OU&#199;A",
-        cycle2: "INTERIORIZE",
-        cycle3: "MELODIZE",
-        cycle4: "CONTEXTUALIZE",
-        cycle5: "IMPROVISE",
+        cycle1: "Ou\u00e7a",
+        cycle2: "Interiorize",
+        cycle3: "Melodize",
+        cycle4: "Contextualize",
+        cycle5: "Improvise",
         body1: "\n          <h3>1. Ou&#231;a</h3>\n          <p>Ou&#231;a o ritmo v&#225;rias vezes. Antes de toc&#225;-lo, procure reconhecer onde caem os ataques em rela&#231;&#227;o &#224; pulsa&#231;&#227;o.</p>\n          <h3>2. Interiorize</h3>\n          <p>Repita o material com a voz, o corpo ou o instrumento. O objetivo &#233; torn&#225;-lo est&#225;vel na escuta e no gesto, e n&#227;o apenas correto na leitura.</p>\n          <h3>3. Melodize</h3>\n          <p>Aplique os ataques a notas que voc&#234; j&#225; conhece: escalas, pentat&#244;nicas, arpejos, intervalos, cromatismos ou outro material pessoal. O ritmo &#233; o ponto de partida; as notas s&#227;o escolhidas pelo m&#250;sico.</p>\n          <h3>4. Contextualize</h3>\n          <p>Escolha um ambiente r&#237;tmico e experimente o material dentro dele. Observe o que muda quando a mesma configura&#231;&#227;o &#233; tocada em diferentes contextos do Jazz Brasileiro.</p>\n          <h3>5. Improvise</h3>\n          <p>Reduza progressivamente o apoio da nota&#231;&#227;o, do gerador e do backing. Varie o material, afaste-se da figura inicial e observe o que emerge na sua improvisa&#231;&#227;o.</p>\n          <p class=\"hint\">Esta &#233; uma maneira simples de come&#231;ar. Os m&#243;dulos do aplicativo n&#227;o constituem uma sequ&#234;ncia obrigat&#243;ria: voc&#234; pode voltar a uma etapa anterior, mudar de material ou trabalhar de outro modo conforme a sua necessidade.</p>\n        ",
         pathTitle: "Modos de trabalhar com o material",
         pathIntro: "Os m&#243;dulos oferecem maneiras diferentes de ouvir, combinar, transformar e contextualizar o material. N&#227;o constituem uma sequ&#234;ncia obrigat&#243;ria.",
@@ -215,10 +214,44 @@
         subheadBody: "\n          <p>A nota&#231;&#227;o do BSL destaca principalmente os pontos de ataque.</p>\n          <p>Uma pausa escrita depois de um ataque n&#227;o significa necessariamente que o som anterior deva ser interrompido: dura&#231;&#227;o, articula&#231;&#227;o, acentua&#231;&#227;o e fraseado permanecem abertos &#224; interpreta&#231;&#227;o.</p>\n          <p>A nota&#231;&#227;o isola intencionalmente um aspecto do ritmo para torn&#225;-lo mais f&#225;cil de observar e manipular; ela n&#227;o representa a totalidade da performance musical.</p>\n        ",
         exRowStudy: "Estudo",
         exRowExecution: "Poss&#237;vel execu&#231;&#227;o"
+      },
+      es: {
+        title: "C\u00f3mo funciona",
+        intro: "El BSL parte de una peque\u00f1a configuraci\u00f3n r\u00edtmica. Puedes escucharla, reconocerla, llevarla al instrumento, convertirla en una frase mel\u00f3dica y probarla en distintos contextos del Jazz Brasileiro.",
+        cycle1: "Escucha",
+        cycle2: "Interioriza",
+        cycle3: "Melodiza",
+        cycle4: "Contextualiza",
+        cycle5: "Improvisa",
+        body1: "\n          <h3>1. Escucha</h3>\n          <p>Escucha el ritmo varias veces. Antes de tocarlo, reconoce d\u00f3nde caen los ataques respecto al pulso.</p>\n          <h3>2. Interioriza</h3>\n          <p>Repite el material con la voz, el cuerpo o el instrumento. El objetivo es que quede estable en la escucha y en el gesto, no solo correcto en la lectura.</p>\n          <h3>3. Melodiza</h3>\n          <p>Aplica los ataques a notas que ya conoces: escalas, pentat\u00f3nicas, arpegios, intervalos, cromatismos u otro material personal. El ritmo es el punto de partida; las notas las elige el m\u00fasico.</p>\n          <h3>4. Contextualiza</h3>\n          <p>Elige un entorno r\u00edtmico y prueba el material dentro de \u00e9l. Observa qu\u00e9 cambia cuando la misma configuraci\u00f3n suena en distintos contextos del Jazz Brasileiro.</p>\n          <h3>5. Improvisa</h3>\n          <p>Reduce poco a poco el apoyo de la notaci\u00f3n, del generador y del backing. Var\u00eda el material, al\u00e9jate de la figura inicial y observa qu\u00e9 aparece en tu improvisaci\u00f3n.</p>\n          <p class=\"hint\">Esta es una forma sencilla de empezar. Los m\u00f3dulos de la aplicaci\u00f3n no son una secuencia obligatoria: puedes volver a una etapa anterior, cambiar de material o trabajar de otro modo seg\u00fan tus necesidades.</p>\n        ",
+        pathTitle: "Modos de trabajar con el material",
+        pathIntro: "Los m\u00f3dulos ofrecen distintas maneras de escuchar, combinar, transformar y contextualizar el material. No constituyen una secuencia obligatoria.",
+        p1Title: "<span class=\"en-term\">Fragment Practice</span>",
+        p1Body: "<p>Explora una micro-unidad a la vez. Esc\u00fachala, reconoce sus ataques y reprod\u00facela con voz, cuerpo o instrumento.</p>",
+        p2Title: "<span class=\"en-term\">Random Generator</span>",
+        p2Body: "<p>Genera combinaciones que quiz\u00e1 no elegir\u00edas espont\u00e1neamente e intenta reconocerlas, repetirlas y transformarlas.</p>",
+        p3Title: "<span class=\"en-term\">Traditional Patterns</span>",
+        p3Body: "<p>Devuelve las micro-unidades a patrones r\u00edtmicos reconocibles y observa c\u00f3mo cambian de funci\u00f3n dentro de una estructura m\u00e1s amplia.</p>",
+        p4Title: "<span class=\"en-term\">Pattern Rotation</span>",
+        p4Body: "<p>Pasa de un patr\u00f3n a otro manteniendo pulso, continuidad y fraseo.</p>",
+        p5Title: "<span class=\"en-term\">Hybrid Pattern</span>",
+        p5Body: "<p>Alterna material procedente de patrones reconocibles con combinaciones generadas por el sistema.</p>",
+        p6Title: "<span class=\"en-term\">Creative Flow</span>",
+        p6Body: "<p>Reduce el control sobre la secuencia y reacciona a cambios que no puedes anticipar. La improvisaci\u00f3n puede empezar ya en los m\u00f3dulos anteriores.</p>",
+        bringTitle: "Lleva el ritmo a la m\u00fasica desde el principio",
+        bringBody: "\n          <p>Cuando una figura empiece a resultarte familiar, no la dejes como simple ejercicio r\u00edtmico.</p>\n          <p>En la app elige una <span class=\"en-term\">backing track</span> en <span class=\"en-term\">Rhythmic Context</span> y un acorde o centro modal en <span class=\"en-term\">Harmonic Pad</span>. Luego toca los ataques de la figura con escalas, pentat\u00f3nicas, arpegios, intervalos o tu propio vocabulario, y empieza a variarla poco a poco.</p>\n          <p class=\"emphasis\">NO ESPERES AL FINAL DEL RECORRIDO PARA IMPROVISAR: LLEVA CADA MATERIAL A LA MELOD\u00cdA DESDE EL PRIMER MOMENTO.</p>\n        ",
+        staticTitle: "Campo arm\u00f3nico est\u00e1tico",
+        staticBody: "<p>Puedes a\u00f1adir un centro o un acorde mantenido. Un campo arm\u00f3nico est\u00e1tico deja m\u00e1s espacio para escuchar el ritmo y construir la l\u00ednea mel\u00f3dica, sin exigir al mismo tiempo la gesti\u00f3n de una progresi\u00f3n arm\u00f3nica.</p>",
+        recontextTitle: "Un material, distintos contextos",
+        recontextBody: "\n          <p>Una configuraci\u00f3n r\u00edtmica puede escucharse aislada, aplicarse al vocabulario mel\u00f3dico del m\u00fasico y experimentarse en distintos entornos r\u00edtmicos.</p>\n          <p>En el prototipo actual, el mismo material puede compararse, por ejemplo, en entornos de Batucada, Bai\u00e3o e Ijex\u00e1. El inter\u00e9s est\u00e1 en observar c\u00f3mo cambian su posici\u00f3n, duraci\u00f3n, acentuaci\u00f3n, articulaci\u00f3n, fraseo y funci\u00f3n musical.</p>\n          <p>En una fase posterior, la notaci\u00f3n y el backing pueden retirarse. As\u00ed es posible observar qu\u00e9 reaparece de forma espont\u00e1nea, qu\u00e9 se transforma y qu\u00e9 desaparece durante la improvisaci\u00f3n.</p>\n        ",
+        subheadTitle: "C\u00f3mo leer la notaci\u00f3n",
+        subheadBody: "\n          <p>La notaci\u00f3n del BSL destaca sobre todo los puntos de ataque.</p>\n          <p>Un silencio escrito despu\u00e9s de un ataque no implica necesariamente que el sonido anterior deba interrumpirse: duraci\u00f3n, articulaci\u00f3n, acentos y fraseo quedan abiertos a la interpretaci\u00f3n.</p>\n          <p>La notaci\u00f3n a\u00edsla intencionadamente un aspecto del ritmo para hacerlo m\u00e1s f\u00e1cil de observar y manipular; no representa la totalidad de la interpretaci\u00f3n musical.</p>\n        ",
+        exRowStudy: "Estudio",
+        exRowExecution: "Posible ejecuci\u00f3n"
       }
     };
   </script>
-  <script src="src/js/i18n.js?v=2"></script>
+  <script src="src/js/i18n.js?v=4"></script>
   <script>
     // Reading the notation — worked examples. Renders 6 pre-built MusicXML
     // files (3 pairs of study/possible-performance) via the same OSMD setup

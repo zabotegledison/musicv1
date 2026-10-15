@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brazilian Syncopation Lab</title>
-  <link rel="stylesheet" href="src/css/style.css?v=34" />
+  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css?v=38" />
 </head>
 <body>
   <header>
@@ -15,11 +19,7 @@
         <a href="about.html" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
         <a href="research.html" data-i18n-nav="research">Research &amp; Context</a>
-        <div class="lang-switch" id="langSwitch">
-          <button type="button" data-lang="it">IT</button>
-          <button type="button" data-lang="en">EN</button>
-          <button type="button" data-lang="pt">PT</button>
-        </div>
+        <div class="lang-switch" id="langSwitch"></div>
       </div>
     </nav>
   </header>
@@ -29,14 +29,12 @@
     <p class="subtitle" data-i18n="headline" style="font-size:20px; font-weight:700; color:var(--text-primary); margin:6px 0 10px;"></p>
     <p class="home-audience" data-i18n="audience"></p>
 
-    <div class="pulse-visual" aria-hidden="true">
-      <div class="pulse-bar on"></div>
-      <div class="pulse-bar on"></div>
-      <div class="pulse-bar"></div>
-      <div class="pulse-bar on"></div>
+    <div class="hero-score" id="heroScore" aria-hidden="true">
+      <div id="heroScoreInner"></div>
+      <div class="hero-playhead"></div>
     </div>
 
-    <a class="home-cta" href="index.html" data-i18n="cta">Explore the App →</a>
+    <a class="home-cta" href="index.html" data-i18n="cta">Explore the App</a>
 
     <div data-i18n="intro"></div>
 
@@ -62,7 +60,7 @@
           <p>BSL grows out of a concrete musical need: to use an established melodic vocabulary freely while maintaining rhythmic coherence as the musical context changes.</p>
           <p>The prototype invites musicians to listen to, internalize, transform, and recontextualize small rhythmic configurations, gradually bringing them into melodic phrasing and improvisation.</p>
         `,
-        cta: 'Explore the App →',
+        cta: 'Explore the App',
         mibNote: '<strong>Brazilian jazz</strong><br>Used here as a working term for the field of Brazilian instrumental and improvised practices the research looks at, where jazz languages meet Brazilian rhythmic matrices. The term coexists with <em>m\u00fasica instrumental brasileira</em> and <em>Brazilian Jazz</em> (Piedade; Ruiz).',
         whyTitle: 'Why "Syncopation"?',
         whyBody: `
@@ -78,7 +76,7 @@
           <p>Il BSL nasce da un\u2019esigenza musicale concreta: utilizzare liberamente un vocabolario melodico gi\u00e0 acquisito mantenendo una forte coerenza ritmica quando cambia il contesto musicale.</p>
           <p>Il prototipo propone di ascoltare, interiorizzare, trasformare e contestualizzare piccole configurazioni ritmiche, portandole progressivamente verso la frase melodica e l\u2019improvvisazione.</p>
         `,
-        cta: 'Esplora l\u2019app \u2192',
+        cta: 'Esplora l\u2019app',
         mibNote: '<strong>Jazz Brasileiro</strong><br>Qui \u00e8 usato come termine di lavoro per il campo di pratiche strumentali e improvvisative brasiliane considerate dalla ricerca, in cui i linguaggi jazzistici incontrano le matrici ritmiche brasiliane. Il termine convive con <em>m\u00fasica instrumental brasileira</em> e <em>Brazilian Jazz</em> (Piedade; Ruiz).',
         whyTitle: 'Perch\u00e9 "Syncopation"?',
         whyBody: `
@@ -94,16 +92,56 @@
           <p>O BSL nasce de uma necessidade musical concreta: usar livremente um vocabul\u00e1rio mel\u00f3dico j\u00e1 adquirido mantendo forte coer\u00eancia r\u00edtmica quando o contexto musical muda.</p>
           <p>O prot\u00f3tipo prop\u00f5e ouvir, interiorizar, transformar e contextualizar pequenas configura\u00e7\u00f5es r\u00edtmicas, levando-as progressivamente para a frase mel\u00f3dica e a improvisa\u00e7\u00e3o.</p>
         `,
-        cta: 'Explore o App \u2192',
+        cta: 'Explore o App',
         mibNote: '<strong>Jazz Brasileiro</strong><br>Usado aqui como termo de trabalho para o campo de pr\u00e1ticas instrumentais e improvisativas brasileiras consideradas pela pesquisa, em que linguagens jaz\u00edsticas encontram matrizes r\u00edtmicas brasileiras. O termo convive com <em>m\u00fasica instrumental brasileira</em> e <em>Brazilian Jazz</em> (Piedade; Ruiz).',
         whyTitle: 'Por que "Syncopation"?',
         whyBody: `
           <p>O termo syncopation / s\u00edncope n\u00e3o possui um \u00fanico significado na literatura: seus limites te\u00f3ricos v\u00eam sendo discutidos e alguns autores preferem conceitos como offbeatness ou contrametricidade.</p>
           <p>O BSL utiliza "Syncopation" em sentido operacional e hist\u00f3rico, como um termo reconhec\u00edvel ligado ao ponto de partida do projeto, sem pressupor que ele, sozinho, possa descrever a complexidade do ritmo brasileiro.</p>
         `
+      },
+      es: {
+        headline: "De las micro-unidades r\u00edtmicas a la improvisaci\u00f3n en los distintos contextos del Jazz Brasileiro.",
+        audience: "Para improvisadores que ya tienen un vocabulario mel\u00f3dico y quieren trabajar el comportamiento r\u00edtmico de la frase.",
+        intro: "\n          <p>Brazilian Syncopation Lab es un entorno de pr\u00e1ctica y un prototipo de investigaci\u00f3n art\u00edstica y pedag\u00f3gica. El proyecto estudia c\u00f3mo peque\u00f1as configuraciones r\u00edtmicas pueden convertirse en material para una l\u00ednea mel\u00f3dica personal y para la improvisaci\u00f3n en los distintos contextos del Jazz Brasileiro.</p>\n          <p>El BSL nace de una necesidad musical concreta: usar con libertad un vocabulario mel\u00f3dico ya adquirido manteniendo una fuerte coherencia r\u00edtmica cuando cambia el contexto musical.</p>\n          <p>El prototipo propone escuchar, interiorizar, transformar y contextualizar peque\u00f1as configuraciones r\u00edtmicas, llev\u00e1ndolas progresivamente hacia la frase mel\u00f3dica y la improvisaci\u00f3n.</p>\n        ",
+        cta: "Explora la app",
+        mibNote: "<strong>Jazz Brasileiro</strong><br>Se usa aqu\u00ed como t\u00e9rmino de trabajo para el campo de pr\u00e1cticas instrumentales e improvisativas brasile\u00f1as que considera la investigaci\u00f3n, donde los lenguajes jaz\u00edsticos se encuentran con las matrices r\u00edtmicas brasile\u00f1as. El t\u00e9rmino convive con <em>m\u00fasica instrumental brasileira</em> y <em>Brazilian Jazz</em> (Piedade; Ruiz).",
+        whyTitle: "\u00bfPor qu\u00e9 \"Syncopation\"?",
+        whyBody: "\n          <p>El t\u00e9rmino syncopation / s\u00edncope no tiene un significado \u00fanico en la literatura: sus l\u00edmites te\u00f3ricos se han discutido y algunos autores prefieren conceptos como offbeatness o contrametricidad.</p>\n          <p>El BSL utiliza \"Syncopation\" en sentido operativo e hist\u00f3rico, como t\u00e9rmino reconocible ligado al punto de partida del proyecto, sin suponer que describa por s\u00ed solo la complejidad del ritmo brasile\u00f1o.</p>\n        "
       }
     };
   </script>
-  <script src="src/js/i18n.js?v=2"></script>
+  <script>
+    // Home hero: the real notation of Telecoteco 1, drawn from the project's
+    // own pattern library and coloured by family, with a playhead sweeping the
+    // two bars. Display only — no audio, no interaction, nothing shared with
+    // the app's generator.
+    (function () {
+      document.addEventListener('DOMContentLoaded', async function () {
+        const stage = document.getElementById('heroScore');
+        if (!stage || typeof opensheetmusicdisplay === 'undefined') return;
+        try {
+          const resp = await fetch('assets/hero/telecoteco.musicxml');
+          const xml = await resp.text();
+          const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay('heroScoreInner', {
+            backend: 'svg', drawTitle: false, drawSubtitle: false, drawComposer: false,
+            drawPartNames: false, drawMeasureNumbers: false, autoResize: true
+          });
+          await osmd.load(xml);
+          osmd.EngravingRules.PageBackgroundColor = '#FBFBF8';
+          osmd.EngravingRules.DefaultColorMusic = '#000000';
+          osmd.EngravingRules.ColoringEnabled = true;
+          osmd.EngravingRules.RenderSingleHorizontalStaffline = true;
+          osmd.render();
+          stage.classList.add('ready');
+        } catch (e) {
+          // if anything fails the hero simply stays without the score
+          stage.style.display = 'none';
+          console.warn('Hero score not shown:', e);
+        }
+      });
+    })();
+  </script>
+  <script src="src/js/i18n.js?v=4"></script>
 </body>
 </html>

@@ -6,7 +6,10 @@
   <title>Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=34" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css?v=38" />
 </head>
 <body>
 
@@ -18,11 +21,7 @@
         <a href="about.html" data-i18n-nav="how">How It Works</a>
         <a href="matrix.html" data-i18n-nav="matrix">Rhythmic Matrix</a>
         <a href="research.html" data-i18n-nav="research">Research &amp; Context</a>
-        <div class="lang-switch" id="langSwitch">
-          <button type="button" data-lang="it">IT</button>
-          <button type="button" data-lang="en">EN</button>
-          <button type="button" data-lang="pt">PT</button>
-        </div>
+        <div class="lang-switch" id="langSwitch"></div>
       </div>
     </nav>
     <h1><span class="t-brazilian">Brazilian</span> <span class="t-lab">Syncopation Lab</span></h1>
@@ -30,20 +29,20 @@
   </header>
 
   <details class="app-about">
-    <summary>Practice flow &amp; about this prototype</summary>
+    <summary data-i18n="appAboutSummary">Practice flow &amp; about this prototype</summary>
     <div class="app-about-body">
       <div class="cycle-visual" style="max-width:640px;">
-        <div class="cycle-node">LISTEN</div>
+        <div class="cycle-node" data-i18n="cyc1">LISTEN</div>
         <div class="cycle-arrow">→</div>
-        <div class="cycle-node">INTERNALIZE</div>
+        <div class="cycle-node" data-i18n="cyc2">INTERNALIZE</div>
         <div class="cycle-arrow">→</div>
-        <div class="cycle-node">TURN IT INTO MELODY</div>
+        <div class="cycle-node" data-i18n="cyc3">TURN IT INTO MELODY</div>
         <div class="cycle-arrow">→</div>
-        <div class="cycle-node">CONTEXTUALIZE</div>
+        <div class="cycle-node" data-i18n="cyc4">CONTEXTUALIZE</div>
         <div class="cycle-arrow">→</div>
-        <div class="cycle-node">IMPROVISE</div>
+        <div class="cycle-node" data-i18n="cyc5">IMPROVISE</div>
       </div>
-      <p class="hint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class="en-term">backing track</span> and a chord or modal centre.</p>
+      <p class="hint" data-i18n="appAboutHint">Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class="en-term">backing track</span> and a chord or modal centre.</p>
     </div>
   </details>
 
@@ -51,7 +50,7 @@
     <aside>
 <div id="loadStatus" class="status" style="display:none"></div>
       <div class="group">
-        <label>Generate Study</label>
+        <label data-i18n="lblMode">Working mode</label>
         <select id="modeSelect" style="position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none;">
           <option value="manual">1. Fragment Practice</option>
           <option value="random">2. Random Generator</option>
@@ -76,30 +75,30 @@
         </div>
         <div style="height:10px"></div>
         <div id="barsBox">
-          <label class="small">Study Length</label>
+          <label class="small" data-i18n="lblLength">Study Length</label>
           <select id="barsInput">
-            <option value="2" selected>2 bars — 4 fragments</option>
-            <option value="4">4 bars — 8 fragments</option>
-            <option value="8">8 bars — 16 fragments</option>
-            <option value="16">16 bars — 32 fragments</option>
-            <option value="32">32 bars — 64 fragments</option>
+            <option value="2" selected data-i18n="len2">2 bars — 4 fragments</option>
+            <option value="4" data-i18n="len4">4 bars — 8 fragments</option>
+            <option value="8" data-i18n="len8">8 bars — 16 fragments</option>
+            <option value="16" data-i18n="len16">16 bars — 32 fragments</option>
+            <option value="32" data-i18n="len32">32 bars — 64 fragments</option>
           </select>
         </div>
-        <div id="barsFixedNote" class="hint" style="display:none">Study Length is fixed at 2 bars for focused fragment practice.</div>
-        <div class="hint">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
-        <label class="switchline"><input id="phraseRestInput" type="checkbox" /> Add 2 bars of rest after every 2-bar phrase</label>
+        <div id="barsFixedNote" class="hint" style="display:none" data-i18n="noteFixedLen">Study Length is fixed at 2 bars for focused fragment practice.</div>
+        <div class="hint" data-i18n="noteMeter">The study is always in 2/4. Each fragment lasts 1/4: the app always uses 2 fragments per bar.</div>
+        <label class="switchline"><input id="phraseRestInput" type="checkbox" /> <span data-i18n="lblPhraseRest">Add 2 bars of rest after every 2-bar phrase</span></label>
         <div id="randomOptions" style="margin-top:10px">
           <div class="hint" data-i18n="modRandom" style="margin-bottom:8px;">Generate continuously changing combinations and use them to develop listening, reading, recognition and rhythmic flexibility.</div>
-          <label class="small">Repetitions</label>
+          <label class="small" data-i18n="lblRepeat">Repetitions</label>
           <select id="repeatSelect">
-            <option value="allow">Allowed</option>
-            <option value="avoidAdjacent">Avoid adjacent duplicates</option>
-            <option value="noRepeat">No repeat until possible</option>
+            <option value="allow" data-i18n="rep1">Allowed</option>
+            <option value="avoidAdjacent" data-i18n="rep2">Avoid adjacent duplicates</option>
+            <option value="noRepeat" data-i18n="rep3">No repeat until possible</option>
           </select>
         </div>
         <div id="manualOptions" style="display:none;margin-top:12px">
           <div class="hint" data-i18n="modFragment" style="margin-bottom:8px;">Explore the micro-cells one at a time. Learn to recognize their sound, notation and behaviour in relation to the pulse.</div>
-          <label class="small">Fragments (per bar) — unset slots default to Rest</label>
+          <label class="small" data-i18n="lblSlots">Fragments (per bar) — unset slots default to Rest</label>
           <div id="manualGrid" style="display:grid; gap:6px; margin-top:6px;"></div>
         </div>
         <div id="library" style="display:none"></div>
@@ -114,65 +113,63 @@
         <div id="progressionBox" class="pattern-box">
           <label>Pattern Rotation</label>
           <div class="hint" data-i18n="modRotation" style="margin-bottom:8px;">Move from one pattern to another while maintaining pulse, continuity and phrasing.</div>
-          <label class="small">Progression mode</label>
+          <label class="small" data-i18n="lblProgMode">Progression mode</label>
           <select id="progressionModeSelect">
-            <option value="manual">Manual pattern choice</option>
-            <option value="random">Random pattern progression</option>
+            <option value="manual" data-i18n="prog1">Manual pattern choice</option>
+            <option value="random" data-i18n="prog2">Random pattern progression</option>
           </select>
           <div id="progressionManualBox" style="margin-top:10px;">
-            <div class="hint" style="margin-bottom:8px;">Choose 2 to 8 patterns. If the progression is shorter than the study length, it will repeat.</div>
+            <div class="hint" style="margin-bottom:8px;" data-i18n="noteProgManual">Choose 2 to 8 patterns. If the progression is shorter than the study length, it will repeat.</div>
             <div id="progressionSelectors" class="pattern-list"></div>
           </div>
-          <div id="progressionRandomBox" class="hint" style="display:none;margin-top:10px;">
-            The app will randomly choose enough traditional patterns to fill the selected study length.
-          </div>
+          <div id="progressionRandomBox" class="hint" style="display:none;margin-top:10px;" data-i18n="noteProgRandom">The app will randomly choose enough traditional patterns to fill the selected study length.</div>
         </div>
 
         <div id="hybridBox" class="pattern-box">
           <label>Hybrid Pattern/Random</label>
           <div class="hint" data-i18n="modHybrid" style="margin-bottom:8px;">Alternate recognizable patterns with generated material, relating contextualized structures to less predictable combinations.</div>
           <div id="hybridPatternSourceBox">
-            <label class="small">Pattern source</label>
+            <label class="small" data-i18n="lblPatSource">Pattern source</label>
             <select id="hybridPatternSourceSelect">
-              <option value="randomPatterns" selected>Random traditional patterns</option>
-              <option value="chosenPattern">Choose one traditional pattern</option>
+              <option value="randomPatterns" selected data-i18n="src1">Random traditional patterns</option>
+              <option value="chosenPattern" data-i18n="src2">Choose one traditional pattern</option>
             </select>
             <div id="hybridChosenPatternBox" style="display:none;margin-top:10px;">
-              <label class="small">Chosen pattern</label>
+              <label class="small" data-i18n="lblChosenPat">Chosen pattern</label>
               <select id="hybridPatternSelect"></select>
             </div>
             <div style="height:10px"></div>
           </div>
           <div id="hybridFormBox">
-          <label class="small">Hybrid form</label>
+          <label class="small" data-i18n="lblHybridForm">Hybrid form</label>
           <select id="hybridFormSelect">
-            <option value="patternBlockRandomBlock" selected>Pattern block → Random block</option>
-            <option value="randomBlockPatternBlock">Random block → Pattern block</option>
-            <option value="patternOpeningRandomEnding">Pattern opening → Random ending</option>
-            <option value="randomOpeningPatternEnding">Random opening → Pattern ending</option>
+            <option value="patternBlockRandomBlock" selected data-i18n="hf1">Pattern block → Random block</option>
+            <option value="randomBlockPatternBlock" data-i18n="hf2">Random block → Pattern block</option>
+            <option value="patternOpeningRandomEnding" data-i18n="hf3">Pattern opening → Random ending</option>
+            <option value="randomOpeningPatternEnding" data-i18n="hf4">Random opening → Pattern ending</option>
             <option value="grammarRemix" hidden>Grammar Remix</option>
           </select>
           </div>
           <div id="hybridVariationTypeBox">
             <div style="height:10px"></div>
-            <label class="small">Random variation type</label>
+            <label class="small" data-i18n="lblVarType">Random variation type</label>
             <select id="hybridRandomTypeSelect">
-              <option value="free" selected>Free random</option>
-              <option value="matchColor">Match A/B color profile</option>
+              <option value="free" selected data-i18n="var1">Free random</option>
+              <option value="matchColor" data-i18n="var2">Match A/B color profile</option>
             </select>
           </div>
           <div id="hybridGrammarHint" class="hint" style="display:none;"><span data-i18n="modCreative">Let the system automatically choose between the different possibilities available in Hybrid Pattern. Use it as a transition towards freer improvisation.</span> Move beyond the written pattern and improvise freely. This step chooses everything automatically: pattern opening or pattern ending, free random or A/B color-matched random. No extra choices.</div>
-          <div class="hint">Block size is fixed at 2 bars: 4 fragments. Opening/ending forms replace one bar inside the pattern phrase.</div>
+          <div class="hint" data-i18n="noteBlock">Block size is fixed at 2 bars: 4 fragments. Opening/ending forms replace one bar inside the pattern phrase.</div>
         </div>
       </div>
       </div>
 
       <div class="group">
-        <button id="generateBtn" class="primary" style="width:100%" disabled>Generate Study</button>
+        <button id="generateBtn" class="primary" style="width:100%" disabled data-i18n="btnGenerate">Generate Study</button>
         <div style="height:10px"></div>
         <div class="row">
-          <button id="saveStudyBtn" class="secondary" type="button" disabled>Save current</button>
-          <button id="printBtn" class="secondary" disabled>PDF/Print</button>
+          <button id="saveStudyBtn" class="secondary" type="button" disabled data-i18n="btnSave">Save current</button>
+          <button id="printBtn" class="secondary" disabled data-i18n="btnPrint">PDF/Print</button>
         </div>
       </div>
 
@@ -180,52 +177,52 @@
         <label class="small">Rhythmic Context</label>
         <select id="backingSelect"><option value="">No track — metronome only</option></select>
         <div class="hint" data-i18n="modRhythmicContext" style="margin-bottom:8px;">Choose the Brazilian rhythmic context in which to practise the material.</div>
-        <div class="hint">Practice the material over different Brazilian rhythmic environments. Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
+        <div class="hint" data-i18n="noteBacking">Practice the material over different Brazilian rhythmic environments. Backing loops are pre-rendered at several tempos, keeping pitch clean at any Study BPM. If no track is selected, a simple metronome plays instead.</div>
         <div id="audioStatus" class="status">Loading backing tracks…</div>
       </div>
 
       <div class="group">
         <div class="row">
-          <button id="playBtn" class="accent-yellow" disabled>Play</button>
-          <button id="stopBtn" class="danger" disabled>Stop</button>
+          <button id="playBtn" class="accent-yellow" disabled data-i18n="btnPlay">Play</button>
+          <button id="stopBtn" class="danger" disabled data-i18n="btnStop">Stop</button>
         </div>
         <div style="height:12px"></div>
-        <label>Study BPM: <span id="bpmValue">100</span></label>
+        <label><span data-i18n="lblBpm">Study BPM</span>: <span id="bpmValue">100</span></label>
         <input id="bpmInput" type="range" min="60" max="160" value="100" />
-        <div class="hint">A 4-beat count-in is always active by default. Looping stays on so the study repeats continuously with the backing.</div>
+        <div class="hint" data-i18n="noteCountIn">A 4-beat count-in is always active by default. Looping stays on so the study repeats continuously with the backing.</div>
         <input id="loopInput" type="checkbox" checked style="display:none" />
         <div style="height:12px"></div>
         <div class="row">
           <div>
-            <label class="small">Study volume: <span id="studyVolumeValue">130</span>%</label>
+            <label class="small"><span data-i18n="lblStudyVol">Study volume</span>: <span id="studyVolumeValue">130</span>%</label>
             <input id="studyVolumeInput" type="range" min="0" max="200" value="130" />
           </div>
           <div>
-            <label class="small">Backing volume</label>
+            <label class="small" data-i18n="lblBackingVol">Backing volume</label>
             <input id="trackVolumeInput" type="range" min="0" max="100" value="70" />
           </div>
         </div>
         <div style="height:10px"></div>
-        <label class="small">Written rhythm sound</label>
+        <label class="small" data-i18n="lblSound">Written rhythm sound</label>
         <select id="soundSelect">
-          <option value="woodblock" selected>Woodblock — clear study sound</option>
-          <option value="clave">Clave — dry and musical</option>
-          <option value="clap">Clap — strong and simple</option>
-          <option value="mute">Off — backing/metronome only</option>
+          <option value="woodblock" selected data-i18n="snd1">Woodblock — clear study sound</option>
+          <option value="clave" data-i18n="snd2">Clave — dry and musical</option>
+          <option value="clap" data-i18n="snd3">Clap — strong and simple</option>
+          <option value="mute" data-i18n="snd4">Off — backing/metronome only</option>
         </select>
       </div>
 
       <div class="group">
-        <label>Harmonic Pad <span class="small">(experimental)</span></label>
+        <label>Harmonic Pad <span class="small" data-i18n="lblExperimental">(experimental)</span></label>
         <div class="hint" data-i18n="modMelodicApplication" style="margin-bottom:8px;">Bring the rhythm into melody using scales, pentatonics, arpeggios, intervals or your own vocabulary.</div>
-        <div class="hint">Optional sustained chord under the study, transposed live — no tempo/loop matching needed.</div>
+        <div class="hint" data-i18n="notePad">Optional sustained chord under the study, transposed live — no tempo/loop matching needed.</div>
         <div style="height:8px"></div>
         <label class="small">Pad</label>
         <select id="padSelect"><option value="">No pad</option></select>
         <div style="height:10px"></div>
         <div class="row">
           <div>
-            <label class="small">Key</label>
+            <label class="small" data-i18n="lblKey">Key</label>
             <select id="padKeySelect">
               <option value="C" selected>C</option>
               <option value="C#">C# / Db</option>
@@ -242,28 +239,28 @@
             </select>
           </div>
           <div>
-            <label class="small">Pad volume</label>
+            <label class="small" data-i18n="lblPadVol">Pad volume</label>
             <input id="padVolumeInput" type="range" min="0" max="100" value="25" />
           </div>
         </div>
       </div>
 
       <div class="group">
-        <label>Saved Studies / Favorites</label>
+        <label data-i18n="lblSaved">Saved Studies / Favorites</label>
         <div class="row">
-          <button id="deleteStudyBtn" class="danger" type="button" disabled>Delete</button>
+          <button id="deleteStudyBtn" class="danger" type="button" disabled data-i18n="btnDelete">Delete</button>
         </div>
         <div style="height:10px"></div>
         <select id="savedStudySelect"><option value="">No saved study</option></select>
         <div class="row" style="margin-top:10px">
-          <button id="loadStudyBtn" class="secondary" type="button" disabled>Load</button>
-          <button id="exportStudiesBtn" class="secondary" type="button">Export</button>
+          <button id="loadStudyBtn" class="secondary" type="button" disabled data-i18n="btnLoad">Load</button>
+          <button id="exportStudiesBtn" class="secondary" type="button" data-i18n="btnExport">Export</button>
         </div>
         <div style="height:10px"></div>
-        <button id="importStudiesBtn" class="secondary" type="button" style="width:100%">Import saved studies</button>
+        <button id="importStudiesBtn" class="secondary" type="button" style="width:100%" data-i18n="btnImport">Import saved studies</button>
         <input id="importStudiesInput" type="file" accept=".json" style="display:none" />
         <div class="hint" data-i18n="modSaved" style="margin-bottom:8px;">Save the studies you want to return to and explore further.</div>
-        <div class="hint">Save useful studies for future practice. Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
+        <div class="hint" data-i18n="noteSaved">Save useful studies for future practice. Saved studies store the exact fragment sequence, rests, selected mode, BPM and backing choice. Export/import lets you move favorites to another computer.</div>
         <div id="savedStudiesStatus" class="status">No saved study yet.</div>
       </div>
     </aside>
@@ -271,13 +268,13 @@
     <section class="viewer">
       <div class="topbar">
         <div>
-          <h2>Generated Study</h2>
-          <p id="summary">Load fragments and generate a 2/4 study.</p>
+          <h2 data-i18n="hGenerated">Generated Study</h2>
+          <p id="summary" data-i18n="summaryEmpty">Load fragments and generate a 2/4 study.</p>
         </div>
-        <button id="darkScoreBtn" class="secondary" type="button">Dark Study Mode</button>
+        <button id="darkScoreBtn" class="secondary" type="button" data-i18n="btnDark">Dark Study Mode</button>
       </div>
       <div id="sequence" class="sequence"></div>
-      <div id="osmd-container"><div class="empty">Notation will appear here.</div></div>
+      <div id="osmd-container"><div class="empty" data-i18n="emptyScore">Notation will appear here.</div></div>
       <div id="patternRotationLegend" class="legend" style="display:none;margin-top:12px;"></div>
       <div id="renderStatus" class="status"></div>
     </section>
@@ -290,10 +287,11 @@
 
 <script src="src/js/manifest.js?v=17"></script>
 <script src="src/js/patterns.js?v=13"></script>
-<script src="src/js/app.js?v=21"></script>
+<script src="src/js/app.js?v=22"></script>
 <script>
   window.BSL_I18N_CONTENT = {
     en: {
+      lblMode: "Working mode",
       modFragment: "Work with one micro-unit at a time. Listen to it, identify its attacks, and reproduce it with your voice, body, or instrument.",
       modRandom: "Generate combinations you might not choose spontaneously, then try to recognize, repeat, and transform them.",
       modTraditional: "Place the micro-units within recognizable rhythmic patterns and observe how their function changes inside a broader structure.",
@@ -302,33 +300,375 @@
       modCreative: "Reduce your control over the sequence and respond to changes you cannot fully anticipate. Improvisation can begin in any of the previous modules.",
       modRhythmicContext: "Choose the Brazilian rhythmic environment in which to practise the material.",
       modMelodicApplication: "Add a tonal centre or a sustained chord. A static harmonic field leaves more space for listening to the rhythm and shaping the melodic line.",
-      modSaved: "Save the studies you want to return to and develop further."
+      modSaved: "Save the studies you want to return to and develop further.",
+      appAboutSummary: "Practice flow &amp; about this prototype",
+      cyc1: "Listen",
+      cyc2: "Internalize",
+      cyc3: "Turn it into melody",
+      cyc4: "Contextualize",
+      cyc5: "Improvise",
+      appAboutHint: "Map each rhythm onto scales, pentatonics, arpeggios, intervals or your own musical vocabulary, then explore it over a selected Brazilian <span class=\"en-term\">backing track</span> and a chord or modal centre.",
+      lblGenerate: "Generate study",
+      lblLength: "Study length",
+      len2: "2 bars &mdash; 4 fragments",
+      len4: "4 bars &mdash; 8 fragments",
+      len8: "8 bars &mdash; 16 fragments",
+      len16: "16 bars &mdash; 32 fragments",
+      len32: "32 bars &mdash; 64 fragments",
+      noteFixedLen: "In Fragment Practice the length stays at 2 bars, to keep the focus on a single cell.",
+      noteMeter: "The study is always in 2/4. Each fragment lasts one beat, so every bar holds two fragments.",
+      lblPhraseRest: "Add 2 bars of rest after every 2-bar phrase",
+      lblRepeat: "Repetitions",
+      rep1: "Allowed",
+      rep2: "Avoid two identical in a row",
+      rep3: "Use all before repeating",
+      lblSlots: "Fragments per beat &mdash; empty slots stay on Rest",
+      lblProgMode: "How patterns follow each other",
+      prog1: "Choose the patterns yourself",
+      prog2: "Let the app choose them",
+      noteProgManual: "Choose from 2 to 8 patterns. If the sequence is shorter than the study, it starts again from the beginning.",
+      noteProgRandom: "The app picks enough traditional patterns to fill the study length.",
+      lblPatSource: "Where the patterns come from",
+      src1: "Random traditional patterns",
+      src2: "One traditional pattern of your choice",
+      lblChosenPat: "Chosen pattern",
+      lblHybridForm: "How the blocks alternate",
+      hf1: "Pattern block &rarr; generated block",
+      hf2: "Generated block &rarr; pattern block",
+      hf3: "Pattern opening &rarr; generated ending",
+      hf4: "Generated opening &rarr; pattern ending",
+      lblVarType: "Type of generated material",
+      var1: "Free",
+      var2: "Following the A/B families",
+      noteBlock: "Each block lasts 2 bars, four fragments. The opening and ending forms replace one bar inside the pattern phrase.",
+      btnGenerate: "Generate study",
+      btnSave: "Save this study",
+      btnPrint: "PDF / Print",
+      noteBacking: "Practise the material over different Brazilian rhythmic environments. Each loop is pre-rendered at several tempos, so the sound stays clean at any BPM. With no track selected, a metronome plays instead.",
+      btnPlay: "Play",
+      btnStop: "Stop",
+      lblBpm: "Study BPM",
+      noteCountIn: "A four-beat count-in always precedes the study, which then loops continuously with the backing.",
+      lblStudyVol: "Study volume",
+      lblBackingVol: "Backing volume",
+      lblSound: "Sound of the written rhythm",
+      snd1: "Woodblock &mdash; clear for study",
+      snd2: "Clave &mdash; dry and musical",
+      snd3: "Clap &mdash; strong and simple",
+      snd4: "Off &mdash; backing or metronome only",
+      lblExperimental: "(experimental)",
+      notePad: "An optional sustained chord under the study. It follows no tempo, so it needs no loop matching.",
+      lblKey: "Key",
+      lblPadVol: "Pad volume",
+      lblSaved: "Saved studies",
+      btnDelete: "Delete",
+      btnLoad: "Load",
+      btnExport: "Export",
+      btnImport: "Import studies",
+      noteSaved: "Saving keeps the exact fragment sequence, the rests, the mode, the BPM and the chosen backing. Export and import let you move your studies to another computer.",
+      hGenerated: "Generated study",
+      summaryEmpty: "Load the fragments and generate a study in 2/4.",
+      btnDark: "Dark study mode",
+      emptyScore: "The notation will appear here.",
+      msgNoFiles: "No files",
+      msgLoadFirst: "Load the fragments first.",
+      optNoSaved: "No saved study",
+      msgNoSavedYet: "No saved studies yet.",
+      msgGenerateFirst: "Generate a study before saving it.",
+      msgImportFailed: "Import failed: the file is not a valid saved-studies file.",
+      msgNotationOk: "Notation generated.",
+      msgManualIncomplete: "The sequence is incomplete: choose a fragment for every slot.",
+      msgNoPattern: "No complete traditional pattern available. Check the fragment names.",
+      msgChoosePattern: "Choose at least one pattern for the sequence.",
+      optNoPad: "No pad",
+      optNoTrack: "No track — metronome only",
+      btnLight: "Light study mode"
     },
     it: {
-      modFragment: "Esplora una micro-unit\u00e0 alla volta. Ascoltala, riconoscine gli attacchi e riproducila con voce, corpo o strumento.",
+      lblMode: "Modalit\u00e0 di lavoro",
+      modFragment: "Esplora una micro-unità alla volta. Ascoltala, riconoscine gli attacchi e riproducila con voce, corpo o strumento.",
       modRandom: "Genera combinazioni che potresti non scegliere spontaneamente e prova a riconoscerle, ripeterle e trasformarle.",
-      modTraditional: "Riporta le micro-unit\u00e0 dentro pattern ritmici riconoscibili e osserva come cambiano funzione all\u2019interno di una struttura pi\u00f9 ampia.",
-      modRotation: "Passa da un pattern all\u2019altro mantenendo pulsazione, continuit\u00e0 e fraseggio.",
+      modTraditional: "Riporta le micro-unità dentro pattern ritmici riconoscibili e osserva come cambiano funzione all’interno di una struttura più ampia.",
+      modRotation: "Passa da un pattern all’altro mantenendo pulsazione, continuità e fraseggio.",
       modHybrid: "Alterna materiale proveniente da pattern riconoscibili e combinazioni generate dal sistema.",
-      modCreative: "Riduci il controllo sulla sequenza e reagisci a cambiamenti non anticipati. L\u2019improvvisazione pu\u00f2 iniziare gi\u00e0 nei moduli precedenti.",
-      modRhythmicContext: "Scegli l\u2019ambiente ritmico brasiliano nel quale praticare il materiale.",
-      modMelodicApplication: "Aggiungi un centro o un accordo mantenuto. Un campo armonico statico lascia pi\u00f9 spazio all\u2019ascolto del ritmo e alla costruzione della linea melodica.",
-      modSaved: "Salva gli studi che vuoi riprendere e approfondire successivamente."
+      modCreative: "Riduci il controllo sulla sequenza e reagisci a cambiamenti non anticipati. L’improvvisazione può iniziare già nei moduli precedenti.",
+      modRhythmicContext: "Scegli l’ambiente ritmico brasiliano nel quale praticare il materiale.",
+      modMelodicApplication: "Aggiungi un centro o un accordo mantenuto. Un campo armonico statico lascia più spazio all’ascolto del ritmo e alla costruzione della linea melodica.",
+      modSaved: "Salva gli studi che vuoi riprendere e approfondire successivamente.",
+      appAboutSummary: "Percorso di pratica e note sul prototipo",
+      cyc1: "Ascolta",
+      cyc2: "Interiorizza",
+      cyc3: "Melodicizza",
+      cyc4: "Contestualizza",
+      cyc5: "Improvvisa",
+      appAboutHint: "Applica ogni ritmo a scale, pentatoniche, arpeggi, intervalli o al tuo vocabolario personale, poi provalo su una <span class=\"en-term\">backing track</span> brasiliana e su un accordo o centro modale.",
+      lblGenerate: "Genera studio",
+      lblLength: "Durata dello studio",
+      len2: "2 battute &mdash; 4 frammenti",
+      len4: "4 battute &mdash; 8 frammenti",
+      len8: "8 battute &mdash; 16 frammenti",
+      len16: "16 battute &mdash; 32 frammenti",
+      len32: "32 battute &mdash; 64 frammenti",
+      noteFixedLen: "In Fragment Practice la durata resta di 2 battute, per tenere il lavoro su una singola cellula.",
+      noteMeter: "Lo studio &egrave; sempre in 2/4. Ogni frammento dura un movimento, quindi ogni battuta contiene due frammenti.",
+      lblPhraseRest: "Aggiungi 2 battute di pausa dopo ogni frase di 2 battute",
+      lblRepeat: "Ripetizioni",
+      rep1: "Consentite",
+      rep2: "Evita due uguali di seguito",
+      rep3: "Usali tutti prima di ripetere",
+      lblSlots: "Frammenti per movimento &mdash; gli slot vuoti restano su Rest",
+      lblProgMode: "Come si susseguono i pattern",
+      prog1: "Scegli tu i pattern",
+      prog2: "Lascia scegliere all&rsquo;app",
+      noteProgManual: "Scegli da 2 a 8 pattern. Se la sequenza &egrave; pi&ugrave; corta dello studio, riparte da capo.",
+      noteProgRandom: "L&rsquo;app sceglie quanti pattern tradizionali servono a riempire la durata dello studio.",
+      lblPatSource: "Da dove vengono i pattern",
+      src1: "Pattern tradizionali casuali",
+      src2: "Un pattern tradizionale a tua scelta",
+      lblChosenPat: "Pattern scelto",
+      lblHybridForm: "Come si alternano i blocchi",
+      hf1: "Blocco pattern &rarr; blocco generato",
+      hf2: "Blocco generato &rarr; blocco pattern",
+      hf3: "Apertura pattern &rarr; chiusura generata",
+      hf4: "Apertura generata &rarr; chiusura pattern",
+      lblVarType: "Tipo di materiale generato",
+      var1: "Libero",
+      var2: "Seguendo le famiglie A/B",
+      noteBlock: "Ogni blocco dura 2 battute, quattro frammenti. Le forme di apertura e chiusura sostituiscono una battuta dentro la frase del pattern.",
+      btnGenerate: "Genera studio",
+      btnSave: "Salva questo studio",
+      btnPrint: "PDF / Stampa",
+      noteBacking: "Pratica il materiale su diversi ambienti ritmici brasiliani. Ogni loop &egrave; gi&agrave; preparato a vari tempi, cos&igrave; il suono resta pulito a qualsiasi BPM. Senza traccia selezionata suona un metronomo.",
+      btnPlay: "Suona",
+      btnStop: "Ferma",
+      lblBpm: "BPM dello studio",
+      noteCountIn: "Un conteggio di quattro movimenti precede sempre lo studio, che poi gira in loop insieme al backing.",
+      lblStudyVol: "Volume dello studio",
+      lblBackingVol: "Volume del backing",
+      lblSound: "Suono del ritmo scritto",
+      snd1: "Woodblock &mdash; chiaro per lo studio",
+      snd2: "Clave &mdash; asciutto e musicale",
+      snd3: "Battito di mani &mdash; forte e semplice",
+      snd4: "Spento &mdash; solo backing o metronomo",
+      lblExperimental: "(sperimentale)",
+      notePad: "Un accordo tenuto facoltativo sotto lo studio. Non segue il tempo, quindi non richiede alcuna sincronizzazione.",
+      lblKey: "Tonalit&agrave;",
+      lblPadVol: "Volume del pad",
+      lblSaved: "Studi salvati",
+      btnDelete: "Elimina",
+      btnLoad: "Carica",
+      btnExport: "Esporta",
+      btnImport: "Importa studi",
+      noteSaved: "Il salvataggio conserva la sequenza esatta dei frammenti, le pause, il modo, il BPM e il backing scelto. Esporta e importa per spostare i tuoi studi su un altro computer.",
+      hGenerated: "Studio generato",
+      summaryEmpty: "Carica i frammenti e genera uno studio in 2/4.",
+      btnDark: "Partitura su fondo scuro",
+      emptyScore: "Qui comparir&agrave; la notazione.",
+      msgNoFiles: "Nessun file",
+      msgLoadFirst: "Carica prima i frammenti.",
+      optNoSaved: "Nessuno studio salvato",
+      msgNoSavedYet: "Non hai ancora studi salvati.",
+      msgGenerateFirst: "Genera uno studio prima di salvarlo.",
+      msgImportFailed: "Importazione non riuscita: il file non è un file di studi salvati valido.",
+      msgNotationOk: "Notazione generata.",
+      msgManualIncomplete: "La sequenza è incompleta: scegli un frammento per ogni slot.",
+      msgNoPattern: "Nessun pattern tradizionale completo disponibile. Controlla i nomi dei frammenti.",
+      msgChoosePattern: "Scegli almeno un pattern per la sequenza.",
+      optNoPad: "Nessun pad",
+      optNoTrack: "Nessuna traccia — solo metronomo",
+      btnLight: "Partitura su fondo chiaro"
     },
     pt: {
-      modFragment: "Explore uma micro-unidade de cada vez. Ou\u00e7a-a, reconhe\u00e7a seus ataques e reproduza-a com voz, corpo ou instrumento.",
-      modRandom: "Gere combina\u00e7\u00f5es que voc\u00ea talvez n\u00e3o escolhesse espontaneamente e tente reconhec\u00ea-las, repeti-las e transform\u00e1-las.",
-      modTraditional: "Recoloque as micro-unidades dentro de padr\u00f5es r\u00edtmicos reconhec\u00edveis e observe como mudam de fun\u00e7\u00e3o dentro de uma estrutura mais ampla.",
-      modRotation: "Passe de um padr\u00e3o a outro mantendo pulsa\u00e7\u00e3o, continuidade e fraseado.",
-      modHybrid: "Alterne material proveniente de padr\u00f5es reconhec\u00edveis e combina\u00e7\u00f5es geradas pelo sistema.",
-      modCreative: "Reduza o controle sobre a sequ\u00eancia e reaja a mudan\u00e7as que n\u00e3o consegue antecipar. A improvisa\u00e7\u00e3o pode come\u00e7ar j\u00e1 nos m\u00f3dulos anteriores.",
-      modRhythmicContext: "Escolha o ambiente r\u00edtmico brasileiro no qual praticar o material.",
-      modMelodicApplication: "Acrescente um centro ou um acorde mantido. Um campo harm\u00f4nico est\u00e1tico deixa mais espa\u00e7o para a escuta do ritmo e a constru\u00e7\u00e3o da linha mel\u00f3dica.",
-      modSaved: "Salve os estudos que deseja retomar e desenvolver depois."
+      lblMode: "Modo de trabalho",
+      modFragment: "Explore uma micro-unidade de cada vez. Ouça-a, reconheça seus ataques e reproduza-a com voz, corpo ou instrumento.",
+      modRandom: "Gere combinações que você talvez não escolhesse espontaneamente e tente reconhecê-las, repeti-las e transformá-las.",
+      modTraditional: "Recoloque as micro-unidades dentro de padrões rítmicos reconhecíveis e observe como mudam de função dentro de uma estrutura mais ampla.",
+      modRotation: "Passe de um padrão a outro mantendo pulsação, continuidade e fraseado.",
+      modHybrid: "Alterne material proveniente de padrões reconhecíveis e combinações geradas pelo sistema.",
+      modCreative: "Reduza o controle sobre a sequência e reaja a mudanças que não consegue antecipar. A improvisação pode começar já nos módulos anteriores.",
+      modRhythmicContext: "Escolha o ambiente rítmico brasileiro no qual praticar o material.",
+      modMelodicApplication: "Acrescente um centro ou um acorde mantido. Um campo harmônico estático deixa mais espaço para a escuta do ritmo e a construção da linha melódica.",
+      modSaved: "Salve os estudos que deseja retomar e desenvolver depois.",
+      appAboutSummary: "Percurso de pr&aacute;tica e notas sobre o prot&oacute;tipo",
+      cyc1: "Ou\u00e7a",
+      cyc2: "Interiorize",
+      cyc3: "Melodize",
+      cyc4: "Contextualize",
+      cyc5: "Improvise",
+      appAboutHint: "Aplique cada ritmo a escalas, pentat&ocirc;nicas, arpejos, intervalos ou ao seu vocabul&aacute;rio pessoal e depois explore-o sobre uma <span class=\"en-term\">backing track</span> brasileira e um acorde ou centro modal.",
+      lblGenerate: "Gerar estudo",
+      lblLength: "Dura&ccedil;&atilde;o do estudo",
+      len2: "2 compassos &mdash; 4 fragmentos",
+      len4: "4 compassos &mdash; 8 fragmentos",
+      len8: "8 compassos &mdash; 16 fragmentos",
+      len16: "16 compassos &mdash; 32 fragmentos",
+      len32: "32 compassos &mdash; 64 fragmentos",
+      noteFixedLen: "Em Fragment Practice a dura&ccedil;&atilde;o fica em 2 compassos, para manter o foco numa &uacute;nica c&eacute;lula.",
+      noteMeter: "O estudo &eacute; sempre em 2/4. Cada fragmento dura um tempo, ent&atilde;o cada compasso tem dois fragmentos.",
+      lblPhraseRest: "Acrescentar 2 compassos de pausa depois de cada frase de 2 compassos",
+      lblRepeat: "Repeti&ccedil;&otilde;es",
+      rep1: "Permitidas",
+      rep2: "Evitar dois iguais seguidos",
+      rep3: "Usar todos antes de repetir",
+      lblSlots: "Fragmentos por tempo &mdash; os espa&ccedil;os vazios ficam em Rest",
+      lblProgMode: "Como os padr&otilde;es se sucedem",
+      prog1: "Voc&ecirc; escolhe os padr&otilde;es",
+      prog2: "Deixar o app escolher",
+      noteProgManual: "Escolha de 2 a 8 padr&otilde;es. Se a sequ&ecirc;ncia for mais curta que o estudo, ela recome&ccedil;a do in&iacute;cio.",
+      noteProgRandom: "O app escolhe quantos padr&otilde;es tradicionais forem necess&aacute;rios para preencher a dura&ccedil;&atilde;o do estudo.",
+      lblPatSource: "De onde vêm os padr&otilde;es",
+      src1: "Padr&otilde;es tradicionais aleat&oacute;rios",
+      src2: "Um padr&atilde;o tradicional &agrave; sua escolha",
+      lblChosenPat: "Padr&atilde;o escolhido",
+      lblHybridForm: "Como os blocos se alternam",
+      hf1: "Bloco de padr&atilde;o &rarr; bloco gerado",
+      hf2: "Bloco gerado &rarr; bloco de padr&atilde;o",
+      hf3: "Abertura de padr&atilde;o &rarr; final gerado",
+      hf4: "Abertura gerada &rarr; final de padr&atilde;o",
+      lblVarType: "Tipo de material gerado",
+      var1: "Livre",
+      var2: "Seguindo as fam&iacute;lias A/B",
+      noteBlock: "Cada bloco dura 2 compassos, quatro fragmentos. As formas de abertura e final substituem um compasso dentro da frase do padr&atilde;o.",
+      btnGenerate: "Gerar estudo",
+      btnSave: "Salvar este estudo",
+      btnPrint: "PDF / Imprimir",
+      noteBacking: "Pratique o material sobre diferentes ambientes r&iacute;tmicos brasileiros. Cada loop j&aacute; vem preparado em v&aacute;rios andamentos, ent&atilde;o o som fica limpo em qualquer BPM. Sem faixa selecionada toca um metr&ocirc;nomo.",
+      btnPlay: "Tocar",
+      btnStop: "Parar",
+      lblBpm: "BPM do estudo",
+      noteCountIn: "Uma contagem de quatro tempos sempre precede o estudo, que depois roda em loop junto com o backing.",
+      lblStudyVol: "Volume do estudo",
+      lblBackingVol: "Volume do backing",
+      lblSound: "Som do ritmo escrito",
+      snd1: "Woodblock &mdash; claro para o estudo",
+      snd2: "Clave &mdash; seco e musical",
+      snd3: "Palma &mdash; forte e simples",
+      snd4: "Desligado &mdash; s&oacute; backing ou metr&ocirc;nomo",
+      lblExperimental: "(experimental)",
+      notePad: "Um acorde sustentado opcional sob o estudo. N&atilde;o segue o andamento, ent&atilde;o n&atilde;o exige nenhuma sincroniza&ccedil;&atilde;o.",
+      lblKey: "Tonalidade",
+      lblPadVol: "Volume do pad",
+      lblSaved: "Estudos salvos",
+      btnDelete: "Apagar",
+      btnLoad: "Carregar",
+      btnExport: "Exportar",
+      btnImport: "Importar estudos",
+      noteSaved: "Salvar preserva a sequ&ecirc;ncia exata dos fragmentos, as pausas, o modo, o BPM e o backing escolhido. Exportar e importar permitem levar seus estudos para outro computador.",
+      hGenerated: "Estudo gerado",
+      summaryEmpty: "Carregue os fragmentos e gere um estudo em 2/4.",
+      btnDark: "Partitura em fundo escuro",
+      emptyScore: "A nota&ccedil;&atilde;o aparecer&aacute; aqui.",
+      msgNoFiles: "Nenhum arquivo",
+      msgLoadFirst: "Carregue os fragmentos primeiro.",
+      optNoSaved: "Nenhum estudo salvo",
+      msgNoSavedYet: "Você ainda não tem estudos salvos.",
+      msgGenerateFirst: "Gere um estudo antes de salvá-lo.",
+      msgImportFailed: "Importação falhou: o arquivo não é um arquivo válido de estudos salvos.",
+      msgNotationOk: "Notação gerada.",
+      msgManualIncomplete: "A sequência está incompleta: escolha um fragmento para cada espaço.",
+      msgNoPattern: "Nenhum padrão tradicional completo disponível. Verifique os nomes dos fragmentos.",
+      msgChoosePattern: "Escolha pelo menos um padrão para a sequência.",
+      optNoPad: "Nenhum pad",
+      optNoTrack: "Nenhuma faixa — só metrônomo",
+      btnLight: "Partitura em fundo claro"
+    },
+    es: {
+      lblMode: "Modo de trabajo",
+      modFragment: "Explora una micro-unidad a la vez. Esc\u00fachala, reconoce sus ataques y reprod\u00facela con voz, cuerpo o instrumento.",
+      modRandom: "Genera combinaciones que quiz\u00e1 no elegir\u00edas espont\u00e1neamente e intenta reconocerlas, repetirlas y transformarlas.",
+      modTraditional: "Devuelve las micro-unidades a patrones r\u00edtmicos reconocibles y observa c\u00f3mo cambian de funci\u00f3n dentro de una estructura m\u00e1s amplia.",
+      modRotation: "Pasa de un patr\u00f3n a otro manteniendo pulso, continuidad y fraseo.",
+      modHybrid: "Alterna material procedente de patrones reconocibles con combinaciones generadas por el sistema.",
+      modCreative: "Reduce el control sobre la secuencia y reacciona a cambios que no puedes anticipar. La improvisaci\u00f3n puede empezar ya en los m\u00f3dulos anteriores.",
+      modRhythmicContext: "Elige el entorno r\u00edtmico brasile\u00f1o en el que practicar el material.",
+      modMelodicApplication: "A\u00f1ade un centro o un acorde mantenido. Un campo arm\u00f3nico est\u00e1tico deja m\u00e1s espacio para escuchar el ritmo y construir la l\u00ednea mel\u00f3dica.",
+      modSaved: "Guarda los estudios que quieras retomar y desarrollar despu\u00e9s.",
+      appAboutSummary: "Recorrido de pr\u00e1ctica y notas sobre el prototipo",
+      cyc1: "Escucha",
+      cyc2: "Interioriza",
+      cyc3: "Melodiza",
+      cyc4: "Contextualiza",
+      cyc5: "Improvisa",
+      appAboutHint: "Aplica cada ritmo a escalas, pentat\u00f3nicas, arpegios, intervalos o a tu vocabulario personal y despu\u00e9s expl\u00f3ralo sobre una <span class=\"en-term\">backing track</span> brasile\u00f1a y un acorde o centro modal.",
+      lblGenerate: "Generar estudio",
+      lblLength: "Duraci\u00f3n del estudio",
+      len2: "2 compases &mdash; 4 fragmentos",
+      len4: "4 compases &mdash; 8 fragmentos",
+      len8: "8 compases &mdash; 16 fragmentos",
+      len16: "16 compases &mdash; 32 fragmentos",
+      len32: "32 compases &mdash; 64 fragmentos",
+      noteFixedLen: "En Fragment Practice la duraci\u00f3n se mantiene en 2 compases, para centrar el trabajo en una sola c\u00e9lula.",
+      noteMeter: "El estudio siempre est\u00e1 en 2/4. Cada fragmento dura un tiempo, as\u00ed que cada comp\u00e1s contiene dos fragmentos.",
+      lblPhraseRest: "A\u00f1adir 2 compases de silencio despu\u00e9s de cada frase de 2 compases",
+      lblRepeat: "Repeticiones",
+      rep1: "Permitidas",
+      rep2: "Evitar dos iguales seguidos",
+      rep3: "Usarlos todos antes de repetir",
+      lblSlots: "Fragmentos por tiempo &mdash; los espacios vac\u00edos quedan en Rest",
+      lblProgMode: "C\u00f3mo se suceden los patrones",
+      prog1: "Eliges t\u00fa los patrones",
+      prog2: "Deja que elija la app",
+      noteProgManual: "Elige entre 2 y 8 patrones. Si la secuencia es m\u00e1s corta que el estudio, vuelve a empezar.",
+      noteProgRandom: "La app elige los patrones tradicionales necesarios para cubrir la duraci\u00f3n del estudio.",
+      lblPatSource: "De d\u00f3nde vienen los patrones",
+      src1: "Patrones tradicionales aleatorios",
+      src2: "Un patr\u00f3n tradicional a tu elecci\u00f3n",
+      lblChosenPat: "Patr\u00f3n elegido",
+      lblHybridForm: "C\u00f3mo se alternan los bloques",
+      hf1: "Bloque de patr\u00f3n &rarr; bloque generado",
+      hf2: "Bloque generado &rarr; bloque de patr\u00f3n",
+      hf3: "Apertura de patr\u00f3n &rarr; final generado",
+      hf4: "Apertura generada &rarr; final de patr\u00f3n",
+      lblVarType: "Tipo de material generado",
+      var1: "Libre",
+      var2: "Siguiendo las familias A/B",
+      noteBlock: "Cada bloque dura 2 compases, cuatro fragmentos. Las formas de apertura y final sustituyen un comp\u00e1s dentro de la frase del patr\u00f3n.",
+      btnGenerate: "Generar estudio",
+      btnSave: "Guardar este estudio",
+      btnPrint: "PDF / Imprimir",
+      noteBacking: "Practica el material sobre distintos entornos r\u00edtmicos brasile\u00f1os. Cada loop viene preparado a varios tempos, as\u00ed que el sonido se mantiene limpio a cualquier BPM. Sin pista seleccionada suena un metr\u00f3nomo.",
+      btnPlay: "Tocar",
+      btnStop: "Parar",
+      lblBpm: "BPM del estudio",
+      noteCountIn: "Una cuenta de cuatro tiempos precede siempre al estudio, que luego se repite en bucle junto al backing.",
+      lblStudyVol: "Volumen del estudio",
+      lblBackingVol: "Volumen del backing",
+      lblSound: "Sonido del ritmo escrito",
+      snd1: "Woodblock &mdash; claro para el estudio",
+      snd2: "Clave &mdash; seco y musical",
+      snd3: "Palmada &mdash; fuerte y sencilla",
+      snd4: "Apagado &mdash; solo backing o metr\u00f3nomo",
+      lblExperimental: "(experimental)",
+      notePad: "Un acorde mantenido opcional bajo el estudio. No sigue el tempo, as\u00ed que no necesita ninguna sincronizaci\u00f3n.",
+      lblKey: "Tonalidad",
+      lblPadVol: "Volumen del pad",
+      lblSaved: "Estudios guardados",
+      btnDelete: "Eliminar",
+      btnLoad: "Cargar",
+      btnExport: "Exportar",
+      btnImport: "Importar estudios",
+      noteSaved: "Al guardar se conserva la secuencia exacta de fragmentos, los silencios, el modo, el BPM y el backing elegido. Exportar e importar permiten llevar tus estudios a otro ordenador.",
+      hGenerated: "Estudio generado",
+      summaryEmpty: "Carga los fragmentos y genera un estudio en 2/4.",
+      btnDark: "Partitura sobre fondo oscuro",
+      emptyScore: "Aqu\u00ed aparecer\u00e1 la notaci\u00f3n.",
+      msgNoFiles: "Ning\u00fan archivo",
+      msgLoadFirst: "Carga primero los fragmentos.",
+      optNoSaved: "Ning\u00fan estudio guardado",
+      msgNoSavedYet: "A\u00fan no tienes estudios guardados.",
+      msgGenerateFirst: "Genera un estudio antes de guardarlo.",
+      msgImportFailed: "La importaci\u00f3n fall\u00f3: el archivo no es un archivo v\u00e1lido de estudios guardados.",
+      msgNotationOk: "Notaci\u00f3n generada.",
+      msgManualIncomplete: "La secuencia est\u00e1 incompleta: elige un fragmento para cada espacio.",
+      msgNoPattern: "No hay ning\u00fan patr\u00f3n tradicional completo disponible. Revisa los nombres de los fragmentos.",
+      msgChoosePattern: "Elige al menos un patr\u00f3n para la secuencia.",
+      optNoPad: "Ning\u00fan pad",
+      optNoTrack: "Ninguna pista \u2014 solo metr\u00f3nomo",
+      btnLight: "Partitura sobre fondo claro"
     }
   };
 </script>
-<script src="src/js/i18n.js?v=2"></script>
+<script src="src/js/i18n.js?v=4"></script>
 <script>
   // Compact animated dropdown: purely a visual layer over the existing
   // #modeSelect. It never reimplements mode logic — it only sets the real

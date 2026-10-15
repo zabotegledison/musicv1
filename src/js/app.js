@@ -104,6 +104,17 @@
     setStatus('loadStatus', state.fragments.length ? `${state.fragments.length} fragments loaded from assets/fragments/.` : 'No fragments found in assets/fragments/.', !state.fragments.length);
   }
 
+  // Looks up a UI string in the page's translation table for the language the
+  // visitor picked. Presentation only: it never affects generation, playback or
+  // any stored data. Falls back to the English text passed in.
+  function tr(key, fallback) {
+    try {
+      let lang = localStorage.getItem('bslInfoLang') || 'en';
+      const dict = (window.BSL_I18N_CONTENT || {})[lang] || {};
+      return dict[key] || fallback;
+    } catch (e) { return fallback; }
+  }
+
   function setStatus(id, text, error=false) { $(id).textContent = text; $(id).className = error ? 'status error' : 'status'; }
   function compareIds(a,b) { return a.id.localeCompare(b.id, undefined, { numeric:true }); }
 
@@ -150,7 +161,7 @@
 
   function renderLibrary() {
     const box = $('library');
-    if (!state.fragments.length) { box.innerHTML = '<div class="cell-item"><span>No files</span></div>'; return; }
+    if (!state.fragments.length) { box.innerHTML = `<div class="cell-item"><span>${tr('msgNoFiles','No files')}</span></div>`; return; }
     box.innerHTML = state.fragments.map(f => `
       <div class="cell-item has-quality ${qualityClass(f)}" data-frag-id="${escapeXml(f.id)}">
         <div class="cell-main">
@@ -335,7 +346,7 @@
     const blockFragments = FRAGS_PER_BAR * 2; // 2 bars = one phrase block
     const available = getAvailableTraditionalPatterns();
     if (!available.length) {
-      return { sequence: [], labels: [], error: 'No complete traditional pattern is available. Check fragment names.' };
+      return { sequence: [], labels: [], error: tr('msgNoPattern','No complete traditional pattern is available. Check fragment names.') };
     }
 
     const form = $('hybridFormSelect') ? $('hybridFormSelect').value : 'patternBlockRandomBlock';
@@ -455,7 +466,7 @@
   function buildManualGrid(reset=true) {
     const grid = $('manualGrid');
     const total = getTotalFragments();
-    if (!state.fragments.length) { grid.innerHTML = '<div class="small">Load fragments first.</div>'; return; }
+    if (!state.fragments.length) { grid.innerHTML = `<div class="small">${tr('msgLoadFirst','Load fragments first.')}</div>`; return; }
     const previous = reset ? [] : Array.from(grid.querySelectorAll('select')).map(s => s.value);
     const restId = state.fragments.some(f => f.id === 'B10') ? 'B10' : (state.fragments[0]?.id || '');
     const aFrags = state.fragments.filter(f => qualityClass(f) === 'quality-a' && f.id !== 'A7');
@@ -633,10 +644,10 @@
     const select = $('savedStudySelect');
     if (!select) return;
     if (!state.savedStudies.length) {
-      select.innerHTML = '<option value="">No saved study</option>';
+      select.innerHTML = `<option value="">${tr('optNoSaved','No saved study')}</option>`;
       $('loadStudyBtn').disabled = true;
       $('deleteStudyBtn').disabled = true;
-      setStatus('savedStudiesStatus', 'No saved study yet.', false);
+      setStatus('savedStudiesStatus', tr('msgNoSavedYet','No saved study yet.'), false);
       return;
     }
     select.innerHTML = state.savedStudies.map(s => `<option value="${escapeXml(s.id)}">${escapeXml(s.name)}</option>`).join('');
@@ -647,7 +658,7 @@
 
   function saveCurrentStudy() {
     if (!state.sequence.length || !state.generatedXml) {
-      setStatus('savedStudiesStatus', 'Generate a study before saving.', true);
+      setStatus('savedStudiesStatus', tr('msgGenerateFirst','Generate a study before saving.'), true);
       return;
     }
     const meta = state.currentStudyMeta || {};
@@ -753,7 +764,7 @@
         setStatus('savedStudiesStatus', `Imported ${normalized.length} saved study/studies.`, false);
       } catch(e) {
         console.warn(e);
-        setStatus('savedStudiesStatus', 'Import failed: invalid saved-studies file.', true);
+        setStatus('savedStudiesStatus', tr('msgImportFailed','Import failed: invalid saved-studies file.'), true);
       }
     };
     reader.readAsText(file);
@@ -856,7 +867,7 @@
       applyOsmdColors();
       state.osmd.render();
       applyScoreDarkMode();
-      setStatus('renderStatus','Notation generated successfully.',false);
+      setStatus('renderStatus',tr('msgNotationOk','Notation generated successfully.'),false);
     } catch (err) {
       console.error(err); container.innerHTML = `<div class="empty">Could not render the notation. The MusicXML structure may be incompatible.</div>`;
       applyScoreDarkMode();
@@ -881,7 +892,7 @@
     if (mode === 'manual') {
       sequence = getManualSequence().slice(0,total);
       modeLabel = 'Manual';
-      if (sequence.length < total) { setStatus('renderStatus','Manual sequence incomplete: prepare the slots and choose the fragments.', true); return; }
+      if (sequence.length < total) { setStatus('renderStatus',tr('msgManualIncomplete','Manual sequence incomplete: prepare the slots and choose the fragments.'), true); return; }
     } else if (mode === 'traditional') {
       const pattern = getPatternById($('traditionalPatternSelect').value);
       const missing = pattern.fragments.filter(id => !findFragmentByPatternId(id));
@@ -902,7 +913,7 @@
         patternRotationNames = result.patterns.map(p => p.name);
       } else {
         const selectedPatterns = Array.from(document.querySelectorAll('.progressionSelect')).map(s => s.value).filter(Boolean).map(getPatternById);
-        if (!selectedPatterns.length) { setStatus('renderStatus','Choose at least one pattern for the progression.', true); return; }
+        if (!selectedPatterns.length) { setStatus('renderStatus',tr('msgChoosePattern','Choose at least one pattern for the progression.'), true); return; }
         let baseSeq = [];
         for (const pattern of selectedPatterns) {
           const missing = pattern.fragments.filter(id => !findFragmentByPatternId(id));
@@ -1117,7 +1128,7 @@
       const opts = g.items.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
       return g.cat ? `<optgroup label="${escapeXml(g.cat)}">${opts}</optgroup>` : opts;
     }).join('');
-    select.innerHTML = '<option value="">No pad</option>' + optionsHtml;
+    select.innerHTML = `<option value="">${tr('optNoPad','No pad')}</option>` + optionsHtml;
   }
 
   function getSelectedPad() { return state.padTracks.find(t => t.id === $('padSelect')?.value) || null; }
@@ -1183,7 +1194,7 @@
 
   function renderAudioTracks() {
     const select = $('backingSelect');
-    select.innerHTML = '<option value="">No track — metronome only</option>' + state.audioTracks.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
+    select.innerHTML = `<option value="">${tr('optNoTrack','No track — metronome only')}</option>` + state.audioTracks.map(t => `<option value="${escapeXml(t.id)}">${escapeXml(t.name)}</option>`).join('');
     if (state.audioTracks[0]) select.value = state.audioTracks[0].id;
     updateTrackBpmFromSelection();
   }
@@ -1359,7 +1370,7 @@
     } else {
       el.style.removeProperty('background');
     }
-    if ($('darkScoreBtn')) $('darkScoreBtn').textContent = state.scoreDark ? 'Light Study Mode' : 'Dark Study Mode';
+    if ($('darkScoreBtn')) $('darkScoreBtn').textContent = state.scoreDark ? tr('btnLight','Light study mode') : tr('btnDark','Dark study mode');
   }
   if ($('darkScoreBtn')) $('darkScoreBtn').addEventListener('click', () => {
     state.scoreDark = !state.scoreDark;
@@ -1386,6 +1397,19 @@
   if ($('hybridPatternSourceSelect')) $('hybridPatternSourceSelect').addEventListener('change', updateHybridModeUI);
   if ($('hybridFormSelect')) $('hybridFormSelect').addEventListener('change', updateHybridModeUI);
   loadFragmentLibrary();
+  // Re-run the existing renderers so strings written by scripts pick up the
+  // new language. Presentation only: no state, sequence or audio is touched.
+  document.addEventListener('bsl:languagechange', () => {
+    try {
+      renderSavedStudies();
+      loadAudioLibrary();
+      loadPadLibrary();
+      if ($('darkScoreBtn')) {
+        $('darkScoreBtn').textContent = state.scoreDark ? tr('btnLight','Light study mode') : tr('btnDark','Dark study mode');
+      }
+    } catch (e) { console.warn('Language refresh skipped:', e); }
+  });
+
   loadAudioLibrary();
   loadPadLibrary();
   restoreSavedStudiesFromBrowser();
