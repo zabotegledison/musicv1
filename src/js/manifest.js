@@ -29,7 +29,7 @@ const AUDIO_TRACKS = [
   { id: 'partidoalto', name: 'Partido Alto', suggestedBpm: 100, tempos: ALL_TEMPOS },
   { id: 'samba',       name: 'Samba',        suggestedBpm: 100, tempos: ALL_TEMPOS },
   { id: 'sambafunk',   name: 'Samba Funk',   suggestedBpm: 95,  tempos: ALL_TEMPOS },
-  { id: 'xote',        name: 'Xote',         suggestedBpm: 100, tempos: ALL_TEMPOS }
+  { id: 'xote',        name: 'Xote',         suggestedBpm: 80,  tempos: ALL_TEMPOS }
 ];
 
 // Experimental: harmonic pads (tempo-free, transposed live via pitch-shift).
