@@ -198,7 +198,7 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .notation-example-box svg { height:auto !important; display:block; margin:0; }
 
 /* --- HOME page --- */
-.home-hero { max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
+.home-hero { display:block; max-width:720px; margin:0 auto; text-align:center; padding:10px 24px 8px; }
 .home-hero h1 { font-size:46px; text-align:center; margin:8px 0 4px; }
 .home-hero .subtitle { color:var(--text-secondary); font-size:15px; margin:6px 0 22px; }
 
