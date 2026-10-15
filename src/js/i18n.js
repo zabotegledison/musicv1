@@ -45,6 +45,30 @@
     try { document.dispatchEvent(new CustomEvent('bsl:languagechange', { detail: { lang } })); } catch (e) {}
   }
 
+  // Which language to open in.
+  //   1. a language the visitor picked here before — an explicit choice always
+  //      wins, detection never overrides it;
+  //   2. otherwise the language their browser asks for, in their own order of
+  //      preference (so a Brazilian abroad still gets Portuguese: it follows
+  //      the device, not the country the connection comes from);
+  //   3. otherwise English.
+  function startingLanguage() {
+    const known = LANGS.map((l) => l.code);
+    try {
+      const chosen = localStorage.getItem('bslInfoLang');
+      if (chosen && known.indexOf(chosen) !== -1) return chosen;
+    } catch (e) {}
+    const asked = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || ''];
+    for (let i = 0; i < asked.length; i++) {
+      // "pt-BR" and "pt-PT" both answer to "pt"
+      const base = String(asked[i]).toLowerCase().split('-')[0];
+      if (known.indexOf(base) !== -1) return base;
+    }
+    return 'en';
+  }
+
   function initLangSwitch() {
     const el = document.getElementById('langSwitch');
     if (!el) return;
@@ -82,10 +106,7 @@
       }
     });
 
-    let saved = 'en';
-    try { saved = localStorage.getItem('bslInfoLang') || 'en'; } catch (e) {}
-    if (!LANGS.some((l) => l.code === saved)) saved = 'en';
-    applyLanguage(saved);
+    applyLanguage(startingLanguage());
   }
 
   document.addEventListener('DOMContentLoaded', initLangSwitch);
