@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works — Brazilian Syncopation Lab</title>
   <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.9.2/build/opensheetmusicdisplay.min.js"></script>
-  <link rel="stylesheet" href="src/css/style.css?v=33" />
+  <link rel="stylesheet" href="src/css/style.css?v=34" />
 </head>
 <body>
   <header>
@@ -45,7 +45,8 @@
 
     <div data-i18n="body1"></div>
 
-    <h2 data-i18n="pathTitle">Suggested path</h2>
+    <h2 data-i18n="pathTitle">Ways to work with the material</h2>
+    <p class="path-intro" data-i18n="pathIntro"></p>
     <div class="module-rail">
       <div class="module-row">
         <div class="module-num">1</div>
@@ -94,6 +95,12 @@
     <h3 data-i18n="bringTitle">Bring the rhythm into the music immediately</h3>
     <div data-i18n="bringBody"></div>
 
+    <h2 data-i18n="staticTitle">Static harmonic field</h2>
+    <div data-i18n="staticBody"></div>
+
+    <h2 data-i18n="recontextTitle">One material, different contexts</h2>
+    <div data-i18n="recontextBody"></div>
+
     <h2 data-i18n="subheadTitle">Reading the notation</h2>
     <div data-i18n="subheadBody"></div>
     <div class="notation-examples-slot" id="notationExamplesSlot">
@@ -108,146 +115,110 @@
   <script>
     window.BSL_I18N_CONTENT = {
       en: {
-        title: 'How it works',
-        intro: 'Brazilian Syncopation Lab temporarily focuses attention on the rhythm of the melodic line: first on when the onsets occur, then on the notes used to play them.',
-        cycle1: 'HEAR', cycle2: 'INTERNALIZE', cycle3: 'MELODICIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
-        body1: `
-          <p>The rhythm is first heard, repeated and internalized. Once it feels stable, its onsets are mapped onto freely chosen pitches drawn from material the musician already knows: scales, pentatonics, arpeggios, intervals or other personal vocabulary.</p>
-          <p>The figure is then placed in a musical context and gradually varied, until the exercise opens into improvisation without requiring the studied material to be reproduced literally.</p>
-        `,
-        bringTitle: 'Bring the rhythm into the music right away',
-        bringBody: `
-          <p>When a figure starts to feel familiar, do not leave it as a purely rhythmic exercise.</p>
-          <p>In the app, choose a <span class="en-term">backing track</span> in <span class="en-term">Rhythmic Context</span> and a chord or modal centre in <span class="en-term">Harmonic Pad</span>. Then play the figure's onsets using notes from scales, pentatonics, arpeggios, intervals or your own vocabulary, and begin to vary it progressively.</p>
-          <p class="emphasis">DO NOT WAIT UNTIL THE END OF THE PATH TO IMPROVISE: CREATE MELODIES WITH THE PROPOSED RHYTHMIC MATERIAL FROM THE VERY BEGINNING.</p>
-          <p>The static harmonic setting is intentional: a single chord or modal centre temporarily reduces harmonic demands, allowing more attention to remain on the rhythmic organization of the phrase.</p>
-        `,
-        pathTitle: 'Suggested path',
-        p1Title: '<span class="en-term">Fragment Practice</span> — get to know the material',
-        p1Body: `<p>Explore one micro-cell at a time. Learn its sound and notation, feel where its onsets fall within the pulse, and reproduce it with voice, body or instrument.</p>`,
-        p2Title: '<span class="en-term">Random Generator</span> — expand the possibilities',
-        p2Body: `
-          <p>Let the system create combinations you might not have chosen yourself. Spend some time with each sequence: listen to it, read it, identify its structure and try to play it while keeping a steady pulse.</p>
-          <p>This exposure to different configurations can also be used for sight-reading, rhythmic solfège and practice in responding to unfamiliar material.</p>
-        `,
-        p3Title: '<span class="en-term">Traditional Patterns</span> — return to context',
-        p3Body: `<p>Move from micro-units to recognizable musical patterns drawn from different Brazilian contexts. Notice how fragments you already know acquire function and character inside larger structures.</p>`,
-        p4Title: '<span class="en-term">Pattern Rotation</span> — develop adaptability',
-        p4Body: `<p>Move from one pattern to another while maintaining pulse, continuity and phrasing. Regular changes invite you to reorganize your rhythmic phrasing without breaking the musical flow.</p>`,
-        p5Title: '<span class="en-term">Hybrid Pattern</span> — bring patterns and generation into dialogue',
-        p5Body: `
-          <p>Alternate material drawn from recognizable patterns with freely generated combinations.</p>
-          <p>The module places an already contextualized rhythmic grammar alongside less predictable material, exploring how free fragments can operate within more recognizable structures.</p>
-        `,
-        p6Title: '<span class="en-term">Creative Flow</span> — give up control of the sequence',
-        p6Body: `
-          <p>The system automatically combines the possibilities available in Hybrid Pattern, choosing without your intervention between pattern openings or endings and different forms of generated material.</p>
-          <p>The task is to move through these changes without knowing in advance what will come next.</p>
-          <p>Use it as a bridge from the exercise to improvisation itself.</p>
-        `,
-        subheadTitle: 'Reading the notation',
-        subheadBody: `
-          <p>BSL notation focuses primarily on onset points.</p>
-          <p>A written rest following an onset does not necessarily mean that the previous sound must stop: duration, articulation, accents and phrasing remain open to interpretation.</p>
-          <p>The notation deliberately isolates one aspect of rhythm to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>
-        `,
-        exRowStudy: 'Study', exRowExecution: 'Possible performance'
+        title: "How it works",
+        intro: "BSL starts with a small rhythmic configuration. You can listen to it, recognize it, play it on your instrument, turn it into a melodic phrase, and test it in different Brazilian jazz contexts.",
+        cycle1: "LISTEN",
+        cycle2: "INTERNALIZE",
+        cycle3: "TURN IT INTO MELODY",
+        cycle4: "CONTEXTUALIZE",
+        cycle5: "IMPROVISE",
+        body1: "\n          <h3>1. Listen</h3>\n          <p>Listen to the rhythm several times. Before playing it, identify where the attacks fall in relation to the pulse.</p>\n          <h3>2. Internalize</h3>\n          <p>Repeat the material with your voice, your body, or your instrument. The aim is to make the rhythm stable in both listening and physical response, rather than simply accurate on the page.</p>\n          <h3>3. Turn it into melody</h3>\n          <p>Apply the attacks to notes you already know: scales, pentatonics, arpeggios, intervals, chromatic material, or other personal resources. The rhythm provides the starting point; the musician chooses the notes.</p>\n          <h3>4. Contextualize</h3>\n          <p>Choose a rhythmic environment and test the material within it. Notice what changes when the same configuration is played in different Brazilian jazz contexts.</p>\n          <h3>5. Improvise</h3>\n          <p>Gradually reduce the support provided by notation, the generator, and the backing. Vary the material, move away from the initial figure, and observe what emerges in your improvisation.</p>\n          <p class=\"hint\">This is one simple way to begin. The application modules are not fixed levels: you can return to an earlier stage, change the material, or work in a different way according to your needs.</p>\n        ",
+        pathTitle: "Ways to work with the material",
+        pathIntro: "The modules offer different ways to listen to, combine, transform, and recontextualize the material. They are not meant to be followed as a fixed sequence.",
+        p1Title: "<span class=\"en-term\">Fragment Practice</span>",
+        p1Body: "<p>Work with one micro-unit at a time. Listen to it, identify its attacks, and reproduce it with your voice, body, or instrument.</p>",
+        p2Title: "<span class=\"en-term\">Random Generator</span>",
+        p2Body: "<p>Generate combinations you might not choose spontaneously, then try to recognize, repeat, and transform them.</p>",
+        p3Title: "<span class=\"en-term\">Traditional Patterns</span>",
+        p3Body: "<p>Place the micro-units within recognizable rhythmic patterns and observe how their function changes inside a broader structure.</p>",
+        p4Title: "<span class=\"en-term\">Pattern Rotation</span>",
+        p4Body: "<p>Move from one pattern to another while maintaining the pulse, continuity, and direction of the phrase.</p>",
+        p5Title: "<span class=\"en-term\">Hybrid Pattern</span>",
+        p5Body: "<p>Alternate between material drawn from recognizable patterns and combinations generated by the system.</p>",
+        p6Title: "<span class=\"en-term\">Creative Flow</span>",
+        p6Body: "<p>Reduce your control over the sequence and respond to changes you cannot fully anticipate. Improvisation can begin in any of the previous modules.</p>",
+        bringTitle: "Bring the rhythm into the music right away",
+        bringBody: "\n          <p>When a figure starts to feel familiar, do not leave it as a purely rhythmic exercise.</p>\n          <p>In the app, choose a <span class=\"en-term\">backing track</span> in <span class=\"en-term\">Rhythmic Context</span> and a chord or modal centre in <span class=\"en-term\">Harmonic Pad</span>. Then play the figure's attacks using notes from scales, pentatonics, arpeggios, intervals or your own vocabulary, and begin to vary it progressively.</p>\n          <p class=\"emphasis\">DO NOT WAIT UNTIL THE END OF THE PATH TO IMPROVISE: CREATE MELODIES WITH THE PROPOSED RHYTHMIC MATERIAL FROM THE VERY BEGINNING.</p>\n        ",
+        staticTitle: "Static harmonic field",
+        staticBody: "<p>You can add a tonal centre or a sustained chord. A static harmonic field leaves more space for listening to the rhythm and shaping the melodic line, without requiring the simultaneous management of a harmonic progression.</p>",
+        recontextTitle: "One material, different contexts",
+        recontextBody: "\n          <p>A rhythmic configuration can first be heard in isolation, then applied to the musician's melodic vocabulary and explored within different rhythmic environments.</p>\n          <p>In the current prototype, the same material can be compared, for example, within Batucada, Bai&#227;o, and Ijex&#225; environments. The focus is on observing how its position, duration, accentuation, articulation, phrasing, and musical function change from one context to another.</p>\n          <p>At a later stage, notation and backing can be gradually removed. This makes it possible to observe what returns spontaneously, what is transformed, and what disappears during improvisation.</p>\n        ",
+        subheadTitle: "Reading the notation",
+        subheadBody: "\n          <p>BSL notation focuses primarily on onset points.</p>\n          <p>A written rest following an onset does not necessarily mean that the previous sound must stop: duration, articulation, accents and phrasing remain open to interpretation.</p>\n          <p>The notation deliberately isolates one aspect of rhythm to make it easier to observe and manipulate; it is not a complete representation of musical performance.</p>\n        ",
+        exRowStudy: "Study",
+        exRowExecution: "Possible performance"
       },
       it: {
-        title: 'Come funziona',
-        intro: 'Il Brazilian Syncopation Lab concentra temporaneamente l\u2019attenzione sul ritmo della linea melodica: prima sul quando avvengono gli attacchi, poi sulle note che li realizzano.',
-        cycle1: 'ASCOLTA', cycle2: 'INTERIORIZZA', cycle3: 'MELODICIZZA', cycle4: 'CONTESTUALIZZA', cycle5: 'IMPROVVISA',
-        body1: `
-          <p>Il ritmo viene prima ascoltato, ripetuto e interiorizzato. Una volta stabile, gli attacchi vengono realizzati con note scelte liberamente da materiali già conosciuti dal musicista: scale, pentatoniche, arpeggi, intervalli o altro vocabolario personale.</p>
-          <p>La figura viene quindi inserita in un contesto musicale e progressivamente variata, fino a lasciare spazio all'improvvisazione senza l'obbligo di riprodurre letteralmente il materiale studiato.</p>
-        `,
-        bringTitle: 'Porta subito il ritmo nella musica',
-        bringBody: `
-          <p>Quando una figura comincia a diventare familiare, non lasciarla come puro esercizio ritmico.</p>
-          <p>Nell'app scegli una <span class="en-term">backing track</span> nella sezione <span class="en-term">Rhythmic Context</span> e un accordo o centro modale nella sezione <span class="en-term">Harmonic Pad</span>. Usa quindi gli attacchi della figura con scale, pentatoniche, arpeggi, intervalli o con il tuo vocabolario personale e comincia progressivamente a variarla.</p>
-          <p class="emphasis">NON ASPETTARE LA FINE DEL PERCORSO PER IMPROVVISARE: PORTA OGNI MATERIALE NELLA MELODIA FIN DALL'INIZIO.</p>
-          <p>La staticità armonica è intenzionale: un singolo accordo o centro modale riduce temporaneamente il carico armonico e permette di concentrare maggiormente l'attenzione sull'organizzazione ritmica della frase.</p>
-        `,
-        pathTitle: 'Percorso suggerito',
-        p1Title: '<span class="en-term">Fragment Practice</span> — conosci il materiale',
-        p1Body: `<p>Esplora una micro-cellula alla volta. Impara a riconoscerne il suono e la notazione, a sentirne gli attacchi rispetto alla pulsazione e a riprodurla con voce, corpo o strumento.</p>`,
-        p2Title: '<span class="en-term">Random Generator</span> — amplia le possibilità',
-        p2Body: `
-          <p>Lascia che il sistema costruisca combinazioni che non avresti necessariamente scelto da solo. Dedica un breve tempo a ciascuna sequenza: ascoltala, leggila, riconoscine la struttura e prova a realizzarla mantenendo stabile la pulsazione.</p>
-          <p>La variazione continua espone il musicista a configurazioni differenti e può essere utilizzata anche come esercizio di lettura a prima vista, solfeggio ritmico e reazione a materiale non preparato.</p>
-        `,
-        p3Title: '<span class="en-term">Traditional Patterns</span> — ritrova il contesto',
-        p3Body: `<p>Passa dalle micro-unità a pattern musicalmente riconoscibili provenienti da differenti contesti brasiliani. Osserva come frammenti già incontrati acquistano funzione e carattere all'interno di strutture più ampie.</p>`,
-        p4Title: '<span class="en-term">Pattern Rotation</span> — sviluppa adattabilità',
-        p4Body: `<p>Passa da un pattern all'altro mantenendo pulsazione, continuità e fraseggio. Il cambio periodico invita a riorganizzare il comportamento ritmico senza interrompere il flusso musicale.</p>`,
-        p5Title: '<span class="en-term">Hybrid Pattern</span> — metti in dialogo pattern e generazione',
-        p5Body: `
-          <p>Alterna materiale proveniente da pattern riconoscibili e combinazioni generate liberamente.</p>
-          <p>Il modulo mette così in relazione una grammatica ritmica già contestualizzata con materiale meno prevedibile, esplorando come i frammenti liberi possano inserirsi all'interno di strutture più riconoscibili.</p>
-        `,
-        p6Title: '<span class="en-term">Creative Flow</span> — rinuncia al controllo della sequenza',
-        p6Body: `
-          <p>Il sistema combina automaticamente le possibilità di Hybrid Pattern, scegliendo senza intervento del musicista tra aperture o chiusure di pattern e differenti forme di materiale generato.</p>
-          <p>Il compito è attraversare questi cambiamenti senza sapere in anticipo quale soluzione arriverà.</p>
-          <p>Usalo come passaggio verso un'improvvisazione più libera.</p>
-        `,
-        subheadTitle: 'Come leggere la notazione',
-        subheadBody: `
-          <p>La notazione del BSL evidenzia principalmente i punti di attacco.</p>
-          <p>Una pausa dopo un attacco non implica necessariamente l'interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all'interpretazione.</p>
-          <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo più facile da osservare e manipolare; non rappresenta l'intera performance musicale.</p>
-        `,
-        exRowStudy: 'Studio', exRowExecution: 'Possibile esecuzione'
+        title: "Come funziona",
+        intro: "Il BSL parte da una piccola configurazione ritmica. Puoi ascoltarla, riconoscerla, portarla sullo strumento, trasformarla in una frase melodica e provarla in diversi contesti del Jazz Brasileiro.",
+        cycle1: "ASCOLTA",
+        cycle2: "INTERIORIZZA",
+        cycle3: "MELODICIZZA",
+        cycle4: "CONTESTUALIZZA",
+        cycle5: "IMPROVVISA",
+        body1: "\n          <h3>1. Ascolta</h3>\n          <p>Ascolta il ritmo pi&#249; volte. Cerca di riconoscere dove cadono gli attacchi rispetto alla pulsazione prima di suonarlo.</p>\n          <h3>2. Interiorizza</h3>\n          <p>Ripeti il materiale con la voce, il corpo o lo strumento. L&#8217;obiettivo &#232; renderlo stabile nell&#8217;ascolto e nel gesto, non soltanto corretto nella lettura.</p>\n          <h3>3. Melodicizza</h3>\n          <p>Applica gli attacchi a note che gi&#224; conosci: scale, pentatoniche, arpeggi, intervalli, cromatismi o altro materiale personale. Il ritmo resta il punto di partenza; le note sono scelte dal musicista.</p>\n          <h3>4. Contestualizza</h3>\n          <p>Scegli un ambiente ritmico e prova il materiale al suo interno. Confronta che cosa cambia quando la stessa configurazione viene suonata in contesti differenti del Jazz Brasileiro.</p>\n          <h3>5. Improvvisa</h3>\n          <p>Riduci progressivamente il supporto della notazione, del generatore e del backing. Varia il materiale, allontanati dalla figura iniziale e osserva che cosa emerge nella tua improvvisazione.</p>\n          <p class=\"hint\">Questa &#232; una modalit&#224; semplice per iniziare. I moduli dell&#8217;applicazione non costituiscono una sequenza obbligatoria: puoi tornare a una fase precedente, cambiare materiale o lavorare in modo diverso secondo le tue esigenze.</p>\n        ",
+        pathTitle: "Modi di lavorare con il materiale",
+        pathIntro: "I moduli offrono modalit&#224; diverse per ascoltare, combinare, trasformare e contestualizzare il materiale. Non costituiscono una sequenza obbligatoria.",
+        p1Title: "<span class=\"en-term\">Fragment Practice</span>",
+        p1Body: "<p>Esplora una micro-unit&#224; alla volta. Ascoltala, riconoscine gli attacchi e riproducila con voce, corpo o strumento.</p>",
+        p2Title: "<span class=\"en-term\">Random Generator</span>",
+        p2Body: "<p>Genera combinazioni che potresti non scegliere spontaneamente e prova a riconoscerle, ripeterle e trasformarle.</p>",
+        p3Title: "<span class=\"en-term\">Traditional Patterns</span>",
+        p3Body: "<p>Riporta le micro-unit&#224; dentro pattern ritmici riconoscibili e osserva come cambiano funzione all&#8217;interno di una struttura pi&#249; ampia.</p>",
+        p4Title: "<span class=\"en-term\">Pattern Rotation</span>",
+        p4Body: "<p>Passa da un pattern all&#8217;altro mantenendo pulsazione, continuit&#224; e fraseggio.</p>",
+        p5Title: "<span class=\"en-term\">Hybrid Pattern</span>",
+        p5Body: "<p>Alterna materiale proveniente da pattern riconoscibili e combinazioni generate dal sistema.</p>",
+        p6Title: "<span class=\"en-term\">Creative Flow</span>",
+        p6Body: "<p>Riduci il controllo sulla sequenza e reagisci a cambiamenti non anticipati. L&#8217;improvvisazione pu&#242; iniziare gi&#224; nei moduli precedenti.</p>",
+        bringTitle: "Porta subito il ritmo nella musica",
+        bringBody: "\n          <p>Quando una figura comincia a diventare familiare, non lasciarla come puro esercizio ritmico.</p>\n          <p>Nell&#8217;app scegli una <span class=\"en-term\">backing track</span> nella sezione <span class=\"en-term\">Rhythmic Context</span> e un accordo o centro modale nella sezione <span class=\"en-term\">Harmonic Pad</span>. Usa quindi gli attacchi della figura con scale, pentatoniche, arpeggi, intervalli o con il tuo vocabolario personale e comincia progressivamente a variarla.</p>\n          <p class=\"emphasis\">NON ASPETTARE LA FINE DEL PERCORSO PER IMPROVVISARE: PORTA OGNI MATERIALE NELLA MELODIA FIN DALL&#8217;INIZIO.</p>\n        ",
+        staticTitle: "Campo armonico statico",
+        staticBody: "<p>Puoi aggiungere un centro o un accordo mantenuto. Un campo armonico statico lascia pi&#249; spazio all&#8217;ascolto del ritmo e alla costruzione della linea melodica, senza richiedere contemporaneamente la gestione di una progressione armonica.</p>",
+        recontextTitle: "Un materiale, diversi contesti",
+        recontextBody: "\n          <p>Una configurazione ritmica pu&#242; essere ascoltata isolatamente, applicata al vocabolario melodico del musicista e sperimentata in diversi ambienti ritmici.</p>\n          <p>Nell&#8217;attuale prototipo, lo stesso materiale pu&#242; essere confrontato, per esempio, con ambienti di Batucada, Bai&#227;o e Ijex&#225;. L&#8217;interesse consiste nell&#8217;osservare come cambino la sua posizione, la durata, l&#8217;accentuazione, l&#8217;articolazione, la fraseologia e la funzione musicale.</p>\n          <p>In una fase successiva, la notazione e il backing possono essere rimossi. Diventa cos&#236; possibile osservare che cosa riemerge spontaneamente, che cosa viene trasformato e che cosa scompare durante l&#8217;improvvisazione.</p>\n        ",
+        subheadTitle: "Come leggere la notazione",
+        subheadBody: "\n          <p>La notazione del BSL evidenzia principalmente i punti di attacco.</p>\n          <p>Una pausa dopo un attacco non implica necessariamente l&#8217;interruzione del suono precedente: durata, articolazione, accenti e fraseggio rimangono aperti all&#8217;interpretazione.</p>\n          <p>La rappresentazione isola intenzionalmente un aspetto del ritmo per renderlo pi&#249; facile da osservare e manipolare; non rappresenta l&#8217;intera performance musicale.</p>\n        ",
+        exRowStudy: "Studio",
+        exRowExecution: "Possibile esecuzione"
       },
       pt: {
-        title: 'Como funciona',
-        intro: 'O Brazilian Syncopation Lab concentra temporariamente a atenção no ritmo da linha melódica: primeiro em quando os ataques acontecem e, depois, nas notas usadas para realizá-los.',
-        cycle1: 'OUÇA', cycle2: 'INTERIORIZE', cycle3: 'MELODIZE', cycle4: 'CONTEXTUALIZE', cycle5: 'IMPROVISE',
-        body1: `
-          <p>O ritmo é primeiro ouvido, repetido e interiorizado. Quando estiver firme, seus ataques são realizados com notas escolhidas livremente a partir de materiais que o músico já conhece: escalas, pentatônicas, arpejos, intervalos ou outro vocabulário pessoal.</p>
-          <p>A figura é então colocada em um contexto musical e progressivamente variada, até abrir espaço para a improvisação sem a obrigação de reproduzir literalmente o material estudado.</p>
-        `,
-        bringTitle: 'Leve o ritmo para a música desde o início',
-        bringBody: `
-          <p>Quando uma figura começar a ficar familiar, não a deixe restrita a um exercício puramente rítmico.</p>
-          <p>No app, escolha uma <span class="en-term">backing track</span> em <span class="en-term">Rhythmic Context</span> e um acorde ou centro modal em <span class="en-term">Harmonic Pad</span>. Em seguida, toque os ataques da figura usando notas de escalas, pentatônicas, arpejos, intervalos ou do seu próprio vocabulário e comece progressivamente a variá-la.</p>
-          <p class="emphasis">NÃO ESPERE CHEGAR AO FIM DO PERCURSO PARA IMPROVISAR: CRIE MELODIAS COM O MATERIAL RÍTMICO PROPOSTO DESDE O COMEÇO.</p>
-          <p>A estabilidade harmônica é intencional: um único acorde ou centro modal reduz temporariamente a demanda harmônica, deixando mais espaço de atenção para a organização rítmica da frase.</p>
-        `,
-        pathTitle: 'Percurso sugerido',
-        p1Title: '<span class="en-term">Fragment Practice</span> — conheça o material',
-        p1Body: `<p>Explore uma microcélula de cada vez. Aprenda a reconhecer seu som e sua escrita, sinta onde seus ataques caem dentro da pulsação e reproduza-a com voz, corpo ou instrumento.</p>`,
-        p2Title: '<span class="en-term">Random Generator</span> — amplie as possibilidades',
-        p2Body: `
-          <p>Deixe que o sistema crie combinações que você talvez não escolhesse sozinho. Passe um pouco de tempo com cada sequência: ouça, leia, identifique sua estrutura e tente tocá-la mantendo a pulsação firme.</p>
-          <p>Essa exposição a diferentes configurações também pode ser usada como exercício de leitura à primeira vista, solfejo rítmico e reação a material não previamente estudado.</p>
-        `,
-        p3Title: '<span class="en-term">Traditional Patterns</span> — reencontre o contexto',
-        p3Body: `<p>Passe das micro-unidades para padrões musicalmente reconhecíveis provenientes de diferentes contextos brasileiros. Observe como fragmentos já conhecidos ganham função e caráter dentro de estruturas maiores.</p>`,
-        p4Title: '<span class="en-term">Pattern Rotation</span> — desenvolva adaptabilidade',
-        p4Body: `<p>Passe de um padrão a outro mantendo pulsação, continuidade e fraseado. As mudanças periódicas pedem que você reorganize o fraseado rítmico sem interromper o fluxo musical.</p>`,
-        p5Title: '<span class="en-term">Hybrid Pattern</span> — coloque padrões e geração em diálogo',
-        p5Body: `
-          <p>Alterne materiais provenientes de padrões reconhecíveis com combinações geradas livremente.</p>
-          <p>O módulo coloca uma gramática rítmica já contextualizada em relação com materiais menos previsíveis, explorando como fragmentos livres podem funcionar dentro de estruturas mais reconhecíveis.</p>
-        `,
-        p6Title: '<span class="en-term">Creative Flow</span> — abra mão do controle da sequência',
-        p6Body: `
-          <p>O sistema combina automaticamente as possibilidades disponíveis no Hybrid Pattern, escolhendo, sem sua intervenção, entre aberturas ou finais de padrões e diferentes formas de material gerado.</p>
-          <p>A tarefa é atravessar essas mudanças sem saber de antemão o que virá em seguida.</p>
-          <p>Use-o como uma ponte para a improvisação de fato.</p>
-        `,
-        subheadTitle: 'Como ler a notação',
-        subheadBody: `
-          <p>A notação do BSL destaca principalmente os pontos de ataque.</p>
-          <p>Uma pausa escrita depois de um ataque não significa necessariamente que o som anterior deva ser interrompido: duração, articulação, acentuação e fraseado permanecem abertos à interpretação.</p>
-          <p>A notação isola intencionalmente um aspecto do ritmo para torná-lo mais fácil de observar e manipular; ela não representa a totalidade da performance musical.</p>
-        `,
-        exRowStudy: 'Estudo', exRowExecution: 'Possível execução'
+        title: "Como funciona",
+        intro: "O BSL parte de uma pequena configura&#231;&#227;o r&#237;tmica. Voc&#234; pode ouvi-la, reconhec&#234;-la, lev&#225;-la para o instrumento, transform&#225;-la em uma frase mel&#243;dica e experiment&#225;-la em diferentes contextos do Jazz Brasileiro.",
+        cycle1: "OU&#199;A",
+        cycle2: "INTERIORIZE",
+        cycle3: "MELODIZE",
+        cycle4: "CONTEXTUALIZE",
+        cycle5: "IMPROVISE",
+        body1: "\n          <h3>1. Ou&#231;a</h3>\n          <p>Ou&#231;a o ritmo v&#225;rias vezes. Antes de toc&#225;-lo, procure reconhecer onde caem os ataques em rela&#231;&#227;o &#224; pulsa&#231;&#227;o.</p>\n          <h3>2. Interiorize</h3>\n          <p>Repita o material com a voz, o corpo ou o instrumento. O objetivo &#233; torn&#225;-lo est&#225;vel na escuta e no gesto, e n&#227;o apenas correto na leitura.</p>\n          <h3>3. Melodize</h3>\n          <p>Aplique os ataques a notas que voc&#234; j&#225; conhece: escalas, pentat&#244;nicas, arpejos, intervalos, cromatismos ou outro material pessoal. O ritmo &#233; o ponto de partida; as notas s&#227;o escolhidas pelo m&#250;sico.</p>\n          <h3>4. Contextualize</h3>\n          <p>Escolha um ambiente r&#237;tmico e experimente o material dentro dele. Observe o que muda quando a mesma configura&#231;&#227;o &#233; tocada em diferentes contextos do Jazz Brasileiro.</p>\n          <h3>5. Improvise</h3>\n          <p>Reduza progressivamente o apoio da nota&#231;&#227;o, do gerador e do backing. Varie o material, afaste-se da figura inicial e observe o que emerge na sua improvisa&#231;&#227;o.</p>\n          <p class=\"hint\">Esta &#233; uma maneira simples de come&#231;ar. Os m&#243;dulos do aplicativo n&#227;o constituem uma sequ&#234;ncia obrigat&#243;ria: voc&#234; pode voltar a uma etapa anterior, mudar de material ou trabalhar de outro modo conforme a sua necessidade.</p>\n        ",
+        pathTitle: "Modos de trabalhar com o material",
+        pathIntro: "Os m&#243;dulos oferecem maneiras diferentes de ouvir, combinar, transformar e contextualizar o material. N&#227;o constituem uma sequ&#234;ncia obrigat&#243;ria.",
+        p1Title: "<span class=\"en-term\">Fragment Practice</span>",
+        p1Body: "<p>Explore uma micro-unidade de cada vez. Ou&#231;a-a, reconhe&#231;a seus ataques e reproduza-a com voz, corpo ou instrumento.</p>",
+        p2Title: "<span class=\"en-term\">Random Generator</span>",
+        p2Body: "<p>Gere combina&#231;&#245;es que voc&#234; talvez n&#227;o escolhesse espontaneamente e tente reconhec&#234;-las, repeti-las e transform&#225;-las.</p>",
+        p3Title: "<span class=\"en-term\">Traditional Patterns</span>",
+        p3Body: "<p>Recoloque as micro-unidades dentro de padr&#245;es r&#237;tmicos reconhec&#237;veis e observe como mudam de fun&#231;&#227;o dentro de uma estrutura mais ampla.</p>",
+        p4Title: "<span class=\"en-term\">Pattern Rotation</span>",
+        p4Body: "<p>Passe de um padr&#227;o a outro mantendo pulsa&#231;&#227;o, continuidade e fraseado.</p>",
+        p5Title: "<span class=\"en-term\">Hybrid Pattern</span>",
+        p5Body: "<p>Alterne material proveniente de padr&#245;es reconhec&#237;veis e combina&#231;&#245;es geradas pelo sistema.</p>",
+        p6Title: "<span class=\"en-term\">Creative Flow</span>",
+        p6Body: "<p>Reduza o controle sobre a sequ&#234;ncia e reaja a mudan&#231;as que n&#227;o consegue antecipar. A improvisa&#231;&#227;o pode come&#231;ar j&#225; nos m&#243;dulos anteriores.</p>",
+        bringTitle: "Leve o ritmo para a m&#250;sica desde o in&#237;cio",
+        bringBody: "\n          <p>Quando uma figura come&#231;ar a ficar familiar, n&#227;o a deixe apenas como exerc&#237;cio r&#237;tmico.</p>\n          <p>No app, escolha uma <span class=\"en-term\">backing track</span> em <span class=\"en-term\">Rhythmic Context</span> e um acorde ou centro modal em <span class=\"en-term\">Harmonic Pad</span>. Em seguida, toque os ataques da figura usando notas de escalas, pentat&#244;nicas, arpejos, intervalos ou do seu pr&#243;prio vocabul&#225;rio e comece progressivamente a vari&#225;-la.</p>\n          <p class=\"emphasis\">N&#195;O ESPERE CHEGAR AO FIM DO PERCURSO PARA IMPROVISAR: CRIE MELODIAS COM O MATERIAL R&#205;TMICO PROPOSTO DESDE O COME&#199;O.</p>\n        ",
+        staticTitle: "Campo harm&#244;nico est&#225;tico",
+        staticBody: "<p>Voc&#234; pode acrescentar um centro ou um acorde mantido. Um campo harm&#244;nico est&#225;tico deixa mais espa&#231;o para a escuta do ritmo e para a constru&#231;&#227;o da linha mel&#243;dica, sem exigir ao mesmo tempo a gest&#227;o de uma progress&#227;o harm&#244;nica.</p>",
+        recontextTitle: "Um material, diferentes contextos",
+        recontextBody: "\n          <p>Uma configura&#231;&#227;o r&#237;tmica pode ser ouvida isoladamente, aplicada ao vocabul&#225;rio mel&#243;dico do m&#250;sico e experimentada em diferentes ambientes r&#237;tmicos.</p>\n          <p>No prot&#243;tipo atual, o mesmo material pode ser comparado, por exemplo, em ambientes de Batucada, Bai&#227;o e Ijex&#225;. O interesse est&#225; em observar como mudam sua posi&#231;&#227;o, dura&#231;&#227;o, acentua&#231;&#227;o, articula&#231;&#227;o, fraseado e fun&#231;&#227;o musical.</p>\n          <p>Numa fase seguinte, a nota&#231;&#227;o e o backing podem ser removidos. Torna-se poss&#237;vel observar o que reemerge espontaneamente, o que &#233; transformado e o que desaparece durante a improvisa&#231;&#227;o.</p>\n        ",
+        subheadTitle: "Como ler a nota&#231;&#227;o",
+        subheadBody: "\n          <p>A nota&#231;&#227;o do BSL destaca principalmente os pontos de ataque.</p>\n          <p>Uma pausa escrita depois de um ataque n&#227;o significa necessariamente que o som anterior deva ser interrompido: dura&#231;&#227;o, articula&#231;&#227;o, acentua&#231;&#227;o e fraseado permanecem abertos &#224; interpreta&#231;&#227;o.</p>\n          <p>A nota&#231;&#227;o isola intencionalmente um aspecto do ritmo para torn&#225;-lo mais f&#225;cil de observar e manipular; ela n&#227;o representa a totalidade da performance musical.</p>\n        ",
+        exRowStudy: "Estudo",
+        exRowExecution: "Poss&#237;vel execu&#231;&#227;o"
       }
     };
   </script>
-  <script src="src/js/i18n.js?v=1"></script>
+  <script src="src/js/i18n.js?v=2"></script>
   <script>
     // Reading the notation — worked examples. Renders 6 pre-built MusicXML
     // files (3 pairs of study/possible-performance) via the same OSMD setup

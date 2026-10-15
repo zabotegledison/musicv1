@@ -281,3 +281,39 @@ button:disabled { opacity:.4; cursor:not-allowed; }
 .fp-opt-id { width:30px; flex:0 0 auto; }
 .fp-opt-notation { flex:1 1 auto; background:#FBFBF8; border-radius:4px; height:38px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:4px 8px; }
 .fp-opt-notation svg { width:100%; height:100%; display:block; }
+
+/* --- typographic refinement pass: hierarchy and breathing room only.
+       No colour values, no structural or behavioural changes. --- */
+
+/* informational pages: a calmer measure and clearer heading rhythm */
+.doc-page { max-width:760px; }
+.doc-page h2 { font-size:27px; margin:52px 0 14px; letter-spacing:-.025em; line-height:1.2; }
+.doc-page h3 { font-size:16px; margin:30px 0 8px; letter-spacing:-.01em; }
+.doc-page p, .doc-page li { font-size:15.5px; line-height:1.72; }
+.doc-page .lede { font-size:18.5px; line-height:1.6; margin-bottom:22px; }
+.doc-page p + p { margin-top:0; }
+
+/* intro line under a section heading, set apart from the body copy */
+.path-intro { font-size:14.5px; color:var(--text-secondary); font-style:italic; margin:0 0 18px; max-width:62ch; }
+
+/* pull-quote lines: less shouty, more deliberate */
+.doc-page .emphasis { font-size:15px; line-height:1.55; letter-spacing:.005em; margin:26px 0; padding:4px 0 4px 18px; }
+
+/* numbered module rail: tighter coupling between number and its text */
+.module-rail .module-row { padding:18px 0; gap:16px; }
+.module-rail .module-num { width:28px; height:28px; font-size:12.5px; }
+.module-rail .module-row h3 { margin:2px 0 6px; font-size:15px; }
+
+/* home: give the headline room and let the audience line sit quietly under it */
+.home-hero h1 { font-size:52px; letter-spacing:-.035em; line-height:1.05; }
+.home-audience { font-size:13.5px; color:var(--text-secondary); margin:0 auto 26px; max-width:46ch; line-height:1.5; }
+.home-hero .subtitle { letter-spacing:-.015em; line-height:1.3; }
+.home-hero p { font-size:15.5px; line-height:1.72; }
+.mib-note { font-size:12.5px; line-height:1.6; }
+
+/* app: tagline and section labels a touch more defined */
+.app-tagline { letter-spacing:.005em; }
+@media (max-width:640px) {
+  .doc-page h2 { font-size:23px; margin:38px 0 12px; }
+  .home-hero h1 { font-size:36px; }
+}
