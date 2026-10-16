@@ -1287,7 +1287,15 @@
       state.backingPlayer.loop = !!$('loopInput').checked;
       state.backingPlayer.loopStart = 0;
       state.backingPlayer.loopEnd = loopLenSec;
-      state.backingPlayer.start(time, 0);
+      // Nudge the groove slightly ahead of the study to cancel the
+      // perceptual attack lag (see BACKING_SYNC_OFFSET_MS in manifest.js).
+      // Timing only: the loop points above are untouched, so this is a
+      // constant shift and can never accumulate into drift.
+      const syncMs = (typeof t.syncOffsetMs === 'number')
+        ? t.syncOffsetMs
+        : (typeof BACKING_SYNC_OFFSET_MS === 'number' ? BACKING_SYNC_OFFSET_MS : 0);
+      const startAt = Math.max(0, time - syncMs / 1000);
+      state.backingPlayer.start(startAt, 0);
       if (!$('loopInput').checked) {
         state.backingPlayer.stop(time + studyDurationSec);
       }

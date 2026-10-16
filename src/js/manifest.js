@@ -20,10 +20,16 @@ const FRAGMENT_FILES = [
 // BPM to this value, and the musician is then free to change it at will.
 // Must be one of the values listed in that track's "tempos".
 const ALL_TEMPOS = [60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140];
+// Default: no shift, so every track starts exactly as before. A single track
+// can ask to start a few milliseconds earlier through its own "syncOffsetMs",
+// used where the recording's attacks are soft enough to read as late against
+// the sharp click of the study. Keep this at 0 unless every track needs it.
+const BACKING_SYNC_OFFSET_MS = 0;
+
 const AUDIO_TRACKS = [
   { id: 'baiao',       name: 'Baião',        suggestedBpm: 100, tempos: ALL_TEMPOS },
   { id: 'batucada',    name: 'Batucada',     suggestedBpm: 100, tempos: ALL_TEMPOS },
-  { id: 'frevo',       name: 'Frevo',        suggestedBpm: 120, tempos: ALL_TEMPOS },
+  { id: 'frevo',       name: 'Frevo',        suggestedBpm: 120, tempos: ALL_TEMPOS, syncOffsetMs: 15 },
   { id: 'afoxe',       name: 'Ijexá',        suggestedBpm: 100, tempos: ALL_TEMPOS },
   { id: 'maracatu',    name: 'Maracatu',     suggestedBpm: 100, tempos: ALL_TEMPOS },
   { id: 'partidoalto', name: 'Partido Alto', suggestedBpm: 100, tempos: ALL_TEMPOS },
